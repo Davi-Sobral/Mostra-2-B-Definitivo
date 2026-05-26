@@ -433,8 +433,8 @@ h2.section-h2,
 ───────────────────────────────────────── */
 #float-audio-btn {
   position: fixed;
-  bottom: calc(var(--body-pb) + 20px);
-  right: 72px; /* alinhado horizontalmente com o vw-access-button (right:20px + 52px de largura) */
+  bottom: calc(var(--body-pb) + 72px);
+  right: 20px;
   left: auto;
   z-index: 7700;
   width: 40px; height: 40px;
@@ -680,8 +680,8 @@ h2.section-h2,
      4. ACESSIBILIDADE (VLibras à direita e áudio à esquerda)
   ========================================================================== */
   [vw] { bottom:20px!important; right:20px!important; left:auto!important; z-index:8000!important; }
-  #float-audio-btn { bottom:20px; right:72px; left:auto; }
-  #sr-panel { bottom:72px; right:20px; left:auto; width:270px; }
+  #float-audio-btn { bottom:72px; right:20px; left:auto; }
+  #sr-panel { bottom:124px; right:20px; left:auto; width:270px; }
 }
 @media (min-width:641px) and (max-width:1200px) {
   :root { --sw:88px; --sc:46px; }
@@ -699,6 +699,93 @@ h2.section-h2,
   .quiz-container { flex:1; min-height:0; height:auto; }
   #bp-webchat-inline { width:min(calc(var(--bp-box-h) * 2), calc(100vw - var(--sw) - 128px)); }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   AJUSTES DESKTOP ESPECÍFICOS (min-width: 1024px)
+   Afetam apenas telas largas — mobile/tablet não é impactado
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+
+  /* ── ABA INÍCIO: "Além do Copo" 6× maior ──────────────────
+     Base desktop: clamp(.85rem, 1vw, 1rem) → 6× ≈ clamp(5.1rem, 6vw, 6rem)
+  ─────────────────────────────────────────────────────────── */
+  .home-project-title {
+    font-size: clamp(5.1rem, 6vw, 6rem) !important;
+    letter-spacing: -.04em;
+    line-height: .9;
+    margin-bottom: 20px;
+  }
+
+  /* ── ABA "O QUE É?": título igual ao "Teste AUDIT" ────────
+     Teste AUDIT desktop: clamp(2.9rem, 3.4vw, 4rem)
+  ─────────────────────────────────────────────────────────── */
+  #sec-info .section-h2,
+  #info-h2 {
+    font-size: clamp(2.9rem, 3.4vw, 4rem) !important;
+    line-height: 1.05;
+  }
+
+  /* ── ABA "O QUE É?": cards pela metade — padding, ícone, h3 e p ─
+     Reduz tudo proporcionalmente para caber no grid 2×2 sem overflow
+  ─────────────────────────────────────────────────────────── */
+  #sec-info .info-card {
+    padding: clamp(10px, 1.1vw, 16px) clamp(10px, 1.1vw, 16px) !important;
+    gap: 5px !important;
+    overflow: hidden;
+  }
+  #sec-info .info-card-icon {
+    width: 30px !important; height: 30px !important;
+    font-size: .85rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 6px !important;
+  }
+  #sec-info .info-card h3 {
+    font-size: clamp(19.5px, 1.575vw, 22.5px) !important;
+    line-height: 1.25 !important;
+    margin-bottom: 4px !important;
+  }
+  #sec-info .info-card p {
+    font-size: 18px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* ── ABA "AJUDA": help-grid cabe inteiro na tela ──────────
+     4 colunas com tamanhos compactos; imagem e corpo menores
+  ─────────────────────────────────────────────────────────── */
+  #sec-ajuda .help-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 14px !important;
+  }
+  #sec-ajuda .help-card-img {
+    height: clamp(70px, 7vh, 100px) !important;
+  }
+  #sec-ajuda .help-card-body {
+    padding: 8px 9px 10px !important;
+  }
+  #sec-ajuda .help-card-icon {
+    width: 22px !important; height: 22px !important;
+    font-size: 11px !important;
+    border-radius: 5px !important;
+    margin-bottom: 4px !important;
+  }
+  #sec-ajuda .help-card-body h3 {
+    font-size: clamp(10px, .78vw, 12px) !important;
+    margin-bottom: 2px !important;
+  }
+  #sec-ajuda .help-card-body p {
+    font-size: clamp(9px, .68vw, 10.5px) !important;
+    line-height: 1.5 !important;
+  }
+  #sec-ajuda .help-card-link {
+    border-radius: 10px !important;
+  }
+  /* Garante que o wrap não gere scroll horizontal */
+  #sec-ajuda .help-wrap {
+    overflow-x: hidden !important;
+  }
+
+}
+/* ── Fim dos ajustes desktop ─────────────────────────────── */
 
 </style>
 </head>
@@ -851,16 +938,14 @@ h2.section-h2,
             <path d="M75,70 L85,310 Q75,314 73,310 L63,70 Z" fill="url(#glassGrad)" opacity=".6"/>
             <ellipse cx="140" cy="60" rx="80" ry="10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
             <ellipse cx="140" cy="330" rx="55" ry="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-            <!-- Ícone de cadeado minimalista integrado ao copo -->
-            <g transform="translate(118, 36)" opacity="0.72">
-              <!-- corpo do cadeado -->
-              <rect x="3" y="11" width="18" height="13" rx="3" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.55)" stroke-width="1.4"/>
-              <!-- arco do cadeado -->
-              <path d="M6,11 L6,7 Q6,2 12,2 Q18,2 18,7 L18,11" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-linecap="round"/>
-              <!-- buraco da fechadura -->
-              <circle cx="12" cy="17" r="2.2" fill="rgba(255,255,255,0.45)"/>
-              <rect x="11" y="17" width="2" height="3.5" rx="1" fill="rgba(255,255,255,0.45)"/>
+            <!-- Sinal de proibição sobre o copo — cobre toda a área -->
+            <g>
+              <!-- Círculo vermelho cobrindo todo o copo -->
+              <circle cx="140" cy="190" r="132" fill="rgba(200,20,20,0.18)" stroke="#CC2200" stroke-width="10"/>
+              <!-- Barra diagonal de canto a canto do círculo -->
+              <line x1="47" y1="97" x2="233" y2="283" stroke="#CC2200" stroke-width="10" stroke-linecap="round"/>
             </g>
+
           </svg>
           <div class="glass-glow"></div>
         </div>
@@ -1030,9 +1115,9 @@ h2.section-h2,
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='315' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Ccircle cx='485' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Cpath d='M223 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3Cpath d='M393 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users-group" style="color:#86EFAC"></i></div><h3>Nar-Anon</h3><p>Grupos de apoio para familiares de dependentes.</p><span class="ext-link">Nar-Anon Brasil <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <a class="help-card-link" href="https://www.desenvolvimentosocial.sp.gov.br/acoes-de-protecao-social/programa-recomeco/" target="_blank" rel="noopener" data-scroll style="transition-delay:.32s" aria-label="Programa Recomeço">
-            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%23F69D39'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M226 327c38 48 91 73 159 73 105 0 170-57 214-143' stroke='%23fff' stroke-width='22' stroke-linecap='round' fill='none'/%3E%3Cpath d='M466 157h147v147' stroke='%23fff' stroke-width='22' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-refresh" style="color:#F69D39"></i></div><h3>Recomeço</h3><p>Programa de apoio e reinserção social contra dependência química.</p><span class="ext-link">Programa Recomeço <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          <a class="help-card-link" href="https://www.buscaclinicas.com.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.32s" aria-label="Busca Clínicas de Recuperação">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%2360A5FA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='340' cy='230' r='110' stroke='%23fff' stroke-width='22' fill='none'/%3E%3Cline x1='420' y1='310' x2='540' y2='400' stroke='%23fff' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='340' y1='175' x2='340' y2='285' stroke='%23fff' stroke-width='18' stroke-linecap='round'/%3E%3Cline x1='285' y1='230' x2='395' y2='230' stroke='%23fff' stroke-width='18' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-search" style="color:#60A5FA"></i></div><h3>Busca Clínicas</h3><p>Encontre clínicas de recuperação em todo o Brasil.</p><span class="ext-link">buscaclinicas.com.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
         </div>
       </div>
