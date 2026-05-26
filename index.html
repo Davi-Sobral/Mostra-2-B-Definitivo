@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Além do Copo — Informação e Apoio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* ─────────────────────────────────────────
+   RESET & TOKENS
+───────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --font-h: 'Playfair Display', serif;
+  --font-b: 'DM Sans', sans-serif;
+  --ease:   cubic-bezier(0.22,1,0.36,1);
+  --gold:   #F69D39;
+  --accent: #FFA500;
+  --sb-accent: #FFA500;
+  --nav-color: rgba(255,255,255,.36);
+  --nav-active-color: #fff;
+  --nav-active-bg: rgba(255,255,255,.12);
+  --nav-active-border: rgba(255,255,255,.55);
+  /* bottom-nav height + safe area */
+  --bnav-h: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  /* total bottom padding */
+  --body-pb: calc(var(--bnav-h) + var(--safe-b));
+}
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--sb-accent) #12100E; }
+body {
+  font-family: var(--font-b);
+  background: #12100E;
+  color: #fff;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-bottom: var(--body-pb);
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #12100E; }
+::-webkit-scrollbar-thumb { background: var(--sb-accent); border-radius: 3px; }
+
+/* ─────────────────────────────────────────
+   PAGE VEIL
+───────────────────────────────────────── */
+#page-veil { position:fixed; inset:0; background:#12100E; z-index:9999; pointer-events:none; transition:opacity .55s ease; }
+#page-veil.out { opacity:0; }
+
+/* ─────────────────────────────────────────
+   SKIP LINK (acessibilidade)
+───────────────────────────────────────── */
+.skip-link {
+  position: fixed; top: -100px; left: 16px; z-index: 10000;
+  background: #FFA500; color: #12100E;
+  padding: 10px 18px; border-radius: 8px;
+  font-weight: 700; font-size: 14px; transition: top .2s;
+}
+.skip-link:focus { top: 10px; }
+
+/* ─────────────────────────────────────────
+   BOTÃO TEMA MOBILE (independente da sidebar)
+───────────────────────────────────────── */
+#mobile-theme-btn {
+  display: flex;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 450;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(30,30,40,.75);
+  border: .5px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background .22s, border-color .22s;
+  -webkit-tap-highlight-color: transparent;
+}
+#mobile-theme-btn i { font-size: 20px; line-height: 1; pointer-events: none; }
+#mobile-theme-btn:active { background: rgba(255,255,255,.18); }
+
+/* Dropdown do botão mobile */
+#mobile-theme-dropdown {
+  position: fixed;
+  top: 64px;
+  right: 12px;
+  z-index: 600;
+  background: #1E1A16;
+  border: .5px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  padding: 8px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 210px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.7);
+  animation: dropIn .22s var(--ease) both;
+}
+#mobile-theme-dropdown.open { display: flex; }
+#mobile-theme-dropdown .theme-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 13px; border-radius: 10px;
+  cursor: pointer; border: .5px solid transparent;
+  transition: background .18s; -webkit-tap-highlight-color: transparent;
+}
+#mobile-theme-dropdown .theme-option:active { background: rgba(255,255,255,.07); }
+#mobile-theme-dropdown .theme-option.active { background: rgba(255,165,0,.15); border-color: rgba(255,165,0,.35); }
+#mobile-theme-dropdown .theme-swatch { width: 34px; height: 24px; border-radius: 6px; flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: .5px solid rgba(255,255,255,.15); }
+#mobile-theme-dropdown .theme-swatch span { display: block; width: 100%; height: 100%; }
+#mobile-theme-dropdown .theme-option-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); line-height: 1.3; }
+#mobile-theme-dropdown .theme-option-sub { font-size: 10.5px; color: rgba(255,255,255,.42); margin-top: 1px; }
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: calc(var(--bnav-h) + var(--safe-b));
+  background: rgba(10,14,20,.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,.07);
+  display: flex; align-items: flex-start; padding-top: 6px;
+  z-index: 400;
+}
+.bnav-items { display: flex; width: 100%; }
+.bnav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px;
+  padding: 0 2px; min-height: 50px;
+  cursor: pointer; text-decoration: none;
+  color: rgba(255,255,255,.32);
+  font-family: var(--font-b); font-size: 9px; font-weight: 500;
+  letter-spacing: .02em; transition: color .2s;
+  border: none; background: none; position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.bnav-item i { font-size: 21px; line-height: 1; transition: transform .22s var(--ease), color .2s; }
+.bnav-item span { line-height: 1; }
+.bnav-item.active { color: #fff; }
+.bnav-item.active i { transform: scale(1.12) translateY(-1px); }
+.bnav-item::after {
+  content: ''; position: absolute; bottom: 3px; left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 18px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transition: transform .28s var(--ease);
+}
+.bnav-item.active::after { transform: translateX(-50%) scaleX(1); }
+
+/* Desktop sidebar — hidden on mobile, shown ≥641px */
+.sidebar { display: none; }
+.mobile-nav-toggle { display: none; }
+
+/* ── THEME BUTTON: fixed top-right on mobile ── */
+#theme-btn {
+  display: flex !important;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 450;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255,255,255,.1);
+  border: .5px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  transition: background .22s, border-color .22s;
+  -webkit-tap-highlight-color: transparent;
+}
+#theme-btn i { font-size: 20px; line-height: 1; }
+#theme-btn span { display: none; }
+#theme-btn:active { background: rgba(255,255,255,.2); }
+/* Dropdown position on mobile */
+#theme-btn .theme-dropdown {
+  position: fixed;
+  top: 64px;
+  right: 12px;
+  left: auto;
+  min-width: 200px;
+  background: #1E1A16;
+  border: .5px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 8px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.7);
+  z-index: 600;
+}
+#theme-btn .theme-dropdown.open { display: flex; animation: dropIn .22s var(--ease) both; }
+@keyframes dropIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+.theme-option { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; transition:background .18s; border:.5px solid transparent; }
+.theme-option:active { background:rgba(255,255,255,.06); }
+.theme-option.active { background:rgba(255,165,0,.15); border-color:rgba(255,165,0,.35); }
+.theme-swatch { width:34px; height:24px; border-radius:6px; flex-shrink:0; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:.5px solid rgba(255,255,255,.15); }
+.theme-swatch span { display:block; width:100%; height:100%; }
+.theme-option-label { font-size:12px; font-weight:600; color:rgba(255,255,255,.85); line-height:1.3; }
+.theme-option-sub { font-size:10px; color:rgba(255,255,255,.4); margin-top:1px; }
+
+/* ─────────────────────────────────────────
+   MAIN CONTENT
+───────────────────────────────────────── */
+.main-wrap { width: 100%; min-width: 0; }
+
+/* ─────────────────────────────────────────
+   SECTIONS — scroll natural on mobile
+───────────────────────────────────────── */
+.page-section {
+  width: 100%; min-height: 100dvh;
+  position: relative;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+  overflow: hidden;
+}
+.page-section.visible { opacity:1; transform:translateY(0); }
+[data-scroll] { opacity:0; transform:translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+[data-scroll].in-view { opacity:1; transform:translateY(0); }
+
+.section-header { margin-bottom: 18px; }
+.section-h2 { font-family:var(--font-h); font-size: clamp(1.65rem,6.5vw,2.2rem); font-weight:700; line-height:1.15; margin-bottom:7px; }
+.section-desc { font-size: 13px; line-height:1.75; }
+
+/* ─────────────────────────────────────────
+   TIPOGRAFIA GLOBAL — consistência h3 e p
+───────────────────────────────────────── */
+h3 { font-size: 25px; }
+p  { font-size: 20px; }
+
+/* Títulos de seção: todos os h2 com classe section-h2 padronizados */
+h2.section-h2,
+.section-header h2 {
+  font-family: var(--font-h);
+  font-size: clamp(1.65rem, 6.5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 7px;
+}
+
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+
+/* ═══════════════════════════════════════
+   HOME
+═══════════════════════════════════════ */
+#sec-home { display:flex; flex-direction:column; overflow:hidden; }
+.home-wave-bg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.hero { display: none; }
+.hero-logo-m { display: none; }
+
+.home-body-v2 {
+  flex: 1; display:flex; flex-direction:column;
+  align-items: center; justify-content: center;
+  padding: 24px 22px 28px;
+  position: relative; z-index: 2; text-align: center;
+  gap: 0;
+}
+.home-project-title {
+  font-family:var(--font-h);
+  font-size: clamp(2.8rem, 13vw, 4.2rem);
+  font-weight: 800; line-height: .95;
+  color: #EEF2F7; letter-spacing: -.03em;
+  margin-bottom: 12px;
+  animation: fadeInDown .65s .05s ease both;
+}
+.home-title-rule {
+  width: 38px; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 2px; margin: 0 auto 14px;
+  animation: fadeInDown .65s .14s ease both;
+}
+.home-right { display:flex; justify-content:center; margin-bottom: 20px; animation: fadeInDown .8s .16s ease both; }
+.glass-scene {
+  position: relative; width: clamp(108px,30vw,168px);
+  aspect-ratio: 280/380;
+}
+.glass-svg { width:100%; height:100%; filter:drop-shadow(0 12px 36px rgba(10,50,110,.55)); animation:glass-float 4s ease-in-out infinite; }
+@keyframes glass-float { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-10px) rotate(1deg)} }
+.glass-glow { position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:70%; height:14px; background:rgba(25,80,160,.3); border-radius:50%; filter:blur(14px); animation:glow-pulse 4s ease-in-out infinite; }
+@keyframes glow-pulse { 0%,100%{opacity:.4;transform:translateX(-50%) scaleX(1)} 50%{opacity:.68;transform:translateX(-50%) scaleX(1.12)} }
+
+.home-left { width:100%; }
+.home-headline { font-family:var(--font-h); font-size:clamp(1.5rem,6.5vw,2.1rem); font-weight:800; line-height:1.15; animation:fadeInDown .8s .26s ease both; }
+.home-headline .hl { font-style:italic; font-weight:400; }
+
+/* ═══════════════════════════════════════
+   INFO
+═══════════════════════════════════════ */
+.info-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:center; transition:background .35s; }
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; flex:1; }
+.info-card { border-radius:18px; padding:16px 13px; display:flex; flex-direction:column; transition:transform .3s var(--ease),box-shadow .3s,background .35s,border-color .35s; border:.5px solid; -webkit-tap-highlight-color:transparent; }
+.info-card:active { transform:scale(.98); }
+.info-card-icon { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:10px; flex-shrink:0; transition:background .35s; }
+.info-card h3 { font-size:16.9px; font-weight:600; margin-bottom:5px; line-height:1.3; }
+.info-card p  { font-size:13.2px; line-height:1.65; }
+
+/* ═══════════════════════════════════════
+   FASES
+═══════════════════════════════════════ */
+.fases-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:center; transition:background .35s; }
+.fases-list { display:flex; flex-direction:column; gap:9px; margin-top:16px; }
+.fase-card {
+  border:.5px solid rgba(255,255,255,.08); border-radius:14px;
+  padding:13px 14px 13px 18px;
+  display:flex; align-items:center; gap:12px;
+  position:relative; overflow:hidden;
+  transition:all .28s var(--ease); background:rgba(255,255,255,.04);
+  -webkit-tap-highlight-color:transparent;
+}
+.fase-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:4px 0 0 4px; background:#FFA500; }
+.fase-card:active { background:rgba(255,255,255,.07); transform:scale(.99); }
+.fase-illus { flex-shrink:0; width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); }
+.fase-illus svg { width:52%; height:52%; }
+.fase-content { flex:1; min-width:0; }
+.fase-num { font-family:var(--font-h); font-size:.57rem; font-weight:700; letter-spacing:.14em; color:#fff; margin-bottom:1px; text-transform:uppercase; }
+.fase-card h3 { font-size:13px; font-weight:600; color:#fff; margin-bottom:2px; line-height:1.3; }
+.fase-card p  { font-size:11px; color:rgba(255,255,255,.62); line-height:1.55; }
+.fase-tag { display:none; }
+
+/* ═══════════════════════════════════════
+   QUIZ
+═══════════════════════════════════════ */
+.quiz-wrap {
+  padding: 28px 18px 26px;
+  padding-top: clamp(18px, 3dvh, 32px);
+  display:flex; flex-direction:column;
+  min-height: 100dvh;
+  height: 100%;
+  justify-content: flex-start;
+  transition:background .35s;
+}
+.quiz-wrap .section-header { width:100%; margin-top: 0; margin-bottom: 16px; }
+.quiz-wrap .section-h2  { font-size: clamp(2.25rem, 8vw, 3.05rem); line-height:1.08; }
+.quiz-wrap .section-desc { font-size: clamp(16px, 4.2vw, 18px); line-height: 1.78; max-width:none; }
+.quiz-inner { width:100%; min-height:100%; height:100%; flex:1; display:flex; flex-direction:column; }
+.quiz-container { border-radius:20px; padding:26px 20px; margin-top:0; border:.5px solid; transition:background .35s,border-color .35s; flex:1; min-height:0; height:auto; overflow:auto; display:flex; flex-direction:column; }
+.quiz-progress-bar { height:5px; border-radius:3px; margin-bottom:24px; overflow:hidden; transition:background .35s; flex-shrink:0; }
+.quiz-bar-fill { height:100%; border-radius:3px; transition:width .4s cubic-bezier(.4,0,.2,1),background .35s; }
+#quiz-main { flex:1; min-height:0; display:flex; flex-direction:column; }
+.quiz-q { font-family:var(--font-h); font-size:clamp(1.35rem,5vw,1.75rem); font-weight:600; margin-bottom:20px; line-height:1.4; transition:color .35s; }
+.quiz-opts { display:flex; flex-direction:column; gap:12px; flex:1; min-height:0; }
+.quiz-opt {
+  border-radius:13px; padding:16px 17px; font-size:clamp(15px,4vw,17px);
+  cursor:pointer; text-align:left; font-family:var(--font-b);
+  display:flex; align-items:center; gap:12px; border:.5px solid;
+  transition:background .18s,border-color .18s,transform .15s;
+  min-height:54px; -webkit-tap-highlight-color:transparent;
+}
+.quiz-opt:active { transform:scale(.99); }
+.quiz-opt-dot { width:21px; height:21px; border-radius:50%; flex-shrink:0; border:1.5px solid; transition:all .18s; }
+.quiz-nav { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:18px; flex-shrink:0; }
+.quiz-counter { font-size:14px; transition:color .35s; }
+.quiz-hint    { font-size:13px; transition:color .35s; }
+.quiz-result  { display:none; text-align:center; padding:12px 0; flex:1; min-height:0; }
+.quiz-result.show { display:block; }
+.result-ring  { width:130px; height:130px; margin:0 auto 18px; position:relative; }
+.result-ring svg { transform:rotate(-90deg); }
+.result-number { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.result-number .num { font-family:var(--font-h); font-size:2.4rem; font-weight:700; transition:color .35s; }
+.result-number .pts { font-size:12px; transition:color .35s; }
+.result-title { font-family:var(--font-h); font-size:1.55rem; font-weight:600; margin-bottom:10px; transition:color .35s; }
+.result-box   { border-radius:13px; padding:16px 18px; margin:14px 0; text-align:left; font-size:clamp(14px,3.8vw,16px); line-height:1.65; }
+.quiz-result-btns { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.btn-reset { padding:14px 24px; border-radius:11px; font-size:clamp(14px,4vw,16px); cursor:pointer; font-family:var(--font-b); font-weight:500; border:.5px solid; transition:background .2s; min-height:50px; -webkit-tap-highlight-color:transparent; }
+.btn-quiz-secondary { background:transparent; padding:13px 18px; border-radius:11px; font-size:clamp(14px,4vw,16px); cursor:pointer; font-family:var(--font-b); font-weight:600; display:inline-flex; align-items:center; gap:6px; border:.5px solid; transition:all .2s; min-height:50px; -webkit-tap-highlight-color:transparent; }
+
+/* ═══════════════════════════════════════
+   IA
+═══════════════════════════════════════ */
+.ia-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:flex-start; transition:background .35s; position:relative; overflow:hidden; }
+.ia-deco { position:absolute; pointer-events:none; z-index:1; transition:color .35s,opacity .35s; }
+.ia-deco i { line-height:1; }
+.ia-deco-1 { top:8%; right:4%; font-size:28px; opacity:.15; animation:deco-float1 6s ease-in-out infinite; }
+.ia-deco-2 { top:20%; right:2%; font-size:18px; opacity:.1; animation:deco-float2 8s ease-in-out infinite; }
+.ia-deco-3 { bottom:22%; right:3%; font-size:22px; opacity:.12; animation:deco-float1 7s 1s ease-in-out infinite; }
+.ia-deco-4,.ia-deco-5,.ia-deco-6 { display:none; }
+@keyframes deco-float1 { 0%,100%{transform:translateY(0) rotate(-6deg)} 50%{transform:translateY(-10px) rotate(4deg)} }
+@keyframes deco-float2 { 0%,100%{transform:translateY(0) rotate(5deg)} 50%{transform:translateY(8px) rotate(-5deg)} }
+.ia-inner { width:100%; flex:1; display:flex; flex-direction:column; position:relative; z-index:2; }
+#bp-webchat-inline { min-height: calc(100dvh - 220px); height: calc(100dvh - 220px); border-radius:16px; overflow:hidden; border:.5px solid rgba(255,255,255,.1); background:rgba(0,0,0,.2); }
+[id*="bp-web-widget-btn"],[class*="bpw-floating"],[class*="bpw-powered"] { display:none!important; }
+
+/* ═══════════════════════════════════════
+   AJUDA
+═══════════════════════════════════════ */
+.help-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:flex-start; transition:background .35s; }
+.help-inner { width:100%; }
+.crisis-strip { border-radius:13px; padding:14px 15px; margin-bottom:13px; display:flex; align-items:flex-start; gap:12px; border:.5px solid; transition:background .35s,border-color .35s; }
+.crisis-strip i { font-size:21px; flex-shrink:0; margin-top:1px; transition:color .35s; }
+.crisis-strip h4 { font-size:13px; font-weight:600; margin-bottom:3px; transition:color .35s; }
+.crisis-strip p  { font-size:11.5px; line-height:1.55; transition:color .35s; }
+/* Help grid */
+.help-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.help-card-link { text-decoration:none; color:inherit; display:block; border-radius:14px; overflow:hidden; border:.5px solid; transition:all .28s var(--ease); position:relative; -webkit-tap-highlight-color:transparent; }
+.help-card-link:active { transform:scale(.98); }
+.help-card-link::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform .28s var(--ease); border-radius:0 0 14px 14px; }
+.help-card-img { height:88px; overflow:hidden; }
+.help-card-img img { width:100%; height:100%; object-fit:cover; filter:saturate(.75); transition:filter .35s; }
+.help-card-link:active .help-card-img img { filter:saturate(1); }
+.help-card-body { padding:11px 10px 13px; }
+.help-card-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; margin-bottom:7px; transition:background .35s; }
+.help-card-body h3 { font-size:12px; font-weight:600; margin-bottom:4px; line-height:1.3; transition:color .35s; }
+.help-card-body p  { font-size:10px; line-height:1.6; transition:color .35s; }
+.ext-link { font-size:10.5px; font-weight:600; display:inline-flex; align-items:center; gap:3px; margin-top:5px; transition:color .35s; }
+
+/* ─────────────────────────────────────────
+   VLIBRAS — canto inferior direito,
+   acima da bottom nav
+───────────────────────────────────────── */
+[vw] {
+  position: fixed !important;
+  bottom: calc(var(--body-pb) + 20px) !important;
+  right: 20px !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 7600 !important;
+}
+
+/* ─────────────────────────────────────────
+   BOTÃO ÁUDIO — acima do VLibras
+   VLibras ≈ 40px, gap 8px → +48px
+───────────────────────────────────────── */
+#float-audio-btn {
+  position: fixed;
+  bottom: calc(var(--body-pb) + 20px);
+  right: 72px; /* alinhado horizontalmente com o vw-access-button (right:20px + 52px de largura) */
+  left: auto;
+  z-index: 7700;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: #00A9FF;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,120,200,.45);
+  transition: transform .22s, box-shadow .22s, background .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+#float-audio-btn:active { transform: scale(.92); }
+#float-audio-btn.speaking { background:#254B8C; animation:audio-pulse 1.4s ease-in-out infinite; }
+@keyframes audio-pulse { 0%,100%{box-shadow:0 4px 14px #254B8C} 50%{box-shadow:0 4px 22px #254B8C,0 0 0 6px rgba(26,111,196,.15)} }
+#float-audio-btn i { font-size:18px; color:#fff; line-height:1; pointer-events:none; }
+
+/* Painel de áudio — sobe da direita */
+#sr-panel {
+  position: fixed;
+  bottom: calc(var(--body-pb) + 72px);
+  right: 20px;
+  left: auto;
+  z-index: 7800;
+  background: #1a2a3a;
+  border: .5px solid rgba(26,111,196,.5);
+  border-radius: 18px; padding: 16px 15px 13px;
+  width: min(270px, calc(100vw - 24px));
+  box-shadow: 0 16px 44px rgba(0,0,0,.45);
+  display: none; flex-direction: column; gap: 10px;
+  animation: slideUpPanel .25s var(--ease) both;
+}
+@keyframes slideUpPanel { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+#sr-panel.open { display:flex; }
+#sr-panel-header { display:flex; align-items:center; justify-content:space-between; }
+#sr-panel h4 { font-size:13px; font-weight:600; color:#fff; display:flex; align-items:center; gap:8px; }
+#sr-panel h4 i { color:#5badff; }
+#sr-panel-close { width:26px; height:26px; border-radius:6px; background:transparent; border:none; cursor:pointer; color:rgba(255,255,255,.5); font-size:16px; display:flex; align-items:center; justify-content:center; transition:color .18s,background .18s; -webkit-tap-highlight-color:transparent; }
+#sr-panel-close:active { color:#fff; background:rgba(255,255,255,.1); }
+.sr-ctrl { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.sr-ctrl label { font-size:12px; color:rgba(255,255,255,.7); }
+.sr-toggle { width:42px; height:23px; border-radius:12px; background:rgba(255,255,255,.15); border:.5px solid rgba(255,255,255,.2); cursor:pointer; position:relative; transition:background .2s; flex-shrink:0; -webkit-tap-highlight-color:transparent; }
+.sr-toggle.on { background:#1a6fc4; border-color:#1a6fc4; }
+.sr-toggle::after { content:''; position:absolute; top:2.5px; left:2.5px; width:18px; height:18px; border-radius:50%; background:#fff; transition:transform .2s; }
+.sr-toggle.on::after { transform:translateX(19px); }
+.sr-speed { display:flex; align-items:center; gap:6px; }
+.sr-speed label { font-size:11px; color:rgba(255,255,255,.6); }
+.sr-speed input { flex:1; accent-color:#1a6fc4; }
+.sr-read-btn { width:100%; padding:10px; border-radius:10px; background:#1a6fc4; border:none; color:#fff; font-family:var(--font-b); font-size:13px; font-weight:600; cursor:pointer; transition:background .2s; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; -webkit-tap-highlight-color:transparent; }
+.sr-read-btn:active { background:#1558a0; }
+.sr-stop-btn { width:100%; padding:8px; border-radius:10px; background:rgba(217,34,67,.12); border:.5px solid rgba(217,34,67,.35); color:#D92243; font-family:var(--font-b); font-size:12px; font-weight:600; cursor:pointer; transition:background .2s; display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px; -webkit-tap-highlight-color:transparent; }
+.sr-stop-btn:active { background:rgba(217,34,67,.22); }
+.sr-status { font-size:11px; color:rgba(255,255,255,.42); text-align:center; min-height:15px; }
+.sr-divider { height:.5px; background:rgba(255,255,255,.1); }
+.sr-voice-note { font-size:10px; color:rgba(255,255,255,.35); line-height:1.5; text-align:center; }
+.sr-compat-note { font-size:10.5px; color:#f6a623; line-height:1.5; text-align:center; display:none; }
+.sr-compat-note.show { display:block; }
+
+/* ─────────────────────────────────────────
+   TABLET & SMALL ≤400px
+───────────────────────────────────────── */
+@media (max-width: 400px) {
+  .help-grid  { grid-template-columns:1fr; }
+  .info-grid  { grid-template-columns:1fr; }
+  .loc-places { grid-template-columns:1fr; }
+  .home-project-title { font-size: 2.5rem; }
+}
+
+/* ─────────────────────────────────────────
+   MOBILE — limites específicos de viewport
+───────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Chat viewport: no máximo 70vh para não cobrir a tela toda no mobile */
+  [class*="bpMessageListViewport"],
+  .bpMessageListViewport {
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP ≥641px — restore sidebar layout
+───────────────────────────────────────── */
+@media (min-width: 641px) {
+  :root { --sw:106px; --sc:56px; }
+  body { padding-bottom: 0; }
+  .bottom-nav { display:none; }
+  /* Mobile theme button hidden on desktop — sidebar version takes over */
+  #mobile-theme-btn { display: none !important; }
+  #mobile-theme-dropdown { display: none !important; }
+
+  /* Sidebar restore */
+  .sidebar {
+    display:flex; position:fixed; left:0; top:0; bottom:0; width:var(--sw);
+    background:#12100E; flex-direction:column; align-items:center;
+    padding:20px 0 28px; gap:5px; z-index:400;
+    border-right:.5px solid rgba(255,255,255,.07);
+    transition:width .5s var(--ease),background .35s; overflow:visible;
+  }
+  .sidebar.collapsed { width:var(--sc); }
+  .sidebar-toggle { width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:transparent; border:none; color:#fff; font-size:19px; margin-bottom:6px; flex-shrink:0; transition:all .25s; }
+  .sidebar-toggle:hover { background:rgba(255,255,255,.1); }
+  .theme-btn { width:74px; height:54px; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; color:#fff; border:none; background:transparent; transition:all .25s; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; flex-shrink:0; margin-bottom:2px; position:relative; }
+  .theme-btn i { font-size:19px; line-height:1; }
+  .theme-btn:hover { background:rgba(255,255,255,.1); }
+  .sidebar.collapsed .theme-btn { width:44px; height:44px; border-radius:10px; }
+  .sidebar.collapsed .theme-btn span { opacity:0; font-size:0; height:0; overflow:hidden; }
+  .theme-dropdown { position:absolute; left:calc(100% + 10px); top:0; background:#1E1A16; border:.5px solid rgba(255,255,255,.12); border-radius:16px; padding:8px; display:none; flex-direction:column; gap:6px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,.6); z-index:600; }
+  .theme-dropdown.open { display:flex; animation:dropIn .22s var(--ease) both; }
+  @keyframes dropIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+  .theme-option { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; transition:background .18s; border:.5px solid transparent; }
+  .theme-option:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.1); }
+  .theme-option.active { background:rgba(255,165,0,.15); border-color:rgba(255,165,0,.35); }
+  .theme-swatch { width:34px; height:24px; border-radius:6px; flex-shrink:0; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:.5px solid rgba(255,255,255,.15); }
+  .theme-swatch span { display:block; width:100%; height:100%; }
+  .theme-option-label { font-size:12px; font-weight:600; color:rgba(255,255,255,.85); line-height:1.3; }
+  .theme-option-sub { font-size:10px; color:rgba(255,255,255,.4); margin-top:1px; }
+  .sidebar-divider { width:50%; height:.5px; background:rgba(255,255,255,.1); margin:4px 0 6px; flex-shrink:0; }
+  .nav-item { width:74px; height:64px; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; cursor:pointer; color:var(--nav-color); border:.5px solid transparent; transition:all .25s; font-size:10.5px; font-weight:500; text-decoration:none; white-space:nowrap; flex-shrink:0; transform-origin:center; }
+  .nav-item i { font-size:21px; line-height:1; }
+  .nav-item:hover { color:#fff; background:rgba(255,255,255,.07); transform:scale(1.15); }
+  .nav-item.active { color:var(--nav-active-color); background:var(--nav-active-bg); border-color:var(--nav-active-border); }
+  .sidebar.collapsed .nav-item { width:44px; height:44px; border-radius:10px; }
+  .sidebar.collapsed .nav-item span { opacity:0; font-size:0; height:0; overflow:hidden; }
+  .main-wrap {
+    margin-left: var(--sw);
+    width: calc(100% - var(--sw));
+    max-width: calc(100% - var(--sw));
+    min-width: 0;
+    transition: margin-left .5s var(--ease), width .5s var(--ease), max-width .5s var(--ease);
+    overflow-x: hidden;
+  }
+  .main-wrap.shifted {
+    margin-left: var(--sc);
+    width: calc(100% - var(--sc));
+    max-width: calc(100% - var(--sc));
+  }
+  /* Fixed sections on desktop */
+  .page-section { height:100dvh; min-height:100dvh; max-height:100dvh; overflow:hidden; }
+  /* Home desktop */
+  .hero { height:clamp(44px,5dvh,56px); background:transparent; }
+  .hero-logo-m { display:none; }
+  .home-body-v2 { flex-direction:row; text-align:left; padding:clamp(20px,4vh,60px) clamp(24px,5vw,80px); gap:clamp(32px,4vw,80px); align-items:center; }
+  .home-right { margin-bottom:0; order:2; }
+  .home-left  { order:1; }
+  .glass-scene { width:clamp(180px,22vw,300px); }
+  .home-project-title { font-size:clamp(.85rem,1vw,1rem); font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin-bottom:clamp(12px,1.5vh,18px); }
+  .home-title-rule { margin:0 0 clamp(14px,2vh,22px); }
+  .home-headline { font-size:clamp(2rem,4.5vw,4.4rem); font-weight:800; line-height:1.1; }
+  /* Info desktop */
+  .info-wrap { padding:clamp(28px,4vh,60px) clamp(20px,5vw,72px); overflow:hidden; }
+  .info-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); }
+  .info-card { padding:clamp(18px,2.2vh,28px) clamp(16px,1.8vw,24px); }
+  .info-card-icon { width:50px; height:50px; border-radius:13px; font-size:1.5rem; margin-bottom:12px; }
+  .info-card h3 { font-size:clamp(17.5px,1.48vw,20.9px); }
+  .info-card p  { font-size:clamp(14.4px,1.14vw,16.8px); }
+  /* Fases desktop */
+  .fases-wrap { padding:clamp(24px,3.5vh,52px) clamp(20px,5vw,72px); overflow:hidden; }
+  .fases-list { margin-top:clamp(14px,1.8vh,24px); gap:clamp(6px,.8vh,11px); }
+  .fase-card { padding:clamp(11px,1.4vh,20px) clamp(16px,2vw,28px); gap:clamp(14px,1.8vw,28px); }
+  .fase-illus { width:clamp(48px,5.5vw,72px); height:clamp(48px,5.5vw,72px); border-radius:13px; }
+  .fase-num { font-size:.62rem; }
+  .fase-card h3 { font-size:clamp(13px,1.15vw,15.5px); }
+  .fase-card p  { font-size:clamp(11px,.9vw,12.5px); }
+  .fase-tag { display:flex; flex-shrink:0; padding:4px 12px; border-radius:28px; font-size:clamp(9px,.78vw,10.5px); font-weight:600; letter-spacing:.06em; border:.5px solid; white-space:nowrap; }
+  /* ==========================================================================
+     1. ABA DA IA (mantém a altura e amplia bastante a largura)
+  ========================================================================== */
+  /* ==========================================================================
+     2. ABA DO TESTE (título no topo e teste ocupando 80% da aba)
+  ========================================================================== */
+  .quiz-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; align-items:stretch; justify-content:flex-start; }
+  .quiz-inner { width:100%; max-width:none; margin:0; min-height:100%; height:100%; display:flex; flex-direction:column; flex:1; }
+  .quiz-wrap .section-header { width:100%; margin-bottom:20px; }
+  .quiz-wrap .section-h2 { font-size:clamp(2.9rem,3.4vw,4rem); line-height:1.05; }
+  .quiz-wrap .section-desc { font-size:clamp(18px,1.28vw,22px); line-height:1.8; }
+  .quiz-container { padding:clamp(28px,4vh,52px) clamp(22px,3vw,52px); flex:1; min-height:0; height:auto; }
+  .quiz-q { font-size:clamp(1.4rem,1.85vw,2rem); }
+  .quiz-opt { padding:clamp(14px,1.7vh,20px) clamp(16px,1.8vw,22px); font-size:clamp(15px,1.2vw,18px); }
+  /* IA desktop */
+  .ia-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); }
+  .ia-deco-4,.ia-deco-5,.ia-deco-6 { display:block; position:absolute; font-size:clamp(16px,2vw,30px); }
+  .ia-deco-4 { top:12%; left:0%; opacity:.13; }
+  .ia-deco-5 { bottom:28%; left:0%; opacity:.10; }
+  .ia-deco-6 { bottom:10%; left:1%; opacity:.14; }
+  #bp-webchat-inline { --bp-box-h: clamp(520px, calc(100dvh - 280px), 680px); height:var(--bp-box-h); min-height:var(--bp-box-h); width:min(calc(var(--bp-box-h) * 2), calc(100vw - var(--sw) - 96px)); max-width:100%; aspect-ratio:auto; margin:18px auto 0; border-radius:24px; }
+  /* Theme btn: back inside sidebar on desktop — reset all mobile overrides */
+  #theme-btn {
+    position: static !important;
+    width: 74px !important; height: 54px !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    font-size: 10px !important; letter-spacing: .08em !important;
+    margin-bottom: 2px !important; flex-shrink: 0 !important;
+  }
+  #theme-btn i { font-size: 19px !important; }
+  #theme-btn span { display: block !important; }
+  #theme-btn:hover { background: rgba(255,255,255,.1) !important; }
+  #theme-btn .theme-dropdown {
+    position: absolute !important;
+    top: 0 !important; right: auto !important;
+    left: calc(100% + 10px) !important;
+    min-width: 180px !important;
+  }
+  /* ==========================================================================
+     3. ABA DE AJUDA (maior afastamento entre os cards)
+  ========================================================================== */
+  .help-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; }
+  .help-grid { grid-template-columns:repeat(4,1fr); gap:32px; align-items:stretch; }
+  .help-card-img { height:clamp(110px,12vh,158px); }
+  .help-card-body { padding:clamp(12px,1.7vh,18px) clamp(12px,1.5vw,18px) clamp(14px,1.8vh,20px); }
+  .help-card-body h3 { font-size:clamp(13px,1vw,14.5px); }
+  .help-card-body p  { font-size:clamp(11px,.88vw,12.5px); }
+  .crisis-strip { padding:clamp(14px,2vh,22px) clamp(16px,2vw,26px); }
+  .crisis-strip h4 { font-size:clamp(13px,1.1vw,15px); }
+  .section-h2 { font-size:3rem; }
+  .section-desc { font-size:clamp(13px,1.2vw,15px); }
+
+  /* ── Fix: prevenir overflow horizontal causado pela sidebar ── */
+  .page-section, .info-wrap, .fases-wrap, .quiz-wrap, .ia-wrap, .help-wrap {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .info-grid, .fases-list, .help-grid, .quiz-inner, .ia-inner, .home-body-v2 {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .info-card, .fase-card, .help-card-link {
+    min-width: 0;
+  }
+  .fase-content { min-width: 0; overflow-wrap: break-word; word-wrap: break-word; }
+  .fase-content h3, .fase-content p, .fase-num {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  /* sidebar sempre acima do conteúdo, mas sem cobrir */
+  .sidebar { z-index: 500; }
+
+  /* ==========================================================================
+     4. ACESSIBILIDADE (VLibras à direita e áudio à esquerda)
+  ========================================================================== */
+  [vw] { bottom:20px!important; right:20px!important; left:auto!important; z-index:8000!important; }
+  #float-audio-btn { bottom:20px; right:72px; left:auto; }
+  #sr-panel { bottom:72px; right:20px; left:auto; width:270px; }
+}
+@media (min-width:641px) and (max-width:1200px) {
+  :root { --sw:88px; --sc:46px; }
+  .nav-item { width:64px; height:56px; }
+  .home-body-v2 { grid-template-columns:1fr 240px; gap:36px; }
+  .help-grid { grid-template-columns:repeat(2,1fr); gap:32px; }
+  .section-h2 { font-size:2.5rem; }
+}
+@media (min-width:861px) { .mobile-nav-toggle { display:none!important; } }
+@media (min-width: 1440px) and (min-height: 900px) {
+  .quiz-wrap { padding-inline: clamp(40px, 5vw, 88px); }
+  .quiz-inner { width:100%; max-width:none; }
+  .quiz-wrap .section-h2 { font-size: clamp(3.2rem, 3.1vw, 4.3rem); }
+  .quiz-wrap .section-desc { font-size: clamp(19px, 1.15vw, 23px); }
+  .quiz-container { flex:1; min-height:0; height:auto; }
+  #bp-webchat-inline { width:min(calc(var(--bp-box-h) * 2), calc(100vw - var(--sw) - 128px)); }
+}
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#sec-home">Pular para o conteúdo principal</a>
+<div id="page-veil" class="out"></div>
+
+<!-- VLibras -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+</div>
+
+<!-- Botão de Áudio -->
+<button id="float-audio-btn" aria-label="Abrir painel de leitura em voz alta" aria-expanded="false">
+  <i class="ti ti-volume" aria-hidden="true"></i>
+</button>
+
+<!-- Painel de Áudio -->
+<div id="sr-panel" role="dialog" aria-label="Painel de leitura em voz alta" aria-modal="true">
+  <div id="sr-panel-header">
+    <h4><i class="ti ti-volume" aria-hidden="true"></i> Voz Alta</h4>
+    <button id="sr-panel-close" aria-label="Fechar painel"><i class="ti ti-x" aria-hidden="true"></i></button>
+  </div>
+  <div class="sr-divider"></div>
+  <div class="sr-ctrl">
+    <label for="sr-auto-toggle">Leitura automática</label>
+    <div class="sr-toggle" id="sr-auto-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+  </div>
+  <div class="sr-ctrl">
+    <label for="sr-highlights-toggle">Destacar texto</label>
+    <div class="sr-toggle on" id="sr-highlights-toggle" role="switch" aria-checked="true" tabindex="0"></div>
+  </div>
+  <div class="sr-speed">
+    <label for="sr-rate">Velocidade:</label>
+    <input type="range" id="sr-rate" min="0.5" max="2" step="0.1" value="0.85" aria-label="Velocidade de leitura">
+    <span id="sr-rate-val" style="font-size:11px;color:rgba(255,255,255,.6);min-width:26px">0.9×</span>
+  </div>
+  <button class="sr-read-btn" id="sr-read-btn" aria-label="Ler seção atual">
+    <i class="ti ti-player-play" aria-hidden="true"></i> Ler página atual
+  </button>
+  <button class="sr-stop-btn" id="sr-stop-btn" aria-label="Parar leitura">
+    <i class="ti ti-player-stop" aria-hidden="true"></i> Parar
+  </button>
+  <div class="sr-status" id="sr-status" aria-live="polite" role="status"></div>
+  <div class="sr-compat-note" id="sr-compat-note"></div>
+  <div class="sr-voice-note">Usa a melhor voz disponível no dispositivo</div>
+</div>
+
+<!-- ════ BOTÃO TEMA MOBILE ════ -->
+<button id="mobile-theme-btn" aria-label="Escolher tema de cores" aria-expanded="false" aria-haspopup="true">
+  <i class="ti ti-palette" aria-hidden="true"></i>
+</button>
+
+<div id="mobile-theme-dropdown" role="menu" aria-label="Temas de cores">
+  <div class="theme-option" data-theme="1" role="menuitem" tabindex="0">
+    <div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#12100E"></span><span style="background:#FFA500"></span><span style="background:#FFA500"></span></div>
+    <div><div class="theme-option-label">Preto &amp; Laranja</div><div class="theme-option-sub">Tema padrão</div></div>
+  </div>
+  <div class="theme-option" data-theme="2" role="menuitem" tabindex="0">
+    <div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#12100E"></span><span style="background:#fff"></span><span style="background:#fff"></span></div>
+    <div><div class="theme-option-label">Preto &amp; Branco</div><div class="theme-option-sub">Contraste alto</div></div>
+  </div>
+  <div class="theme-option" data-theme="3" role="menuitem" tabindex="0">
+    <div class="theme-swatch"><span style="background:#fff"></span><span style="background:#fff"></span><span style="background:#FFA500"></span><span style="background:#FFA500"></span></div>
+    <div><div class="theme-option-label">Laranja &amp; Branco</div><div class="theme-option-sub">Mais vibrante</div></div>
+  </div>
+  <div class="theme-option" data-theme="4" role="menuitem" tabindex="0">
+    <div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#1C1916"></span><span style="background:#2a2520"></span><span style="background:#383228"></span></div>
+    <div><div class="theme-option-label">Todo Preto</div><div class="theme-option-sub">Máximo contraste</div></div>
+  </div>
+  <div class="theme-option" data-theme="5" role="menuitem" tabindex="0">
+    <div class="theme-swatch"><span style="background:#FFA500"></span><span style="background:#E69400"></span><span style="background:#CC7700"></span><span style="background:#FFC966"></span></div>
+    <div><div class="theme-option-label">Todo Laranja</div><div class="theme-option-sub">Energia total</div></div>
+  </div>
+</div>
+
+<!-- ════ BOTTOM NAV (mobile only) ════ -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Navegação principal">
+  <div class="bnav-items">
+    <a class="bnav-item active" href="#sec-home"  data-target="sec-home"  id="bn-home"><i class="ti ti-home" aria-hidden="true"></i><span>Início</span></a>
+    <a class="bnav-item"       href="#sec-info"  data-target="sec-info"  id="bn-info"><i class="ti ti-book" aria-hidden="true"></i><span>O que é</span></a>
+    <a class="bnav-item"       href="#sec-fases" data-target="sec-fases" id="bn-fases"><i class="ti ti-chart-line" aria-hidden="true"></i><span>Fases</span></a>
+    <a class="bnav-item"       href="#sec-quiz"  data-target="sec-quiz"  id="bn-quiz"><i class="ti ti-clipboard-check" aria-hidden="true"></i><span>Teste</span></a>
+    <a class="bnav-item"       href="#sec-ia"    data-target="sec-ia"    id="bn-ia"><i class="ti ti-robot" aria-hidden="true"></i><span>IA</span></a>
+    <a class="bnav-item"       href="#sec-ajuda" data-target="sec-ajuda" id="bn-ajuda"><i class="ti ti-heart" aria-hidden="true"></i><span>Ajuda</span></a>
+  </div>
+</nav>
+
+<!-- ════ DESKTOP SIDEBAR ════ -->
+<button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Abrir menu de navegação" style="display:none"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+<nav class="sidebar" id="sidebar" aria-label="Navegação principal">
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Recolher ou expandir menu lateral">
+    <i class="ti ti-arrow-left" id="toggle-icon" aria-hidden="true"></i>
+  </button>
+  <div class="theme-btn" id="theme-btn" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Escolher tema">
+    <i class="ti ti-palette" aria-hidden="true"></i>
+    <span>Tema</span>
+    <div class="theme-dropdown" id="theme-dropdown" role="menu">
+      <div class="theme-option" data-theme="1" role="menuitem" tabindex="0"><div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#12100E"></span><span style="background:#FFA500"></span><span style="background:#FFA500"></span></div><div><div class="theme-option-label">Preto &amp; Laranja</div><div class="theme-option-sub">Tema padrão</div></div></div>
+      <div class="theme-option" data-theme="2" role="menuitem" tabindex="0"><div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#12100E"></span><span style="background:#fff"></span><span style="background:#fff"></span></div><div><div class="theme-option-label">Preto &amp; Branco</div><div class="theme-option-sub">Contraste alto</div></div></div>
+      <div class="theme-option" data-theme="3" role="menuitem" tabindex="0"><div class="theme-swatch"><span style="background:#fff"></span><span style="background:#fff"></span><span style="background:#FFA500"></span><span style="background:#FFA500"></span></div><div><div class="theme-option-label">Laranja &amp; Branco</div><div class="theme-option-sub">Mais vibrante</div></div></div>
+      <div class="theme-option" data-theme="4" role="menuitem" tabindex="0"><div class="theme-swatch"><span style="background:#12100E"></span><span style="background:#1C1916"></span><span style="background:#2a2520"></span><span style="background:#383228"></span></div><div><div class="theme-option-label">Todo Preto</div><div class="theme-option-sub">Máximo contraste</div></div></div>
+      <div class="theme-option" data-theme="5" role="menuitem" tabindex="0"><div class="theme-swatch"><span style="background:#FFA500"></span><span style="background:#E69400"></span><span style="background:#CC7700"></span><span style="background:#FFC966"></span></div><div><div class="theme-option-label">Todo Laranja</div><div class="theme-option-sub">Energia total</div></div></div>
+    </div>
+  </div>
+  <div class="sidebar-divider"></div>
+  <a class="nav-item active" href="#sec-home"  data-target="sec-home"  aria-label="Início"><i class="ti ti-home" aria-hidden="true"></i><span>Início</span></a>
+  <a class="nav-item"        href="#sec-info"  data-target="sec-info"  aria-label="O que é"><i class="ti ti-book" aria-hidden="true"></i><span>O que é</span></a>
+  <a class="nav-item"        href="#sec-fases" data-target="sec-fases" aria-label="Fases"><i class="ti ti-chart-line" aria-hidden="true"></i><span>Fases</span></a>
+  <a class="nav-item"        href="#sec-quiz"  data-target="sec-quiz"  aria-label="Teste"><i class="ti ti-clipboard-check" aria-hidden="true"></i><span>Teste</span></a>
+  <a class="nav-item"        href="#sec-ia"    data-target="sec-ia"    aria-label="IA"><i class="ti ti-robot" aria-hidden="true"></i><span>IA</span></a>
+  <a class="nav-item"        href="#sec-ajuda" data-target="sec-ajuda" aria-label="Ajuda"><i class="ti ti-heart" aria-hidden="true"></i><span>Ajuda</span></a>
+</nav>
+
+<!-- ════ MAIN CONTENT ════ -->
+<div class="main-wrap" id="main-wrap">
+
+  <!-- HOME -->
+  <section class="page-section visible" id="sec-home" data-section="sec-home" aria-label="Página inicial — Além do Copo">
+    <svg class="home-wave-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1A3A5C" stop-opacity="0"/><stop offset="30%" stop-color="#1E4470" stop-opacity=".55"/><stop offset="65%" stop-color="#163860" stop-opacity=".45"/><stop offset="100%" stop-color="#1A3A5C" stop-opacity="0"/></linearGradient>
+        <linearGradient id="wg2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#132D4A" stop-opacity="0"/><stop offset="40%" stop-color="#163555" stop-opacity=".35"/><stop offset="100%" stop-color="#132D4A" stop-opacity="0"/></linearGradient>
+      </defs>
+      <path d="M-80,580 C120,480 320,620 580,520 C840,420 1020,580 1300,460 C1420,410 1500,430 1520,450" fill="none" stroke="url(#wg1)" stroke-width="1.5"/>
+      <path d="M-80,460 C180,380 400,500 660,400 C880,320 1100,460 1360,360" fill="none" stroke="url(#wg2)" stroke-width="1"/>
+      <path d="M-80,590 C120,490 320,630 580,530 C840,430 1020,590 1300,470 L1520,460 L1520,900 L-80,900 Z" fill="url(#wg1)" opacity=".07"/>
+    </svg>
+    <div class="hero"><span class="hero-logo-m">Além do Copo</span></div>
+    <div class="home-body-v2">
+      <div class="home-right" aria-hidden="true">
+        <div class="glass-scene">
+          <svg class="glass-svg" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="glassClip"><path d="M60,60 L220,60 L195,330 L85,330 Z"/></clipPath>
+              <linearGradient id="liqGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#D92243" stop-opacity=".88"/><stop offset="50%" stop-color="#F69D39" stop-opacity=".94"/><stop offset="100%" stop-color="#D92243" stop-opacity=".88"/></linearGradient>
+              <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(255,255,255,.3)"/><stop offset="40%" stop-color="rgba(255,255,255,.05)"/><stop offset="100%" stop-color="rgba(255,255,255,.15)"/></linearGradient>
+            </defs>
+            <g clip-path="url(#glassClip)">
+              <rect x="55" y="160" width="170" height="175" fill="url(#liqGrad)"/>
+              <path d="M55,160 Q90,152 140,160 Q190,168 225,160 L225,174 Q190,166 140,174 Q90,182 55,174 Z" fill="rgba(224,195,117,.4)"><animateTransform attributeName="transform" type="translate" values="0,0;-24,0;0,0" dur="3s" repeatCount="indefinite"/></path>
+              <path d="M55,160 Q105,168 140,160 Q175,152 225,160 L225,169 Q175,161 140,169 Q105,177 55,169 Z" fill="rgba(255,255,255,.11)"><animateTransform attributeName="transform" type="translate" values="0,0;18,0;0,0" dur="4s" repeatCount="indefinite"/></path>
+              <circle cx="92" cy="284" r="4" fill="rgba(255,255,255,.25)"><animate attributeName="cy" values="304;170" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="2.2s" repeatCount="indefinite"/></circle>
+              <circle cx="138" cy="304" r="3" fill="rgba(255,255,255,.2)"><animate attributeName="cy" values="314;176" dur="1.9s" begin=".5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.6;0" dur="1.9s" begin=".5s" repeatCount="indefinite"/></circle>
+              <circle cx="168" cy="294" r="5" fill="rgba(255,255,255,.15)"><animate attributeName="cy" values="310;164" dur="2.7s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.5;0" dur="2.7s" begin="1s" repeatCount="indefinite"/></circle>
+            </g>
+            <path d="M60,60 L220,60 L195,330 L85,330 Z" fill="none" stroke="rgba(255,255,255,.19)" stroke-width="1.5"/>
+            <path d="M75,70 L85,310 Q75,314 73,310 L63,70 Z" fill="url(#glassGrad)" opacity=".6"/>
+            <ellipse cx="140" cy="60" rx="80" ry="10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+            <ellipse cx="140" cy="330" rx="55" ry="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <!-- Ícone de cadeado minimalista integrado ao copo -->
+            <g transform="translate(118, 36)" opacity="0.72">
+              <!-- corpo do cadeado -->
+              <rect x="3" y="11" width="18" height="13" rx="3" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.55)" stroke-width="1.4"/>
+              <!-- arco do cadeado -->
+              <path d="M6,11 L6,7 Q6,2 12,2 Q18,2 18,7 L18,11" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-linecap="round"/>
+              <!-- buraco da fechadura -->
+              <circle cx="12" cy="17" r="2.2" fill="rgba(255,255,255,0.45)"/>
+              <rect x="11" y="17" width="2" height="3.5" rx="1" fill="rgba(255,255,255,0.45)"/>
+            </g>
+          </svg>
+          <div class="glass-glow"></div>
+        </div>
+      </div>
+      <div class="home-left">
+        <p class="home-project-title" id="home-title-text">Além do Copo</p>
+        <div class="home-title-rule" aria-hidden="true"></div>
+        <h1 class="home-headline" id="home-headline">Entenda o vício<br>em álcool e<br><span class="hl" id="home-hl">encontre a saída</span></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="page-section visible" id="sec-info" data-section="sec-info" aria-label="O que é o alcoolismo">
+    <div class="info-wrap" id="info-wrap">
+      <div class="section-header" data-scroll>
+        <h2 class="section-h2" id="info-h2">O que é o alcoolismo?</h2>
+        <p class="section-desc" id="info-desc">Compreender a natureza da dependência é o primeiro passo para transformar qualquer situação.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card" data-scroll style="transition-delay:.04s">
+          <div class="info-card-icon" aria-hidden="true"><i class="ti ti-brain" style="color:#D92243"></i></div>
+          <h3>Doença neurológica</h3>
+          <p>O álcool altera circuitos de recompensa, controle e memória. A dependência é real e mensurável neurologicamente.</p>
+        </div>
+        <div class="info-card" data-scroll style="transition-delay:.08s">
+          <div class="info-card-icon" aria-hidden="true"><i class="ti ti-dna" style="color:#60A5FA"></i></div>
+          <h3>Base genética</h3>
+          <p>50–60% do risco é hereditário. Filhos de dependentes têm 3–4× mais chance de desenvolver.</p>
+        </div>
+        <div class="info-card" data-scroll style="transition-delay:.12s">
+          <div class="info-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div>
+          <h3>Impacto social</h3>
+          <p>Afeta relacionamentos e emprego. No Brasil, +10 milhões têm uso nocivo — a maioria não reconhece.</p>
+        </div>
+        <div class="info-card" data-scroll style="transition-delay:.16s">
+          <div class="info-card-icon" aria-hidden="true"><i class="ti ti-heartbeat" style="color:#D92243"></i></div>
+          <h3>Riscos à saúde</h3>
+          <p>Cirrose, pancreatite, cardiomiopatia e risco aumentado de 7 tipos de câncer com uso prolongado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASES -->
+  <section class="page-section visible" id="sec-fases" data-section="sec-fases" aria-label="Fases da dependência alcoólica">
+    <div class="fases-wrap" id="fases-wrap">
+      <div class="section-header" data-scroll>
+        <h2 class="section-h2" id="fases-h2">Fases da dependência</h2>
+        <p class="section-desc" id="fases-desc">Reconhecer a fase atual ajuda a escolher o tratamento mais adequado.</p>
+      </div>
+      <div class="fases-list" role="list">
+        <div class="fase-card" data-scroll style="transition-delay:.04s" role="listitem"><div class="fase-illus" aria-hidden="true"><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="20" stroke="#FFA500" stroke-width="1.4" fill="rgba(99,153,34,.1)"/><path d="M14 32 Q18 22 25 27 Q32 32 36 18" stroke="#FFA500" stroke-width="2.2" stroke-linecap="round"/><circle cx="25" cy="19" r="4.5" fill="rgba(99,153,34,.2)" stroke="#FFA500" stroke-width="1.4"/><path d="M23 19 L25 21 L28 17" stroke="#FFA500" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="fase-content"><div class="fase-num">Fase 01</div><h3>Uso social</h3><p>Consumo em ocasiões sociais sem compulsão. Risco baixo, mas atenção à frequência.</p></div><div class="fase-tag" style="border-color:#ffa500;background:rgba(99,153,34,.08)">Baixo risco</div></div>
+        <div class="fase-card" data-scroll style="transition-delay:.08s" role="listitem"><div class="fase-illus" aria-hidden="true"><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="20" stroke="#FFA500" stroke-width="1.4" fill="rgba(246,157,57,.1)"/><path d="M17 34 L17 26 Q17 16 25 16 Q33 16 33 26 L33 34" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/><path d="M21 27 Q25 23 29 27" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="36" r="2" fill="#F69D39"/></svg></div><div class="fase-content"><div class="fase-num">Fase 02</div><h3>Uso problemático</h3><p>Frequência aumenta. Usa álcool para gerenciar emoções negativas e estresse.</p></div><div class="fase-tag" style="border-color:#ffa500;background:rgba(246,157,57,.08)">Atenção</div></div>
+        <div class="fase-card" data-scroll style="transition-delay:.12s" role="listitem"><div class="fase-illus" aria-hidden="true"><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="20" stroke="#FFA500" stroke-width="1.4" fill="rgba(224,195,117,.1)"/><path d="M18 17 L18 36 M25 14 L25 36 M32 19 L32 36" stroke="#FFA500" stroke-width="2.2" stroke-linecap="round"/><path d="M15 36 L35 36" stroke="#FFA500" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="fase-content"><div class="fase-num">Fase 03</div><h3>Abuso de álcool</h3><p>O consumo prejudica trabalho e relações. Há negação do problema e primeiros conflitos.</p></div><div class="fase-tag" style="border-color:#ffa500;background:rgba(224,195,117,.1)">Preocupante</div></div>
+        <div class="fase-card" data-scroll style="transition-delay:.16s" role="listitem"><div class="fase-illus" aria-hidden="true"><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="20" stroke="#FFA500" stroke-width="1.4" fill="rgba(216,90,48,.1)"/><path d="M25 14 L25 18 M25 32 L25 36 M14 25 L18 25 M32 25 L36 25" stroke="#FFA500" stroke-width="1.8" stroke-linecap="round"/><circle cx="25" cy="25" r="6" stroke="#FFA500" stroke-width="1.4" fill="rgba(216,90,48,.18)"/></svg></div><div class="fase-content"><div class="fase-num">Fase 04</div><h3>Dependência</h3><p>Alta tolerância, sintomas físicos ao parar. Fissura intensa. A vida gira em torno do álcool.</p></div><div class="fase-tag" style="border-color:#ffa500;background:rgba(216,90,48,.08)">Grave</div></div>
+        <div class="fase-card" data-scroll style="transition-delay:.2s" role="listitem"><div class="fase-illus" aria-hidden="true"><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="20" stroke="#FFA500" stroke-width="1.4" fill="rgba(217,34,67,.1)"/><path d="M25 14 L27.5 21 L35 21 L29 25.5 L31.5 32.5 L25 28.5 L18.5 32.5 L21 25.5 L15 21 L22.5 21 Z" stroke="#FFA500" stroke-width="1.3" fill="rgba(217,34,67,.18)" stroke-linejoin="round"/></svg></div><div class="fase-content"><div class="fase-num">Fase 05</div><h3>Dependência grave</h3><p>Perda total de controle. A abstinência sem suporte médico pode ser fatal. Ajuda imediata necessária.</p></div><div class="fase-tag" style="border-color:#ffa500;background:rgba(217,34,67,.08)">Urgente</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="page-section visible" id="sec-quiz" data-section="sec-quiz" aria-label="Teste AUDIT da OMS">
+    <div class="quiz-wrap" id="quiz-wrap">
+      <div class="quiz-inner">
+        <div class="section-header" data-scroll>
+          <h2 class="section-h2" id="quiz-h2">Teste AUDIT (OMS)</h2>
+          <p class="section-desc" id="quiz-desc">Avaliação oficial validada pela OMS. Leva menos de 2 minutos.</p>
+        </div>
+        <div class="quiz-container" id="quiz-container" data-scroll>
+          <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="quiz-bar-fill" id="qbar" style="width:0%"></div>
+          </div>
+          <div id="quiz-main">
+            <div class="quiz-q" id="qtext" aria-live="polite"></div>
+            <div class="quiz-opts" id="qopts" role="radiogroup" aria-labelledby="qtext"></div>
+            <div class="quiz-nav">
+              <span class="quiz-counter" id="qcount" aria-live="polite"></span>
+              <span class="quiz-hint"    id="quiz-hint">Toque para avançar</span>
+            </div>
+          </div>
+          <div class="quiz-result" id="quiz-result" aria-live="polite">
+            <div class="result-ring" aria-hidden="true">
+              <svg width="130" height="130" viewBox="0 0 130 130">
+                <circle cx="65" cy="65" r="52" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8" id="ring-track"/>
+                <circle id="ring-fill" cx="65" cy="65" r="52" fill="none" stroke="#D92243" stroke-width="8" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+              </svg>
+              <div class="result-number">
+                <span class="num" id="res-score">0</span>
+                <span class="pts" id="res-pts">pts</span>
+              </div>
+            </div>
+            <div class="result-title" id="res-title"></div>
+            <div class="result-box"   id="res-box"></div>
+            <div class="quiz-result-btns">
+              <button class="btn-reset" id="btn-reset" onclick="resetQuiz()">Refazer</button>
+              <button class="btn-quiz-secondary" id="btn-quiz-sec" onclick="scrollToSection('sec-ia')">Falar com IA <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IA -->
+  <section class="page-section visible" id="sec-ia" data-section="sec-ia" aria-label="Converse com a IA de apoio">
+    <div class="ia-wrap" id="ia-wrap">
+      <div class="ia-deco ia-deco-1" aria-hidden="true"><i class="ti ti-brain"></i></div>
+      <div class="ia-deco ia-deco-2" aria-hidden="true"><i class="ti ti-sparkles"></i></div>
+      <div class="ia-deco ia-deco-3" aria-hidden="true"><i class="ti ti-heart-handshake"></i></div>
+      <div class="ia-deco ia-deco-4" id="ia-deco-4" aria-hidden="true"><i class="ti ti-message-circle-2"></i></div>
+      <div class="ia-deco ia-deco-5" id="ia-deco-5" aria-hidden="true"><i class="ti ti-shield-heart"></i></div>
+      <div class="ia-deco ia-deco-6" id="ia-deco-6" aria-hidden="true"><i class="ti ti-leaf"></i></div>
+      <div class="ia-inner">
+        <div class="section-header" data-scroll>
+          <h2 class="section-h2" id="ia-h2">Converse com a IA</h2>
+          <p class="section-desc" id="ia-desc">Tire dúvidas e compartilhe o que está sentindo — sem julgamentos, a qualquer hora.</p>
+        </div>
+        <div id="bp-webchat-inline" aria-label="Chat de apoio com inteligência artificial">
+          <div id="webchat-root" style="height:100%;width:100%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AJUDA -->
+  <section class="page-section visible" id="sec-ajuda" data-section="sec-ajuda" aria-label="Como buscar ajuda">
+    <div class="help-wrap" id="help-wrap">
+      <div class="help-inner">
+        <div class="section-header" data-scroll>
+          <h2 class="section-h2" id="ajuda-h2">Como buscar ajuda</h2>
+          <p class="section-desc" id="ajuda-desc">Existem opções gratuitas em todo o Brasil. Você não precisa passar por isso sozinho.</p>
+        </div>
+        <div class="crisis-strip" id="crisis-strip" data-scroll role="alert">
+          <i class="ti ti-phone-call" id="crisis-icon" aria-hidden="true"></i>
+          <div>
+            <h4 id="crisis-title">Em crise? Ligue 188 (CVV) — gratuito, 24h</h4>
+            <p id="crisis-sub">Ou ligue 149 (SENAD). Vá ao pronto-socorro se houver risco imediato.</p>
+          </div>
+        </div>
+        <div class="help-grid">
+          <a class="help-card-link" href="https://www.gov.br/saude/pt-br/composicao/saes/dadt/caps" target="_blank" rel="noopener" data-scroll style="transition-delay:.04s" aria-label="CAPS-AD gratuito pelo SUS">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-building-hospital" style="color:#60A5FA"></i></div><h3>CAPS-AD</h3><p>Atendimento SUS, equipe multidisciplinar.</p><span class="ext-link">Saiba mais <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://www.aa.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.08s" aria-label="Alcoólicos Anônimos">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div><h3>AA</h3><p>Grupos gratuitos e anônimos em todo o Brasil.</p><span class="ext-link">aa.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="tel:149" data-scroll style="transition-delay:.12s" aria-label="SENAD - Ligue 149">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone" id="senad-icon"></i></div><h3>SENAD 149</h3><p>Orientação gratuita 24h sobre dependência.</p><span class="ext-link">Ligar <i class="ti ti-arrow-right" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://www.al-anon.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.16s" aria-label="Al-Anon para familiares">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1541199249251-f713e6145474?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Al-Anon</h3><p>Suporte para famílias e amigos.</p><span class="ext-link">al-anon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://amorexigente.org/" target="_blank" rel="noopener" data-scroll style="transition-delay:.20s" aria-label="Amor-Exigente">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%23D92243'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M220 170c0-46 37-83 83-83 39 0 63 22 97 62 34-40 58-62 97-62 46 0 83 37 83 83 0 100-180 193-180 193S220 270 220 170z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Amor-Exigente</h3><p>Apoio para familiares e pessoas com dependência química.</p><span class="ext-link">Amor-Exigente <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://www.gov.br/mj/pt-br/assuntos/noticias/mais-de-um-milhao-de-pessoas-atendidas-pelo-servico-viva-voz" target="_blank" rel="noopener" data-scroll style="transition-delay:.24s" aria-label="Viva Voz">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2360A5FA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M236 155h328c25 0 44 19 44 44v102c0 25-19 44-44 44H430l-82 63c-10 8-24 0-22-12l10-51H236c-25 0-44-19-44-44V199c0-25 19-44 44-44z' fill='rgba(255,255,255,.12)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-message-circle-2" style="color:#60A5FA"></i></div><h3>Viva Voz</h3><p>Orientação gratuita e sigilosa sobre álcool e drogas.</p><span class="ext-link">Viva Voz <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://www.naranon.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.28s" aria-label="Nar-Anon Brasil">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='315' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Ccircle cx='485' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Cpath d='M223 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3Cpath d='M393 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users-group" style="color:#86EFAC"></i></div><h3>Nar-Anon</h3><p>Grupos de apoio para familiares de dependentes.</p><span class="ext-link">Nar-Anon Brasil <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <a class="help-card-link" href="https://www.desenvolvimentosocial.sp.gov.br/acoes-de-protecao-social/programa-recomeco/" target="_blank" rel="noopener" data-scroll style="transition-delay:.32s" aria-label="Programa Recomeço">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%23F69D39'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M226 327c38 48 91 73 159 73 105 0 170-57 214-143' stroke='%23fff' stroke-width='22' stroke-linecap='round' fill='none'/%3E%3Cpath d='M466 157h147v147' stroke='%23fff' stroke-width='22' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-refresh" style="color:#F69D39"></i></div><h3>Recomeço</h3><p>Programa de apoio e reinserção social contra dependência química.</p><span class="ext-link">Programa Recomeço <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /main-wrap -->
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+(function(){function t(){try{if(typeof VLibras!=='undefined')new VLibras.Widget('https://vlibras.gov.br/app');}catch(e){}}
+if(typeof VLibras!=='undefined')t();else{window.addEventListener('load',t);setTimeout(t,1000);setTimeout(t,3000);}})();
+</script>
+<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/05/06/00/20260506003322-655CSK0X.js" defer></script>
+<script>
+/* ══════════════════════════════════
+   THEMES
+══════════════════════════════════ */
+const THEMES={
+  '1':{label:'Preto & Laranja',scrollbarAccent:'#FFA500',darkBg:'#12100E',accentBg:'#FFA500',sidebarBg:'#12100E',txOnDark:'#FFA500',txOnDarkSub:'rgba(255,255,255,.5)',txOnDarkFaded:'rgba(255,255,255,.22)',txOnAcc:'#12100E',txOnAccSub:'rgba(0,0,0,.62)',cardBg:'#12100E',cardBorder:'rgba(255,255,255,.08)',cardTx:'#fff',cardTx2:'rgba(255,255,255,.6)',cardIconBg:'rgba(255,255,255,.08)',quizContainerBorder:'rgba(255,165,0,.35)',optBg:'rgba(255,255,255,.05)',optBorder:'rgba(255,165,0,.4)',optTx:'#fff',optDotBorder:'rgba(255,165,0,.55)',optSelBg:'rgba(255,165,0,.18)',optSelBorder:'#FFA500',optSelTx:'#FFA500',optSelDot:'#FFA500',progressTrack:'rgba(255,255,255,.12)',progressFill:'#FFA500',counterTx:'rgba(255,255,255,.5)',hintTx:'rgba(255,255,255,.3)',ringTrack:'rgba(255,255,255,.12)',resNum:'#fff',resPts:'rgba(255,255,255,.5)',resTitle:'#fff',btnResetBg:'rgba(255,255,255,.1)',btnResetTx:'#fff',btnResetBdr:'rgba(255,255,255,.18)',btnSecTx:'#FFA500',btnSecBdr:'rgba(255,165,0,.4)',crisisBg:'#12100E',crisisBdr:'rgba(255,255,255,.1)',crisisIconTx:'#D92243',crisisTitleTx:'#fff',crisisSubTx:'rgba(255,255,255,.58)',extLinkTx:'#FFA500',senadIconTx:'#FFA500',navColor:'rgba(255,165,0,.45)',navActiveColor:'#FFA500',navActiveBg:'rgba(255,165,0,.15)',navActiveBorder:'rgba(255,165,0,.7)',iaDecoColor:'rgba(255,255,255,1)',faseCardBorder:'rgba(255,255,255,.08)',faseCardBg:'rgba(255,255,255,.04)',faseIllusBg:'rgba(255,255,255,.05)',faseSvgStroke:'#FFA500'},
+  '2':{label:'Preto & Branco',scrollbarAccent:'#ffffff',darkBg:'#12100E',accentBg:'#ffffff',sidebarBg:'#12100E',txOnDark:'#ffffff',txOnDarkSub:'rgba(255,255,255,.55)',txOnDarkFaded:'rgba(255,255,255,.28)',txOnAcc:'#0a0a0a',txOnAccSub:'rgba(0,0,0,.6)',cardBg:'#12100E',cardBorder:'rgba(255,255,255,.08)',cardTx:'#fff',cardTx2:'rgba(255,255,255,.6)',cardIconBg:'rgba(255,255,255,.08)',quizContainerBorder:'rgba(255,255,255,.35)',optBg:'rgba(255,255,255,.06)',optBorder:'rgba(255,255,255,.4)',optTx:'#fff',optDotBorder:'rgba(255,255,255,.7)',optSelBg:'rgba(255,255,255,.18)',optSelBorder:'#ffffff',optSelTx:'#ffffff',optSelDot:'#ffffff',progressTrack:'rgba(255,255,255,.15)',progressFill:'#ffffff',counterTx:'rgba(255,255,255,.55)',hintTx:'rgba(255,255,255,.35)',ringTrack:'rgba(255,255,255,.15)',resNum:'#fff',resPts:'rgba(255,255,255,.55)',resTitle:'#fff',btnResetBg:'rgba(255,255,255,.12)',btnResetTx:'#fff',btnResetBdr:'rgba(255,255,255,.2)',btnSecTx:'#fff',btnSecBdr:'rgba(255,255,255,.3)',crisisBg:'rgba(0,0,0,.06)',crisisBdr:'rgba(0,0,0,.15)',crisisIconTx:'#D92243',crisisTitleTx:'#0a0a0a',crisisSubTx:'rgba(0,0,0,.55)',extLinkTx:'#12100E',senadIconTx:'#12100E',navColor:'rgba(255,255,255,.36)',navActiveColor:'#fff',navActiveBg:'rgba(255,255,255,.12)',navActiveBorder:'rgba(255,255,255,.55)',iaDecoColor:'rgba(255,255,255,1)',faseCardBorder:'rgba(255,255,255,.08)',faseCardBg:'rgba(255,255,255,.04)',faseIllusBg:'rgba(255,255,255,.05)',faseSvgStroke:'#FFA500'},
+  '3':{label:'Laranja & Branco',scrollbarAccent:'#FFA500',darkBg:'#FFA500',accentBg:'#ffffff',sidebarBg:'#CC7700',txOnDark:'#fff',txOnDarkSub:'rgba(255,255,255,.78)',txOnDarkFaded:'rgba(255,255,255,.5)',txOnAcc:'#0a0a0a',txOnAccSub:'rgba(0,0,0,.6)',cardBg:'#FFA500',cardBorder:'rgba(0,0,0,.1)',cardTx:'#12100E',cardTx2:'rgba(0,0,0,.62)',cardIconBg:'rgba(0,0,0,.08)',quizContainerBorder:'rgba(255,255,255,.5)',optBg:'rgba(255,255,255,.12)',optBorder:'rgba(255,255,255,.55)',optTx:'#12100E',optDotBorder:'rgba(255,255,255,.75)',optSelBg:'rgba(255,255,255,.35)',optSelBorder:'#ffffff',optSelTx:'#CC7700',optSelDot:'#FFA500',progressTrack:'rgba(255,255,255,.25)',progressFill:'#FFA500',counterTx:'rgba(0,0,0,.5)',hintTx:'rgba(0,0,0,.35)',ringTrack:'rgba(0,0,0,.1)',resNum:'#12100E',resPts:'rgba(0,0,0,.5)',resTitle:'#12100E',btnResetBg:'rgba(0,0,0,.08)',btnResetTx:'#12100E',btnResetBdr:'rgba(0,0,0,.2)',btnSecTx:'#CC7700',btnSecBdr:'rgba(204,119,0,.4)',crisisBg:'rgba(0,0,0,.05)',crisisBdr:'rgba(0,0,0,.13)',crisisIconTx:'#D92243',crisisTitleTx:'#0a0a0a',crisisSubTx:'rgba(0,0,0,.55)',extLinkTx:'#CC7700',senadIconTx:'#CC7700',navColor:'rgba(255,255,255,.55)',navActiveColor:'#fff',navActiveBg:'rgba(255,255,255,.2)',navActiveBorder:'rgba(255,255,255,.65)',iaDecoColor:'rgba(0,0,0,1)',faseCardBorder:'rgba(255,255,255,.55)',faseCardBg:'rgba(255,255,255,.15)',faseIllusBg:'rgba(255,255,255,.25)',faseSvgStroke:'#ffffff'},
+  '4':{label:'Todo Preto',scrollbarAccent:'#ffffff',darkBg:'#12100E',accentBg:'#12100E',sidebarBg:'#12100E',txOnDark:'#ffffff',txOnDarkSub:'rgba(255,255,255,.5)',txOnDarkFaded:'rgba(255,255,255,.22)',txOnAcc:'#ffffff',txOnAccSub:'rgba(255,255,255,.5)',cardBg:'#1C1916',cardBorder:'rgba(255,255,255,.1)',cardTx:'#fff',cardTx2:'rgba(255,255,255,.55)',cardIconBg:'rgba(255,255,255,.07)',quizContainerBorder:'rgba(255,255,255,.2)',optBg:'rgba(255,255,255,.05)',optBorder:'rgba(255,255,255,.14)',optTx:'#fff',optDotBorder:'rgba(255,255,255,.6)',optSelBg:'rgba(255,255,255,.14)',optSelBorder:'#fff',optSelTx:'#fff',optSelDot:'#fff',progressTrack:'rgba(255,255,255,.1)',progressFill:'#ffffff',counterTx:'rgba(255,255,255,.45)',hintTx:'rgba(255,255,255,.28)',ringTrack:'rgba(255,255,255,.1)',resNum:'#fff',resPts:'rgba(255,255,255,.45)',resTitle:'#fff',btnResetBg:'rgba(255,255,255,.08)',btnResetTx:'#fff',btnResetBdr:'rgba(255,255,255,.18)',btnSecTx:'#fff',btnSecBdr:'rgba(255,255,255,.25)',crisisBg:'#1C1916',crisisBdr:'rgba(255,255,255,.1)',crisisIconTx:'#D92243',crisisTitleTx:'#fff',crisisSubTx:'rgba(255,255,255,.5)',extLinkTx:'#fff',senadIconTx:'#fff',navColor:'rgba(255,255,255,.36)',navActiveColor:'#fff',navActiveBg:'rgba(255,255,255,.12)',navActiveBorder:'rgba(255,255,255,.55)',iaDecoColor:'rgba(255,255,255,1)',faseCardBorder:'rgba(255,255,255,.08)',faseCardBg:'rgba(255,255,255,.04)',faseIllusBg:'rgba(255,255,255,.05)',faseSvgStroke:'#FFA500'},
+  '5':{label:'Todo Laranja',scrollbarAccent:'#ffffff',darkBg:'#FFA500',accentBg:'#FFA500',sidebarBg:'#CC7700',txOnDark:'#fff',txOnDarkSub:'rgba(255,255,255,.75)',txOnDarkFaded:'rgba(255,255,255,.45)',txOnAcc:'#fff',txOnAccSub:'rgba(255,255,255,.75)',cardBg:'#E69400',cardBorder:'rgba(255,255,255,.2)',cardTx:'#fff',cardTx2:'rgba(255,255,255,.72)',cardIconBg:'rgba(255,255,255,.15)',quizContainerBorder:'rgba(255,255,255,.3)',optBg:'rgba(255,255,255,.18)',optBorder:'rgba(255,255,255,.3)',optTx:'#fff',optDotBorder:'rgba(255,255,255,.75)',optSelBg:'rgba(255,255,255,.32)',optSelBorder:'#fff',optSelTx:'#fff',optSelDot:'#fff',progressTrack:'rgba(255,255,255,.25)',progressFill:'#ffffff',counterTx:'rgba(255,255,255,.65)',hintTx:'rgba(255,255,255,.45)',ringTrack:'rgba(255,255,255,.22)',resNum:'#fff',resPts:'rgba(255,255,255,.65)',resTitle:'#fff',btnResetBg:'rgba(255,255,255,.18)',btnResetTx:'#fff',btnResetBdr:'rgba(255,255,255,.4)',btnSecTx:'#fff',btnSecBdr:'rgba(255,255,255,.45)',crisisBg:'#E69400',crisisBdr:'rgba(255,255,255,.25)',crisisIconTx:'#fff',crisisTitleTx:'#fff',crisisSubTx:'rgba(255,255,255,.75)',extLinkTx:'#fff',senadIconTx:'#fff',navColor:'rgba(255,255,255,.55)',navActiveColor:'#fff',navActiveBg:'rgba(255,255,255,.2)',navActiveBorder:'rgba(255,255,255,.65)',iaDecoColor:'rgba(0,0,0,1)',faseCardBorder:'rgba(255,255,255,.5)',faseCardBg:'rgba(255,255,255,.15)',faseIllusBg:'rgba(255,255,255,.25)',faseSvgStroke:'#ffffff'}
+};
+
+let currentTheme='1';
+
+function applyFaseCardTheme(T){
+  document.querySelectorAll('.fase-card').forEach(el=>{el.style.borderColor=T.faseCardBorder;el.style.background=T.faseCardBg;});
+  document.querySelectorAll('.fase-illus').forEach(el=>{el.style.background=T.faseIllusBg;});
+  document.querySelectorAll('.fase-tag').forEach(el=>{el.style.borderColor=T.faseSvgStroke==='#ffffff'?'rgba(255,255,255,.6)':'#ffa500';el.style.background=T.faseSvgStroke==='#ffffff'?'rgba(255,255,255,.15)':'';el.style.color=T.txOnDark;});
+}
+
+function applyTheme(t){
+  if(!THEMES[t])return;
+  currentTheme=t;const T=THEMES[t];
+  document.documentElement.style.setProperty('--sb-accent',T.scrollbarAccent);
+  document.getElementById('sec-home').style.background=T.darkBg;
+  document.getElementById('fases-wrap').style.background=T.darkBg;
+  document.getElementById('ia-wrap').style.background=T.darkBg;
+  document.getElementById('info-wrap').style.background=T.accentBg;
+  document.getElementById('quiz-wrap').style.background=T.accentBg;
+  document.getElementById('help-wrap').style.background=T.accentBg;
+  const sb=document.getElementById('sidebar');if(sb)sb.style.background=T.sidebarBg;
+  document.documentElement.style.setProperty('--nav-color',T.navColor);
+  document.documentElement.style.setProperty('--nav-active-color',T.navActiveColor);
+  document.documentElement.style.setProperty('--nav-active-bg',T.navActiveBg);
+  document.documentElement.style.setProperty('--nav-active-border',T.navActiveBorder);
+  document.querySelectorAll('.ia-deco').forEach(el=>el.style.color=T.iaDecoColor);
+  /* home text */
+  document.getElementById('home-headline').style.color=T.txOnDark;
+  document.getElementById('home-title-text').style.color=T.txOnDark;
+  document.getElementById('home-hl').style.color=T.txOnDark;
+  /* section headers */
+  document.getElementById('fases-h2').style.color=T.txOnDark;document.getElementById('fases-desc').style.color=T.txOnDarkSub;
+  document.getElementById('ia-h2').style.color=T.txOnDark;document.getElementById('ia-desc').style.color=T.txOnDarkSub;
+  document.getElementById('info-h2').style.color=T.txOnAcc;document.getElementById('info-desc').style.color=T.txOnAccSub;
+  document.getElementById('quiz-h2').style.color=T.txOnAcc;document.getElementById('quiz-desc').style.color=T.txOnAccSub;
+  document.getElementById('ajuda-h2').style.color=T.txOnAcc;document.getElementById('ajuda-desc').style.color=T.txOnAccSub;
+  /* info cards */
+  document.querySelectorAll('.info-card').forEach(el=>{el.style.background=T.cardBg;el.style.borderColor=T.cardBorder;});
+  document.querySelectorAll('.info-card h3').forEach(el=>el.style.color=T.cardTx);
+  document.querySelectorAll('.info-card p').forEach(el=>el.style.color=T.cardTx2);
+  document.querySelectorAll('.info-card-icon').forEach(el=>el.style.background=T.cardIconBg);
+  /* quiz */
+  const qc=document.getElementById('quiz-container');qc.style.background=T.cardBg;qc.style.borderColor=T.quizContainerBorder||T.cardBorder;
+  document.getElementById('quiz-progress-bar').style.background=T.progressTrack;
+  document.getElementById('qbar').style.background=T.progressFill;
+  document.getElementById('qtext').style.color=T.cardTx;
+  document.getElementById('qcount').style.color=T.counterTx;
+  document.getElementById('quiz-hint').style.color=T.hintTx;
+  document.getElementById('ring-track').setAttribute('stroke',T.ringTrack);
+  document.getElementById('res-score').style.color=T.resNum;
+  document.getElementById('res-pts').style.color=T.resPts;
+  document.getElementById('res-title').style.color=T.resTitle;
+  const bR=document.getElementById('btn-reset');bR.style.background=T.btnResetBg;bR.style.color=T.btnResetTx;bR.style.borderColor=T.btnResetBdr;
+  const bS=document.getElementById('btn-quiz-sec');bS.style.color=T.btnSecTx;bS.style.borderColor=T.btnSecBdr;
+  /* crisis */
+  const cs=document.getElementById('crisis-strip');cs.style.background=T.crisisBg;cs.style.borderColor=T.crisisBdr;
+  document.getElementById('crisis-icon').style.color=T.crisisIconTx;
+  document.getElementById('crisis-title').style.color=T.crisisTitleTx;
+  document.getElementById('crisis-sub').style.color=T.crisisSubTx;
+  /* help cards */
+  document.querySelectorAll('.help-card-link').forEach(el=>{el.style.background=T.cardBg;el.style.borderColor=T.cardBorder;});
+  document.querySelectorAll('.help-card-body h3').forEach(el=>el.style.color=T.cardTx);
+  document.querySelectorAll('.help-card-body p').forEach(el=>el.style.color=T.cardTx2);
+  document.querySelectorAll('.help-card-icon').forEach(el=>el.style.background=T.cardIconBg);
+  document.querySelectorAll('.ext-link').forEach(el=>el.style.color=T.extLinkTx);
+  document.getElementById('senad-icon').style.color=T.senadIconTx;
+  applyFaseCardTheme(T);
+  paintQuizOpts();
+  document.querySelectorAll('.theme-option').forEach(opt=>opt.classList.toggle('active',opt.dataset.theme===t));
+  try{localStorage.setItem('adc-theme',t);}catch(e){}
+}
+
+function paintQuizOpts(){
+  const T=THEMES[currentTheme];
+  document.querySelectorAll('.quiz-opt').forEach(btn=>{
+    const sel=btn.classList.contains('selected');
+    btn.style.background=sel?T.optSelBg:T.optBg;btn.style.borderColor=sel?T.optSelBorder:T.optBorder;btn.style.color=sel?T.optSelTx:T.optTx;
+    const dot=btn.querySelector('.quiz-opt-dot');if(dot){dot.style.background=sel?T.optSelDot:'transparent';dot.style.borderColor=sel?T.optSelBorder:T.optDotBorder;}
+  });
+}
+
+/* ── Theme dropdown (desktop) ── */
+const themeBtn=document.getElementById('theme-btn');
+const themeDropdown=document.getElementById('theme-dropdown');
+if(themeBtn){
+  themeBtn.addEventListener('click',e=>{e.stopPropagation();const o=themeDropdown.classList.toggle('open');themeBtn.setAttribute('aria-expanded',o?'true':'false');});
+  themeBtn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();themeBtn.click();}});
+  document.querySelectorAll('.theme-option').forEach(opt=>{opt.addEventListener('click',e=>{e.stopPropagation();applyTheme(opt.dataset.theme);themeDropdown.classList.remove('open');themeBtn.setAttribute('aria-expanded','false');});opt.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();opt.click();}});});
+  document.addEventListener('click',()=>{themeDropdown.classList.remove('open');themeBtn.setAttribute('aria-expanded','false');});
+}
+
+/* ── Navigation ── */
+function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+document.querySelectorAll('.bnav-item[data-target]').forEach(link=>{
+  link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);});
+});
+document.querySelectorAll('.nav-item[data-target]').forEach(link=>{
+  link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);if(window.innerWidth<=860)document.getElementById('sidebar').classList.remove('mobile-open');});
+});
+
+/* Desktop sidebar collapse */
+const sidebar=document.getElementById('sidebar');
+const mainWrap=document.getElementById('main-wrap');
+const toggleBtn=document.getElementById('sidebar-toggle');
+if(toggleBtn){
+  toggleBtn.addEventListener('click',()=>{if(window.innerWidth<=640)return;const c=sidebar.classList.toggle('collapsed');mainWrap.classList.toggle('shifted',c);const ti=document.getElementById('toggle-icon');if(ti)ti.className=c?'ti ti-arrow-right':'ti ti-arrow-left';});
+}
+
+/* Active state via IntersectionObserver */
+const navObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;const T=THEMES[currentTheme];
+      document.querySelectorAll('.bnav-item').forEach(b=>b.classList.toggle('active',b.dataset.target===id));
+      document.querySelectorAll('.nav-item').forEach(n=>{const a=n.dataset.target===id;n.classList.toggle('active',a);n.style.color=a?T.navActiveColor:T.navColor;});
+    }
+  });
+},{threshold:0.45});
+document.querySelectorAll('.page-section').forEach(s=>navObs.observe(s));
+
+/* Reveal observers */
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in-view');});},{threshold:0.06,rootMargin:'0px 0px -16px 0px'});
+document.querySelectorAll('[data-scroll]').forEach(el=>revObs.observe(el));
+const pgObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.02});
+document.querySelectorAll('.page-section').forEach(s=>pgObs.observe(s));
+
+/* ══════════════════════════════════
+   QUIZ AUDIT
+══════════════════════════════════ */
+const Qs=[
+  {q:"Com que frequência você consome bebidas alcoólicas?",o:["Nunca","Mensalmente ou menos","2–4 vezes ao mês","2–3 vezes por semana","4 ou mais vezes por semana"],s:[0,1,2,3,4]},
+  {q:"Quantas doses você toma num dia típico em que bebe?",o:["1 ou 2","3 ou 4","5 ou 6","7, 8 ou 9","10 ou mais"],s:[0,1,2,3,4]},
+  {q:"Com que frequência você toma 6 ou mais doses de uma vez?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Nos últimos 12 meses, não conseguiu parar de beber?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Deixou de fazer algo esperado por causa do álcool?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Bebeu pela manhã para aliviar a ressaca?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Sentiu culpa ou remorso após beber?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Não conseguiu lembrar o que aconteceu por causa do álcool?",o:["Nunca","Menos que mensalmente","Mensalmente","Semanalmente","Todos os dias ou quase"],s:[0,1,2,3,4]},
+  {q:"Você ou alguém se feriu por causa do seu consumo?",o:["Não","Sim, mas não nos últimos 12 meses","Sim, nos últimos 12 meses"],s:[0,2,4]},
+  {q:"Familiar, amigo ou médico demonstrou preocupação com seu consumo?",o:["Não","Sim, mas não nos últimos 12 meses","Sim, nos últimos 12 meses"],s:[0,2,4]}
+];
+let qi=0,answers=[],totalScore=0;
+
+function loadQ(){
+  const T=THEMES[currentTheme];const q=Qs[qi];
+  document.getElementById('qtext').textContent=`${qi+1}. ${q.q}`;
+  document.getElementById('qcount').textContent=`${qi+1} / ${Qs.length}`;
+  const pct=(qi/Qs.length)*100;
+  document.getElementById('qbar').style.width=`${pct}%`;
+  document.getElementById('quiz-progress-bar').setAttribute('aria-valuenow',Math.round(pct));
+  document.getElementById('qopts').innerHTML=q.o.map((o,i)=>{const sel=answers[qi]===i;return`<button class="quiz-opt${sel?' selected':''}" onclick="selectQ(${i})" role="radio" aria-checked="${sel}" style="background:${sel?T.optSelBg:T.optBg};border-color:${sel?T.optSelBorder:T.optBorder};color:${sel?T.optSelTx:T.optTx}"><div class="quiz-opt-dot" style="background:${sel?T.optSelDot:'transparent'};border-color:${sel?T.optSelBorder:T.optDotBorder}" aria-hidden="true"></div>${o}</button>`;}).join('');
+}
+function selectQ(i){answers[qi]=i;loadQ();setTimeout(()=>{if(qi<Qs.length-1){qi++;loadQ();}else showResult();},280);}
+function showResult(){
+  totalScore=Qs.reduce((s,q,i)=>s+(answers[i]!==undefined?q.s[answers[i]]:0),0);
+  document.getElementById('quiz-main').style.display='none';
+  document.getElementById('qbar').style.width='100%';
+  document.getElementById('quiz-result').classList.add('show');
+  document.getElementById('res-score').textContent=totalScore;
+  const r=52,c=2*Math.PI*r;
+  const offset=c-(c*Math.min(totalScore/40,1));
+  setTimeout(()=>{document.getElementById('ring-fill').style.strokeDashoffset=offset;},100);
+  let title,msg,strokeCol;
+  if(totalScore<=7){title='Uso de baixo risco';msg='Seu padrão indica baixo risco. Continue atento ao consumo e evite aumentar frequência ou quantidade.';strokeCol='#639922';}
+  else if(totalScore<=15){title='Uso problemático detectado';msg='Há sinais de uso problemático. Uma conversa com médico ou psicólogo pode ajudar muito.';strokeCol='#F69D39';}
+  else if(totalScore<=19){title='Uso nocivo — ação recomendada';msg='Os resultados indicam uso nocivo com sinais de dependência. Procure um CAPS-AD ou ligue 149.';strokeCol='#D85A30';}
+  else{title='Dependência grave — busque ajuda';msg='Busque ajuda médica urgente. A abstinência sem acompanhamento pode ser perigosa. Ligue 149, CVV 188 ou vá ao pronto-socorro.';strokeCol='#D92243';}
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('ring-fill').style.stroke=strokeCol;
+  const box=document.getElementById('res-box');
+  box.textContent=msg;box.style.cssText=`background:${strokeCol}22;color:${strokeCol};border:.5px solid ${strokeCol};border-radius:12px;padding:14px 16px;margin:12px 0;text-align:left;font-size:13.5px;line-height:1.65;`;
+  srAnnounce(`Resultado: ${title}. Pontuação: ${totalScore} pontos. ${msg}`);
+}
+function resetQuiz(){qi=0;answers=[];totalScore=0;document.getElementById('quiz-main').style.display='block';document.getElementById('quiz-result').classList.remove('show');document.getElementById('ring-fill').style.strokeDashoffset='327';loadQ();}
+
+/* ══════════════════════════════════
+   BOTPRESS
+══════════════════════════════════ */
+window.addEventListener('load',()=>{
+  const container=document.getElementById('bp-webchat-inline');
+  const suppress=()=>{document.querySelectorAll('[id*="bp-web-widget-btn"],[class*="bpw-floating"],[class*="bp-widget-btn"],[class*="bpw-powered"]').forEach(el=>{if(!container.contains(el))el.style.cssText='display:none!important';});};
+  const tryMove=()=>{const widget=document.querySelector('body>[id*="bp-web-widget"]:not([id*="btn"]),body>[class*="bpw-layout"],body>iframe[src*="botpress"]');if(widget&&!container.contains(widget)){widget.style.cssText='position:relative!important;width:100%!important;height:100%!important;bottom:auto!important;right:auto!important;inset:auto!important;';container.appendChild(widget);}suppress();};
+  suppress();new MutationObserver(tryMove).observe(document.body,{childList:true,subtree:true});
+  [600,1500,3000,5000].forEach(t=>setTimeout(tryMove,t));
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&window.botpress?.open)window.botpress.open();});},{threshold:0.5}).observe(document.getElementById('sec-ia'));
+});
+
+/* ══════════════════════════════════
+   GEOLOCALIZAÇÃO
+══════════════════════════════════ */
+let leafletLoaded=false,locMap=null;
+function loadLeaflet(cb){if(leafletLoaded){cb();return;}const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);const js=document.createElement('script');js.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';js.onload=()=>{leafletLoaded=true;cb();};document.head.appendChild(js);}
+function haversineKm(la1,lo1,la2,lo2){const R=6371,dL=(la2-la1)*Math.PI/180,dN=(lo2-lo1)*Math.PI/180,a=Math.sin(dL/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function formatDist(km){return km<1?Math.round(km*1000)+'m':km.toFixed(1).replace('.',',')+'km';}
+function requestLocation(){
+  const btn=document.getElementById('loc-btn'),txt=document.getElementById('loc-btn-text');
+  btn.disabled=true;txt.textContent='Buscando…';srAnnounce('Buscando sua localização…');
+  if(!navigator.geolocation){txt.textContent='Não suportado';btn.disabled=false;return;}
+  navigator.geolocation.getCurrentPosition(
+    pos=>{txt.textContent='Ativo ✓';btn.disabled=false;srAnnounce('Localização encontrada. Buscando centros próximos…');loadLeaflet(()=>showNearbyPlaces(pos.coords.latitude,pos.coords.longitude));},
+    err=>{btn.disabled=false;txt.textContent='Tentar novamente';let m='Erro ao obter localização.';if(err.code===1)m='Permissão negada.';else if(err.code===3)m='Tempo esgotado.';document.getElementById('loc-sub').textContent=m;srAnnounce(m);},
+    {timeout:20000,enableHighAccuracy:true,maximumAge:60000}
+  );
+}
+async function fetchOverpass(q){const eps=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];for(const ep of eps){try{const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'data='+encodeURIComponent(q),signal:AbortSignal.timeout(18000)});if(!r.ok)continue;const d=await r.json();if(d&&d.elements)return d;}catch(e){continue;}}return null;}
+async function showNearbyPlaces(uLat,uLng){
+  const T=THEMES[currentTheme];
+  document.getElementById('loc-results').style.display='block';
+  document.getElementById('loc-places').innerHTML='<div class="loc-status">Buscando locais…</div>';
+  const mapEl=document.getElementById('loc-map');
+  if(!locMap){locMap=L.map(mapEl,{zoomControl:true}).setView([uLat,uLng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'©OSM',maxZoom:18}).addTo(locMap);}
+  else{locMap.setView([uLat,uLng],13);locMap.eachLayer(l=>{if(l instanceof L.Marker||l instanceof L.CircleMarker)locMap.removeLayer(l);});}
+  L.circleMarker([uLat,uLng],{radius:9,color:'#FFA500',fillColor:'#FFA500',fillOpacity:1,weight:3}).addTo(locMap).bindPopup('<b>📍 Você está aqui</b>').openPopup();
+  const q=`[out:json][timeout:30];(node["amenity"="hospital"](around:30000,${uLat},${uLng});way["amenity"="hospital"](around:30000,${uLat},${uLng});node["amenity"="clinic"](around:30000,${uLat},${uLng});node["amenity"="social_facility"](around:30000,${uLat},${uLng});node["healthcare"](around:30000,${uLat},${uLng});node["name"~"CAPS|Atenção Psicossocial|Alcoólicos|Saúde Mental|CRAS|CREAS|UPA|Pronto.Socorro|Hospital",i](around:30000,${uLat},${uLng}););out center 50;`;
+  let data=null;try{data=await fetchOverpass(q);}catch(e){}
+  if(!data||!data.elements?.length){document.getElementById('loc-places').innerHTML=`<div class="loc-status">Nenhum local encontrado automaticamente.<br><a href="https://www.google.com/maps/search/CAPS+saúde+mental/@${uLat},${uLng},13z" target="_blank" rel="noopener" style="color:#FFA500;font-weight:600">Buscar no Google Maps →</a></div>`;return;}
+  const seen=new Set();
+  const places=data.elements.filter(p=>{const n=p.tags?.name,a=p.tags?.amenity||p.tags?.healthcare;if(!n&&!a)return false;const k=n||(a+'_'+(p.lat||p.center?.lat));if(seen.has(k))return false;seen.add(k);return true;})
+    .map(p=>{const pLat=p.lat??p.center?.lat,pLon=p.lon??p.center?.lon;return{...p,lat:pLat,lon:pLon,distKm:haversineKm(uLat,uLng,pLat,pLon)};})
+    .filter(p=>p.lat&&p.lon).sort((a,b)=>a.distKm-b.distKm).slice(0,16);
+  if(!places.length){document.getElementById('loc-places').innerHTML='<div class="loc-status">Nenhum local mapeado encontrado.</div>';return;}
+  places.forEach(p=>{const name=p.tags?.name||'Serviço de saúde';const am=p.tags?.amenity||p.tags?.healthcare||'';const icon=am==='hospital'?'🏥':am==='pharmacy'?'💊':am==='social_facility'?'🏛️':'🏥';L.marker([p.lat,p.lon],{icon:L.divIcon({html:`<div style="font-size:20px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))">${icon}</div>`,className:'',iconSize:[24,24],iconAnchor:[12,12]})}).addTo(locMap).bindPopup(`<b>${name}</b><br><small>${am||'serviço'}·${formatDist(p.distKm)}</small>`);});
+  try{const grp=L.featureGroup([L.circleMarker([uLat,uLng],{radius:1}),...places.slice(0,8).map(p=>L.circleMarker([p.lat,p.lon],{radius:1}))]);locMap.fitBounds(grp.getBounds().pad(.15));}catch(e){}
+  document.getElementById('loc-places').innerHTML=places.map(p=>{const name=p.tags?.name||'Serviço de saúde';const am=p.tags?.amenity||p.tags?.healthcare||'';const tl={hospital:'Hospital',clinic:'Clínica',pharmacy:'Farmácia',social_facility:'Serviço Social',doctors:'UBS'}[am]||am||'Serviço';const phone=p.tags?.phone||p.tags?.['contact:phone'];const mu=`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lon}`;const icon=am==='hospital'?'🏥':am==='pharmacy'?'💊':am==='social_facility'?'🏛️':'🏥';return`<a class="loc-place-card" href="${mu}" target="_blank" rel="noopener" style="background:${T.cardBg};border-color:${T.cardBorder}"><div class="loc-place-name" style="color:${T.cardTx}">${icon} ${name}</div><div class="loc-place-type" style="color:${T.cardTx2}">${tl}</div>${phone?`<div class="loc-place-dist" style="color:${T.cardTx2}">📞 ${phone}</div>`:''}<div class="loc-place-dist" style="color:${T.extLinkTx};font-weight:600">${formatDist(p.distKm)} ↗</div></a>`;}).join('');
+  srAnnounce(`${places.length} locais encontrados próximos a você.`);
+}
+
+/* ══════════════════════════════════
+   ÁUDIO / VOZ ALTA
+══════════════════════════════════ */
+const floatBtn=document.getElementById('float-audio-btn');
+const srPanel=document.getElementById('sr-panel');
+let srPanelOpen=false,srAutoRead=false,srHighlight=true,srRate=0.85,srSpeaking=false,cachedVoice=null;
+const hasTTS='speechSynthesis' in window;
+if(!hasTTS){document.getElementById('sr-compat-note').textContent='Leitura em voz alta não suportada. Use Chrome, Edge ou Safari.';document.getElementById('sr-compat-note').classList.add('show');document.getElementById('sr-read-btn').disabled=true;document.getElementById('sr-stop-btn').disabled=true;}
+function loadVoices(){if(!hasTTS)return;const v=window.speechSynthesis.getVoices();if(v.length>0){cachedVoice=null;pickBestVoice();}}
+function pickBestVoice(){if(!hasTTS)return null;if(cachedVoice)return cachedVoice;const v=window.speechSynthesis.getVoices();if(!v.length)return null;const nat=['natural','neural','premium','enhanced','google','microsoft','fernanda','luciana'];let vv=v.find(x=>x.lang.startsWith('pt-BR')&&nat.some(k=>x.name.toLowerCase().includes(k)));if(!vv)vv=v.find(x=>x.lang==='pt-BR');if(!vv)vv=v.find(x=>x.lang.startsWith('pt'));if(!vv)vv=v[0];cachedVoice=vv;return vv;}
+if(hasTTS){if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=loadVoices;loadVoices();[300,800,1500,3000].forEach(t=>setTimeout(loadVoices,t));}
+floatBtn.addEventListener('click',e=>{e.stopPropagation();srPanelOpen=!srPanelOpen;srPanel.classList.toggle('open',srPanelOpen);floatBtn.setAttribute('aria-expanded',srPanelOpen?'true':'false');if(srPanelOpen)document.getElementById('sr-read-btn').focus();});
+document.getElementById('sr-panel-close').addEventListener('click',()=>{srPanelOpen=false;srPanel.classList.remove('open');floatBtn.setAttribute('aria-expanded','false');});
+document.addEventListener('click',e=>{if(srPanelOpen&&!srPanel.contains(e.target)&&e.target!==floatBtn){srPanelOpen=false;srPanel.classList.remove('open');floatBtn.setAttribute('aria-expanded','false');}});
+const srAutoTg=document.getElementById('sr-auto-toggle');srAutoTg.addEventListener('click',()=>{srAutoRead=!srAutoRead;srAutoTg.classList.toggle('on',srAutoRead);srAutoTg.setAttribute('aria-checked',srAutoRead?'true':'false');document.getElementById('sr-status').textContent=srAutoRead?'Automática ativada':'Automática desativada';});srAutoTg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();srAutoTg.click();}});
+const srHiTg=document.getElementById('sr-highlights-toggle');srHiTg.addEventListener('click',()=>{srHighlight=!srHighlight;srHiTg.classList.toggle('on',srHighlight);srHiTg.setAttribute('aria-checked',srHighlight?'true':'false');});srHiTg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();srHiTg.click();}});
+const srRateIn=document.getElementById('sr-rate');srRateIn.addEventListener('input',()=>{srRate=parseFloat(srRateIn.value);document.getElementById('sr-rate-val').textContent=srRate.toFixed(1)+'×';});
+function getCurrentSectionText(){const secs=document.querySelectorAll('.page-section');let best=null,bestR=0;secs.forEach(s=>{const r=s.getBoundingClientRect();const vis=Math.max(0,Math.min(r.bottom,window.innerHeight)-Math.max(r.top,0));const ratio=r.height>0?vis/r.height:0;if(ratio>bestR){bestR=ratio;best=s;}});if(!best)return'';const skip=['SCRIPT','STYLE','SVG','IMG','BUTTON','INPUT','CANVAS'];const walker=document.createTreeWalker(best,NodeFilter.SHOW_TEXT,{acceptNode:n=>{let el=n.parentElement;while(el){if(skip.includes(el.tagName))return NodeFilter.FILTER_REJECT;if(el.getAttribute('aria-hidden')==='true')return NodeFilter.FILTER_REJECT;el=el.parentElement;}return n.textContent.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});const texts=[];let node;while((node=walker.nextNode()))texts.push(node.textContent.trim());return texts.join('. ').replace(/\.{2,}/g,'.').replace(/\s+/g,' ').trim();}
+function srRead(){if(!hasTTS){document.getElementById('sr-status').textContent='Não suportado.';return;}window.speechSynthesis.cancel();const text=getCurrentSectionText();if(!text){document.getElementById('sr-status').textContent='Nenhum texto encontrado.';return;}const utter=new SpeechSynthesisUtterance(text);utter.lang='pt-BR';utter.rate=srRate;utter.pitch=1.0;utter.volume=1;const voice=pickBestVoice();if(voice)utter.voice=voice;utter.onstart=()=>{srSpeaking=true;floatBtn.classList.add('speaking');document.getElementById('sr-status').textContent='▶ Lendo…';};let keepAlive;utter.onend=()=>{clearInterval(keepAlive);srSpeaking=false;floatBtn.classList.remove('speaking');document.getElementById('sr-status').textContent='Concluído.';};utter.onerror=e=>{clearInterval(keepAlive);srSpeaking=false;floatBtn.classList.remove('speaking');document.getElementById('sr-status').textContent=e.error==='not-allowed'?'Permissão negada. Toque na página primeiro.':'Erro na leitura.';};if(/Chrome|Edge/.test(navigator.userAgent)){keepAlive=setInterval(()=>{if(!window.speechSynthesis.speaking){clearInterval(keepAlive);return;}window.speechSynthesis.pause();window.speechSynthesis.resume();},10000);}window.speechSynthesis.speak(utter);}
+function srStop(){if(!hasTTS)return;window.speechSynthesis.cancel();srSpeaking=false;floatBtn.classList.remove('speaking');document.getElementById('sr-status').textContent='Parado.';}
+document.getElementById('sr-read-btn').addEventListener('click',srRead);
+document.getElementById('sr-stop-btn').addEventListener('click',srStop);
+const srNavObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&srAutoRead)setTimeout(srRead,600);});},{threshold:0.6});
+document.querySelectorAll('.page-section').forEach(s=>srNavObs.observe(s));
+function srAnnounce(text){const live=document.getElementById('sr-status');if(live){live.textContent='';setTimeout(()=>{live.textContent=text;},50);}}
+document.addEventListener('keydown',e=>{if(e.altKey&&e.key.toLowerCase()==='r'){e.preventDefault();srRead();}if(e.altKey&&e.key.toLowerCase()==='s'){e.preventDefault();srStop();}});
+
+/* ══════════════════════════════════
+   BOTÃO TEMA MOBILE
+══════════════════════════════════ */
+const mobileThemeBtn = document.getElementById('mobile-theme-btn');
+const mobileThemeDd  = document.getElementById('mobile-theme-dropdown');
+
+if (mobileThemeBtn && mobileThemeDd) {
+  mobileThemeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = mobileThemeDd.classList.toggle('open');
+    mobileThemeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  mobileThemeDd.querySelectorAll('.theme-option').forEach(opt => {
+    opt.addEventListener('click', e => {
+      e.stopPropagation();
+      applyTheme(opt.dataset.theme);
+      mobileThemeDd.classList.remove('open');
+      mobileThemeBtn.setAttribute('aria-expanded', 'false');
+      /* espelha seleção no dropdown mobile */
+      mobileThemeDd.querySelectorAll('.theme-option').forEach(o =>
+        o.classList.toggle('active', o.dataset.theme === opt.dataset.theme)
+      );
+    });
+    opt.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click(); }
+    });
+  });
+
+  document.addEventListener('click', () => {
+    mobileThemeDd.classList.remove('open');
+    mobileThemeBtn.setAttribute('aria-expanded', 'false');
+  });
+}
+
+/* Espelha o tema ativo no dropdown mobile ao inicializar */
+function syncMobileThemeActive(t) {
+  const dd = document.getElementById('mobile-theme-dropdown');
+  if (!dd) return;
+  dd.querySelectorAll('.theme-option').forEach(o =>
+    o.classList.toggle('active', o.dataset.theme === t)
+  );
+}
+
+/* ══════════════════════════════════
+   INIT
+══════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  let saved='1';try{saved=localStorage.getItem('adc-theme')||'1';}catch(e){}
+  if(!THEMES[saved])saved='1';
+  applyTheme(saved);
+  syncMobileThemeActive(saved);
+  loadQ();
+});
+setTimeout(()=>document.getElementById('page-veil').classList.add('out'),80);
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a016bd34eb766b1b',t:'MTc3OTczNTE2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0188dd339eeb8fb',t:'MTc3OTc1NDE5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
