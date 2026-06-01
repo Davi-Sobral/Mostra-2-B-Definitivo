@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Além do Copo — Informação e Apoio</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312100E'/%3E%3C!-- copo --%3E%3Cpath d='M18 14 L46 14 L41 50 L23 50 Z' fill='none' stroke='%23FFA500' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cellipse cx='32' cy='14' rx='14' ry='3.5' fill='none' stroke='%23FFA500' stroke-width='2.5'/%3E%3Crect x='23' y='31' width='18' height='14' rx='1' fill='rgba(255,165,0,.18)'/%3E%3C!-- sinal de bloqueio --%3E%3Ccircle cx='32' cy='32' r='19' fill='rgba(217,34,67,.15)' stroke='%23D92243' stroke-width='4'/%3E%3Cline x1='18' y1='18' x2='46' y2='46' stroke='%23D92243' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312100E'/%3E%3Cpath d='M18 14 L46 14 L41 50 L23 50 Z' fill='none' stroke='%23FFA500' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cellipse cx='32' cy='14' rx='14' ry='3.5' fill='none' stroke='%23FFA500' stroke-width='2.5'/%3E%3Crect x='23' y='31' width='18' height='14' rx='1' fill='rgba(255,165,0,.18)'/%3E%3Ccircle cx='32' cy='32' r='19' fill='rgba(217,34,67,.15)' stroke='%23D92243' stroke-width='4'/%3E%3Cline x1='18' y1='18' x2='46' y2='46' stroke='%23D92243' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
@@ -24,10 +24,8 @@
   --nav-active-color: #fff;
   --nav-active-bg: rgba(255,255,255,.12);
   --nav-active-border: rgba(255,255,255,.55);
-  /* bottom-nav height + safe area */
   --bnav-h: 64px;
   --safe-b: env(safe-area-inset-bottom, 0px);
-  /* total bottom padding */
   --body-pb: calc(var(--bnav-h) + var(--safe-b));
 }
 html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--sb-accent) #12100E; }
@@ -50,7 +48,7 @@ body {
 #page-veil.out { opacity:0; }
 
 /* ─────────────────────────────────────────
-   SKIP LINK (acessibilidade)
+   SKIP LINK
 ───────────────────────────────────────── */
 .skip-link {
   position: fixed; top: -100px; left: 16px; z-index: 10000;
@@ -61,7 +59,7 @@ body {
 .skip-link:focus { top: 10px; }
 
 /* ─────────────────────────────────────────
-   BOTÃO TEMA MOBILE (independente da sidebar)
+   BOTÃO TEMA MOBILE
 ───────────────────────────────────────── */
 #mobile-theme-btn {
   display: flex;
@@ -86,7 +84,6 @@ body {
 #mobile-theme-btn i { font-size: 20px; line-height: 1; pointer-events: none; }
 #mobile-theme-btn:active { background: rgba(255,255,255,.18); }
 
-/* Dropdown do botão mobile */
 #mobile-theme-dropdown {
   position: fixed;
   top: 64px;
@@ -116,6 +113,10 @@ body {
 #mobile-theme-dropdown .theme-swatch span { display: block; width: 100%; height: 100%; }
 #mobile-theme-dropdown .theme-option-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); line-height: 1.3; }
 #mobile-theme-dropdown .theme-option-sub { font-size: 10.5px; color: rgba(255,255,255,.42); margin-top: 1px; }
+
+/* ─────────────────────────────────────────
+   BOTTOM NAV
+───────────────────────────────────────── */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
   height: calc(var(--bnav-h) + var(--safe-b));
@@ -150,11 +151,10 @@ body {
 }
 .bnav-item.active::after { transform: translateX(-50%) scaleX(1); }
 
-/* Desktop sidebar — hidden on mobile, shown ≥641px */
 .sidebar { display: none; }
 .mobile-nav-toggle { display: none; }
 
-/* ── THEME BUTTON: fixed top-right on mobile ── */
+/* ── THEME BUTTON MOBILE ── */
 #theme-btn {
   display: flex !important;
   position: fixed;
@@ -184,7 +184,6 @@ body {
 #theme-btn i { font-size: 20px; line-height: 1; }
 #theme-btn span { display: none; }
 #theme-btn:active { background: rgba(255,255,255,.2); }
-/* Dropdown position on mobile */
 #theme-btn .theme-dropdown {
   position: fixed;
   top: 64px;
@@ -217,7 +216,7 @@ body {
 .main-wrap { width: 100%; min-width: 0; }
 
 /* ─────────────────────────────────────────
-   SECTIONS — scroll natural on mobile
+   SECTIONS
 ───────────────────────────────────────── */
 .page-section {
   width: 100%; min-height: 100dvh;
@@ -234,13 +233,9 @@ body {
 .section-h2 { font-family:var(--font-h); font-size: clamp(1.65rem,6.5vw,2.2rem); font-weight:700; line-height:1.15; margin-bottom:7px; }
 .section-desc { font-size: 13px; line-height:1.75; }
 
-/* ─────────────────────────────────────────
-   TIPOGRAFIA GLOBAL — consistência h3 e p
-───────────────────────────────────────── */
 h3 { font-size: 25px; }
 p  { font-size: 20px; }
 
-/* Títulos de seção: todos os h2 com classe section-h2 padronizados */
 h2.section-h2,
 .section-header h2 {
   font-family: var(--font-h);
@@ -331,52 +326,154 @@ h2.section-h2,
 .fase-tag { display:none; }
 
 /* ═══════════════════════════════════════
-   QUIZ
+   QUIZ — CORREÇÃO PRINCIPAL (Fix #1 e #2)
+   
+   ESTRUTURA NOVA:
+   .quiz-wrap (flex-col, justify-content:flex-start, padding seguro)
+     └─ .quiz-inner (flex-col, flex:1, sem overflow)
+          ├─ .section-header
+          └─ .quiz-container-outer (flex:1, flex-col, overflow:hidden)
+               ├─ .quiz-progress-bar (flex-shrink:0)
+               ├─ .quiz-opts-scroll (flex:1, overflow-y:auto) ← scroll aqui
+               │    └─ .quiz-q + .quiz-opts
+               └─ .quiz-nav (flex-shrink:0) ← SEMPRE VISÍVEL, nunca sobreposto
 ═══════════════════════════════════════ */
 .quiz-wrap {
-  padding: 28px 18px 26px;
-  padding-top: clamp(18px, 3dvh, 32px);
-  display:flex; flex-direction:column;
+  padding: 24px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  /* FIX: altura exata da viewport menos a bottom-nav */
   min-height: 100dvh;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  transition:background .35s;
+  height: 100dvh;
+  max-height: 100dvh;
+  justify-content: flex-start;
+  align-items: stretch;
+  transition: background .35s;
+  overflow: hidden;
 }
-.quiz-wrap .section-header { width:100%; margin-top: 0; margin-bottom: 16px; }
-.quiz-wrap .section-h2  { font-size: clamp(2.25rem, 8vw, 3.05rem); line-height:1.08; }
-.quiz-wrap .section-desc { font-size: clamp(16px, 4.2vw, 18px); line-height: 1.78; max-width:none; }
-.quiz-inner { width:100%; min-height:0; height:auto; flex:0 1 auto; display:flex; flex-direction:column; }
-.quiz-container { border-radius:20px; padding:26px 20px; margin-top:0; border:.5px solid; transition:background .35s,border-color .35s; min-height:0; height:auto; max-height:calc(100dvh * 0.55); overflow:auto; display:flex; flex-direction:column; width:100%; }
-.quiz-progress-bar { height:5px; border-radius:3px; margin-bottom:24px; overflow:hidden; transition:background .35s; flex-shrink:0; }
-.quiz-bar-fill { height:100%; border-radius:3px; transition:width .4s cubic-bezier(.4,0,.2,1),background .35s; }
-#quiz-main { flex:1; min-height:0; display:flex; flex-direction:column; }
-.quiz-q { font-family:var(--font-h); font-size:clamp(1.35rem,5vw,1.75rem); font-weight:600; margin-bottom:20px; line-height:1.4; transition:color .35s; }
-.quiz-opts { display:flex; flex-direction:column; gap:12px; flex:1; min-height:0; }
+
+.quiz-wrap .section-header {
+  width: 100%;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+.quiz-wrap .section-h2  { font-size: clamp(1.75rem, 7vw, 2.4rem); line-height:1.08; }
+.quiz-wrap .section-desc { font-size: clamp(13px, 3.8vw, 15px); line-height: 1.7; }
+
+.quiz-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* crucial para flex funcionar com overflow */
+  overflow: hidden;
+}
+
+/* Container externo — flex-col, sem max-height rígido */
+.quiz-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: .5px solid;
+  transition: background .35s, border-color .35s;
+  overflow: hidden; /* sem scroll aqui */
+  min-height: 0;
+  /* FIX: padding apenas no topo e lados; bottom fica no quiz-nav */
+  padding: 20px 18px 0;
+}
+
+/* Barra de progresso — nunca some */
+.quiz-progress-bar {
+  height: 5px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: background .35s;
+}
+.quiz-bar-fill { height:100%; border-radius:3px; transition:width .4s cubic-bezier(.4,0,.2,1), background .35s; }
+
+/* Área principal do quiz — scroll interno aqui */
+#quiz-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.quiz-q {
+  font-family: var(--font-h);
+  font-size: clamp(1.15rem, 4.5vw, 1.55rem);
+  font-weight: 600;
+  margin-bottom: 14px;
+  line-height: 1.4;
+  transition: color .35s;
+  flex-shrink: 0; /* pergunta não some */
+}
+
+/* FIX: opções ficam em área scrollável */
+.quiz-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  /* espaço para o quiz-nav não ficar por baixo das opções */
+  padding-bottom: 8px;
+  /* scrollbar fina */
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-accent) transparent;
+}
+.quiz-opts::-webkit-scrollbar { width: 3px; }
+.quiz-opts::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
 .quiz-opt {
-  border-radius:13px; padding:16px 17px; font-size:clamp(15px,4vw,17px);
-  cursor:pointer; text-align:left; font-family:var(--font-b);
-  display:flex; align-items:center; gap:12px; border:.5px solid;
-  transition:background .18s,border-color .18s,transform .15s;
-  min-height:54px; -webkit-tap-highlight-color:transparent;
+  border-radius: 13px;
+  padding: 14px 15px;
+  font-size: clamp(14px, 3.8vw, 16px);
+  cursor: pointer; text-align: left;
+  font-family: var(--font-b);
+  display: flex; align-items: center; gap: 11px;
+  border: .5px solid;
+  transition: background .18s, border-color .18s, transform .15s;
+  /* FIX: altura mínima garantida, mas sem min-height que force overflow */
+  min-height: 48px;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 .quiz-opt:active { transform:scale(.99); }
-.quiz-opt-dot { width:21px; height:21px; border-radius:50%; flex-shrink:0; border:1.5px solid; transition:all .18s; }
-.quiz-nav { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:18px; flex-shrink:0; }
-.quiz-counter { font-size:14px; transition:color .35s; }
-.quiz-hint    { font-size:13px; transition:color .35s; }
-.quiz-result  { display:none; text-align:center; padding:12px 0; flex:1; min-height:0; }
+.quiz-opt-dot { width:20px; height:20px; border-radius:50%; flex-shrink:0; border:1.5px solid; transition:all .18s; }
+
+/* FIX: quiz-nav FORA do scroll — sempre visível no rodapé do container */
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 12px 18px 16px;
+  /* negativo de margin para "sair" do padding do container */
+  margin: 0 -18px;
+  background: inherit; /* herda o fundo do container */
+  border-top: .5px solid rgba(255,255,255,.06);
+}
+.quiz-counter { font-size:13px; transition:color .35s; }
+.quiz-hint    { font-size:12px; transition:color .35s; }
+
+/* Resultado */
+.quiz-result  { display:none; text-align:center; padding:12px 0 0; flex:1; min-height:0; overflow-y:auto; }
 .quiz-result.show { display:block; }
-.result-ring  { width:130px; height:130px; margin:0 auto 18px; position:relative; }
+.result-ring  { width:120px; height:120px; margin:0 auto 14px; position:relative; }
 .result-ring svg { transform:rotate(-90deg); }
 .result-number { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.result-number .num { font-family:var(--font-h); font-size:2.4rem; font-weight:700; transition:color .35s; }
-.result-number .pts { font-size:12px; transition:color .35s; }
-.result-title { font-family:var(--font-h); font-size:1.55rem; font-weight:600; margin-bottom:10px; transition:color .35s; }
-.result-box   { border-radius:13px; padding:16px 18px; margin:14px 0; text-align:left; font-size:clamp(14px,3.8vw,16px); line-height:1.65; }
-.quiz-result-btns { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-.btn-reset { padding:14px 24px; border-radius:11px; font-size:clamp(14px,4vw,16px); cursor:pointer; font-family:var(--font-b); font-weight:500; border:.5px solid; transition:background .2s; min-height:50px; -webkit-tap-highlight-color:transparent; }
-.btn-quiz-secondary { background:transparent; padding:13px 18px; border-radius:11px; font-size:clamp(14px,4vw,16px); cursor:pointer; font-family:var(--font-b); font-weight:600; display:inline-flex; align-items:center; gap:6px; border:.5px solid; transition:all .2s; min-height:50px; -webkit-tap-highlight-color:transparent; }
+.result-number .num { font-family:var(--font-h); font-size:2.2rem; font-weight:700; transition:color .35s; }
+.result-number .pts { font-size:11px; transition:color .35s; }
+.result-title { font-family:var(--font-h); font-size:1.4rem; font-weight:600; margin-bottom:8px; transition:color .35s; }
+.result-box   { border-radius:13px; padding:14px 16px; margin:10px 0; text-align:left; font-size:clamp(13px,3.5vw,15px); line-height:1.65; }
+.quiz-result-btns { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding-bottom: 16px; }
+.btn-reset { padding:13px 22px; border-radius:11px; font-size:clamp(13px,3.8vw,15px); cursor:pointer; font-family:var(--font-b); font-weight:500; border:.5px solid; transition:background .2s; min-height:48px; -webkit-tap-highlight-color:transparent; }
+.btn-quiz-secondary { background:transparent; padding:12px 16px; border-radius:11px; font-size:clamp(13px,3.8vw,15px); cursor:pointer; font-family:var(--font-b); font-weight:600; display:inline-flex; align-items:center; gap:6px; border:.5px solid; transition:all .2s; min-height:48px; -webkit-tap-highlight-color:transparent; }
 
 /* ═══════════════════════════════════════
    IA
@@ -395,31 +492,47 @@ h2.section-h2,
 [id*="bp-web-widget-btn"],[class*="bpw-floating"],[class*="bpw-powered"] { display:none!important; }
 
 /* ═══════════════════════════════════════
-   AJUDA
+   AJUDA — CORREÇÃO (Fix #3)
+   Problema: 4 colunas em desktop + cards altos extrapolam a tela
+   Solução: overflow-y:auto no help-wrap, height contida
 ═══════════════════════════════════════ */
-.help-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:flex-start; transition:background .35s; }
-.help-inner { width:100%; }
+.help-wrap {
+  padding: 24px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  /* FIX: em mobile, permite scroll natural */
+  min-height: 100dvh;
+  height: auto;
+  transition: background .35s;
+  overflow-y: auto;
+}
+.help-inner { width: 100%; }
+
 .crisis-strip { border-radius:13px; padding:14px 15px; margin-bottom:13px; display:flex; align-items:flex-start; gap:12px; border:.5px solid; transition:background .35s,border-color .35s; }
 .crisis-strip i { font-size:21px; flex-shrink:0; margin-top:1px; transition:color .35s; }
 .crisis-strip h4 { font-size:13px; font-weight:600; margin-bottom:3px; transition:color .35s; }
 .crisis-strip p  { font-size:11.5px; line-height:1.55; transition:color .35s; }
-/* Help grid */
-.help-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+
+/* FIX: mobile — grid 2 colunas cabe bem */
+.help-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
 .help-card-link { text-decoration:none; color:inherit; display:block; border-radius:14px; overflow:hidden; border:.5px solid; transition:all .28s var(--ease); position:relative; -webkit-tap-highlight-color:transparent; }
 .help-card-link:active { transform:scale(.98); }
 .help-card-link::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform .28s var(--ease); border-radius:0 0 14px 14px; }
-.help-card-img { height:88px; overflow:hidden; }
+.help-card-img { height:72px; overflow:hidden; }
 .help-card-img img { width:100%; height:100%; object-fit:cover; filter:saturate(.75); transition:filter .35s; }
 .help-card-link:active .help-card-img img { filter:saturate(1); }
-.help-card-body { padding:11px 10px 13px; }
-.help-card-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; margin-bottom:7px; transition:background .35s; }
-.help-card-body h3 { font-size:12px; font-weight:600; margin-bottom:4px; line-height:1.3; transition:color .35s; }
-.help-card-body p  { font-size:10px; line-height:1.6; transition:color .35s; }
-.ext-link { font-size:10.5px; font-weight:600; display:inline-flex; align-items:center; gap:3px; margin-top:5px; transition:color .35s; }
+.help-card-body { padding:9px 9px 11px; }
+.help-card-icon { width:28px; height:28px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; margin-bottom:5px; transition:background .35s; }
+.help-card-body h3 { font-size:11px; font-weight:600; margin-bottom:3px; line-height:1.3; transition:color .35s; }
+.help-card-body p  { font-size:9.5px; line-height:1.6; transition:color .35s; }
+.ext-link { font-size:9.5px; font-weight:600; display:inline-flex; align-items:center; gap:3px; margin-top:4px; transition:color .35s; }
 
 /* ─────────────────────────────────────────
-   VLIBRAS — canto inferior direito,
-   acima da bottom nav
+   VLIBRAS
 ───────────────────────────────────────── */
 [vw] {
   position: fixed !important;
@@ -431,8 +544,7 @@ h2.section-h2,
 }
 
 /* ─────────────────────────────────────────
-   BOTÃO ÁUDIO — acima do VLibras
-   VLibras ≈ 56px, gap 12px → +68px
+   BOTÃO ÁUDIO
 ───────────────────────────────────────── */
 #float-audio-btn {
   position: fixed;
@@ -454,7 +566,7 @@ h2.section-h2,
 @keyframes audio-pulse { 0%,100%{box-shadow:0 4px 14px #254B8C} 50%{box-shadow:0 4px 22px #254B8C,0 0 0 6px rgba(26,111,196,.15)} }
 #float-audio-btn i { font-size:18px; color:#fff; line-height:1; pointer-events:none; }
 
-/* Painel de áudio — sobe da direita */
+/* Painel de áudio */
 #sr-panel {
   position: fixed;
   bottom: calc(var(--body-pb) + 148px);
@@ -501,34 +613,46 @@ h2.section-h2,
 @media (max-width: 400px) {
   .help-grid  { grid-template-columns:1fr; }
   .info-grid  { grid-template-columns:1fr; }
-  .loc-places { grid-template-columns:1fr; }
   .home-project-title { font-size: 2.5rem; }
+  .quiz-opt { padding: 12px 13px; font-size: 13px; min-height: 44px; }
+  .quiz-q { font-size: 1.05rem; }
 }
 
 /* ─────────────────────────────────────────
    MOBILE — limites específicos de viewport
 ───────────────────────────────────────── */
 @media (max-width: 640px) {
-  /* Chat viewport: no máximo 70vh para não cobrir a tela toda no mobile */
   [class*="bpMessageListViewport"],
   .bpMessageListViewport {
     max-height: 70vh !important;
     overflow-y: auto !important;
   }
+  /* FIX: quiz-wrap precisa descontar a bottom-nav */
+  .quiz-wrap {
+    height: calc(100dvh - var(--bnav-h) - var(--safe-b));
+    max-height: calc(100dvh - var(--bnav-h) - var(--safe-b));
+    min-height: auto;
+    padding-bottom: 0;
+  }
+  /* FIX: ajuda mobile — 2 colunas simples */
+  .help-wrap {
+    min-height: auto;
+    height: auto;
+    padding-bottom: calc(var(--bnav-h) + var(--safe-b) + 16px);
+  }
 }
 
 /* ─────────────────────────────────────────
-   DESKTOP ≥641px — restore sidebar layout
+   DESKTOP ≥641px
 ───────────────────────────────────────── */
 @media (min-width: 641px) {
   :root { --sw:106px; --sc:56px; }
   body { padding-bottom: 0; }
   .bottom-nav { display:none; }
-  /* Mobile theme button hidden on desktop — sidebar version takes over */
   #mobile-theme-btn { display: none !important; }
   #mobile-theme-dropdown { display: none !important; }
 
-  /* Sidebar restore */
+  /* Sidebar */
   .sidebar {
     display:flex; position:fixed; left:0; top:0; bottom:0; width:var(--sw);
     background:#12100E; flex-direction:column; align-items:center;
@@ -574,8 +698,10 @@ h2.section-h2,
     width: calc(100% - var(--sc));
     max-width: calc(100% - var(--sc));
   }
+
   /* Fixed sections on desktop */
   .page-section { height:100dvh; min-height:100dvh; max-height:100dvh; overflow:hidden; }
+
   /* Home desktop */
   .hero { height:clamp(44px,5dvh,56px); background:transparent; }
   .hero-logo-m { display:none; }
@@ -586,6 +712,7 @@ h2.section-h2,
   .home-project-title { font-size:clamp(.85rem,1vw,1rem); font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin-bottom:clamp(12px,1.5vh,18px); }
   .home-title-rule { margin:0 0 clamp(14px,2vh,22px); }
   .home-headline { font-size:clamp(2rem,4.5vw,4.4rem); font-weight:800; line-height:1.1; }
+
   /* Info desktop */
   .info-wrap { padding:clamp(28px,4vh,60px) clamp(20px,5vw,72px); overflow:hidden; justify-content:center; }
   .info-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); max-height:calc((100dvh - clamp(56px,8vh,120px)) * 0.75); gap:11px; }
@@ -593,6 +720,7 @@ h2.section-h2,
   .info-card-icon { width:40px; height:40px; border-radius:11px; font-size:1.2rem; margin-bottom:8px; }
   .info-card h3 { font-size:clamp(15px,1.25vw,18px); }
   .info-card p  { font-size:clamp(12px,.96vw,14px); line-height:1.55; }
+
   /* Fases desktop */
   .fases-wrap { padding:clamp(24px,3.5vh,52px) clamp(20px,5vw,72px); overflow:hidden; }
   .fases-list { margin-top:clamp(14px,1.8vh,24px); gap:clamp(7px,.9vh,13px); max-width:860px; }
@@ -602,20 +730,57 @@ h2.section-h2,
   .fase-card h3 { font-size:clamp(15px,1.25vw,17.5px); }
   .fase-card p  { font-size:clamp(12.5px,.98vw,14px); }
   .fase-tag { display:flex; flex-shrink:0; padding:4px 12px; border-radius:28px; font-size:clamp(9px,.78vw,10.5px); font-weight:600; letter-spacing:.06em; border:.5px solid; white-space:nowrap; }
-  /* ==========================================================================
-     1. ABA DA IA (mantém a altura e amplia bastante a largura)
-  ========================================================================== */
-  /* ==========================================================================
-     2. ABA DO TESTE (título no topo e teste ocupando 80% da aba)
-  ========================================================================== */
-  .quiz-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; align-items:center; justify-content:center; }
-  .quiz-inner { width:100%; max-width:none; margin:0; min-height:0; height:auto; display:flex; flex-direction:column; flex:0 1 auto; }
-  .quiz-wrap .section-header { width:100%; margin-bottom:20px; }
-  .quiz-wrap .section-h2 { font-size:clamp(2.9rem,3.4vw,4rem); line-height:1.05; }
-  .quiz-wrap .section-desc { font-size:clamp(18px,1.28vw,22px); line-height:1.8; }
-  .quiz-container { padding:clamp(28px,4vh,52px) clamp(22px,3vw,52px); min-height:0; height:auto; max-height:calc(100dvh * 0.55); }
-  .quiz-q { font-size:clamp(1.4rem,1.85vw,2rem); }
-  .quiz-opt { padding:clamp(14px,1.7vh,20px) clamp(16px,1.8vw,22px); font-size:clamp(15px,1.2vw,18px); }
+
+  /* ══════════════════════════════════════════
+     QUIZ DESKTOP — FIX #2
+     Estrutura: quiz-wrap (fixed 100dvh) >
+       quiz-inner (flex:1, overflow:hidden) >
+         section-header (flex-shrink:0) +
+         quiz-container (flex:1, flex-col) >
+           progress-bar + quiz-main(overflow:hidden) + quiz-nav
+  ══════════════════════════════════════════ */
+  .quiz-wrap {
+    padding: clamp(28px,4vh,52px) clamp(24px,5vw,72px) 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .quiz-wrap .section-header {
+    margin-bottom: clamp(16px,2vh,24px);
+    flex-shrink: 0;
+  }
+  .quiz-wrap .section-h2  { font-size: clamp(2.4rem, 3.2vw, 3.6rem); line-height: 1.05; }
+  .quiz-wrap .section-desc { font-size: clamp(15px, 1.15vw, 18px); line-height: 1.8; }
+
+  .quiz-inner {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .quiz-container {
+    padding: clamp(24px,3vh,40px) clamp(22px,2.5vw,44px) 0;
+    flex: 1;
+    min-height: 0;
+    /* FIX: sem max-height fixo — ocupa o espaço disponível */
+    max-height: none;
+  }
+
+  .quiz-q { font-size: clamp(1.3rem, 1.7vw, 1.85rem); margin-bottom: clamp(14px,1.8vh,22px); }
+  .quiz-opt { padding: clamp(14px,1.8vh,20px) clamp(16px,1.8vw,22px); font-size: clamp(14px,1.15vw,17px); min-height: 52px; }
+  .quiz-opts { gap: clamp(9px,1.1vh,14px); }
+
+  /* quiz-nav no desktop: padding lateral condizente */
+  .quiz-nav {
+    padding: clamp(10px,1.4vh,16px) clamp(22px,2.5vw,44px) clamp(18px,2.5vh,32px);
+    margin: 0 calc(-1 * clamp(22px,2.5vw,44px));
+  }
+  .quiz-counter { font-size: 14px; }
+  .quiz-hint    { font-size: 13px; }
+
   /* IA desktop */
   .ia-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); }
   .ia-deco-4,.ia-deco-5,.ia-deco-6 { display:block; position:absolute; font-size:clamp(16px,2vw,30px); }
@@ -623,7 +788,8 @@ h2.section-h2,
   .ia-deco-5 { bottom:28%; left:0%; opacity:.10; }
   .ia-deco-6 { bottom:10%; left:1%; opacity:.14; }
   #bp-webchat-inline { --bp-box-h: clamp(520px, calc(100dvh - 280px), 680px); height:var(--bp-box-h); min-height:var(--bp-box-h); width:min(calc(var(--bp-box-h) * 1.5), calc((100vw - var(--sw) - 96px) * 0.75)); max-width:100%; aspect-ratio:auto; margin:18px auto 0; border-radius:24px; display:block; }
-  /* Theme btn: back inside sidebar on desktop — reset all mobile overrides */
+
+  /* Theme btn: dentro da sidebar no desktop */
   #theme-btn {
     position: static !important;
     width: 74px !important; height: 54px !important;
@@ -643,21 +809,45 @@ h2.section-h2,
     left: calc(100% + 10px) !important;
     min-width: 180px !important;
   }
-  /* ==========================================================================
-     3. ABA DE AJUDA (maior afastamento entre os cards)
-  ========================================================================== */
-  .help-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; }
-  .help-grid { grid-template-columns:repeat(4,1fr); gap:32px; align-items:stretch; }
-  .help-card-img { height:clamp(110px,12vh,158px); }
-  .help-card-body { padding:clamp(12px,1.7vh,18px) clamp(12px,1.5vw,18px) clamp(14px,1.8vh,20px); }
-  .help-card-body h3 { font-size:clamp(13px,1vw,14.5px); }
-  .help-card-body p  { font-size:clamp(11px,.88vw,12.5px); }
-  .crisis-strip { padding:clamp(14px,2vh,22px) clamp(16px,2vw,26px); }
-  .crisis-strip h4 { font-size:clamp(13px,1.1vw,15px); }
-  .section-h2 { font-size:3rem; }
-  .section-desc { font-size:clamp(13px,1.2vw,15px); }
 
-  /* ── Fix: prevenir overflow horizontal causado pela sidebar ── */
+  /* ══════════════════════════════════════════
+     AJUDA DESKTOP — FIX #3
+     Problema: 4 cols + cards altos → scroll horizontal e extrapolam tela
+     Solução: page-section overflow:hidden + help-wrap overflow-y:auto
+              com altura calculada para caber em 100dvh
+  ══════════════════════════════════════════ */
+  .help-wrap {
+    padding: clamp(20px,3vh,44px) clamp(20px,4vw,60px);
+    /* FIX: contem tudo em 100dvh — scroll vertical interno */
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sb-accent) transparent;
+  }
+  .help-wrap::-webkit-scrollbar { width: 3px; }
+  .help-wrap::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* FIX: 4 colunas compactas — cards menores para caber em 1 tela */
+  .help-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(12px, 1.5vw, 20px);
+  }
+  .help-card-img { height: clamp(80px, 9vh, 120px); }
+  .help-card-body { padding: clamp(10px,1.4vh,15px) clamp(10px,1.2vw,14px) clamp(12px,1.6vh,16px); }
+  .help-card-icon { width: 28px; height: 28px; font-size: 13px; margin-bottom: 5px; }
+  .help-card-body h3 { font-size: clamp(11.5px,.9vw,13.5px); margin-bottom: 3px; }
+  .help-card-body p  { font-size: clamp(10px,.8vw,11.5px); line-height: 1.55; }
+  .ext-link { font-size: clamp(9.5px,.78vw,11px); margin-top: 4px; }
+  .help-card-link { border-radius: 13px; }
+  .crisis-strip { padding: clamp(12px,1.8vh,20px) clamp(14px,1.8vw,22px); margin-bottom: clamp(10px,1.5vh,16px); }
+  .crisis-strip h4 { font-size: clamp(12px,.98vw,14px); }
+  .crisis-strip p  { font-size: clamp(10px,.82vw,12px); }
+  .section-h2 { font-size: 2.8rem; }
+  .section-desc { font-size: clamp(13px,1.1vw,15px); }
+
+  /* Prevenir overflow horizontal geral */
   .page-section, .info-wrap, .fases-wrap, .quiz-wrap, .ia-wrap, .help-wrap {
     max-width: 100%;
     min-width: 0;
@@ -667,51 +857,38 @@ h2.section-h2,
     max-width: 100%;
     min-width: 0;
   }
-  .info-card, .fase-card, .help-card-link {
-    min-width: 0;
-  }
+  .info-card, .fase-card, .help-card-link { min-width: 0; }
   .fase-content { min-width: 0; overflow-wrap: break-word; word-wrap: break-word; }
-  .fase-content h3, .fase-content p, .fase-num {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
-  }
-  /* sidebar sempre acima do conteúdo, mas sem cobrir */
+  .fase-content h3, .fase-content p, .fase-num { overflow-wrap: break-word; word-wrap: break-word; hyphens: auto; }
   .sidebar { z-index: 500; }
 
-  /* ==========================================================================
-     4. ACESSIBILIDADE (VLibras à direita e áudio à esquerda)
-  ========================================================================== */
   [vw] { bottom:20px!important; right:20px!important; left:auto!important; z-index:8000!important; }
   #float-audio-btn { bottom:96px; right:20px; left:auto; }
   #sr-panel { bottom:148px; right:20px; left:auto; width:270px; }
 }
+
 @media (min-width:641px) and (max-width:1200px) {
   :root { --sw:88px; --sc:46px; }
   .nav-item { width:64px; height:56px; }
   .home-body-v2 { grid-template-columns:1fr 240px; gap:36px; }
-  .help-grid { grid-template-columns:repeat(2,1fr); gap:32px; }
-  .section-h2 { font-size:2.5rem; }
+  /* FIX: tablet — 2 colunas para ajuda */
+  .help-grid { grid-template-columns:repeat(2,1fr); gap:clamp(12px,1.8vw,20px); }
+  .section-h2 { font-size:2.2rem; }
 }
+
 @media (min-width:861px) { .mobile-nav-toggle { display:none!important; } }
+
 @media (min-width: 1440px) and (min-height: 900px) {
   .quiz-wrap { padding-inline: clamp(40px, 5vw, 88px); }
-  .quiz-inner { width:100%; max-width:none; }
-  .quiz-wrap .section-h2 { font-size: clamp(3.2rem, 3.1vw, 4.3rem); }
-  .quiz-wrap .section-desc { font-size: clamp(19px, 1.15vw, 23px); }
-  .quiz-container { flex:1; min-height:0; height:auto; }
+  .quiz-wrap .section-h2 { font-size: clamp(2.8rem, 2.8vw, 3.8rem); }
+  .quiz-wrap .section-desc { font-size: clamp(17px, 1.1vw, 20px); }
   #bp-webchat-inline { width:min(calc(var(--bp-box-h) * 1.5), calc((100vw - var(--sw) - 128px) * 0.75)); }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   AJUSTES DESKTOP ESPECÍFICOS (min-width: 1024px)
-   Afetam apenas telas largas — mobile/tablet não é impactado
+   AJUSTES DESKTOP ≥1024px
 ══════════════════════════════════════════════════════════════ */
 @media (min-width: 1024px) {
-
-  /* ── ABA INÍCIO: "Além do Copo" 6× maior ──────────────────
-     Base desktop: clamp(.85rem, 1vw, 1rem) → 6× ≈ clamp(5.1rem, 6vw, 6rem)
-  ─────────────────────────────────────────────────────────── */
   .home-project-title {
     font-size: clamp(5.1rem, 6vw, 6rem) !important;
     letter-spacing: -.04em;
@@ -719,17 +896,12 @@ h2.section-h2,
     margin-bottom: 20px;
   }
 
-  /* ── ABA "O QUE É?": título igual ao "Teste AUDIT" ────────
-     Teste AUDIT desktop: clamp(2.9rem, 3.4vw, 4rem)
-  ─────────────────────────────────────────────────────────── */
   #sec-info .section-h2,
   #info-h2 {
     font-size: clamp(2.9rem, 3.4vw, 4rem) !important;
     line-height: 1.05;
   }
 
-  /* ── ABA "O QUE É?": cards −25% — padding, ícone, h3 e p ──
-  ─────────────────────────────────────────────────────────── */
   #sec-info .info-grid {
     max-height: calc((100dvh - clamp(56px,8vh,120px)) * 0.56) !important;
   }
@@ -754,47 +926,47 @@ h2.section-h2,
     line-height: 1.55 !important;
   }
 
-  /* ── ABA "AJUDA": help-grid — cards 25% maiores vs base anterior
-  ─────────────────────────────────────────────────────────── */
+  /* FIX: ajuda 4 colunas compactas em telas grandes */
   #sec-ajuda .help-grid {
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 25px !important;
+    gap: clamp(14px, 1.2vw, 22px) !important;
   }
   #sec-ajuda .help-card-img {
-    height: clamp(113px, 11.25vh, 160px) !important;
+    height: clamp(80px, 9vh, 118px) !important;
   }
   #sec-ajuda .help-card-body {
-    padding: 14px 15px 18px !important;
+    padding: clamp(10px,1.3vh,14px) clamp(11px,1.1vw,14px) clamp(12px,1.5vh,16px) !important;
   }
   #sec-ajuda .help-card-icon {
-    width: 35px !important; height: 35px !important;
-    font-size: 17px !important;
-    border-radius: 8px !important;
-    margin-bottom: 6px !important;
+    width: 28px !important; height: 28px !important;
+    font-size: 14px !important;
+    border-radius: 7px !important;
+    margin-bottom: 5px !important;
   }
   #sec-ajuda .help-card-body h3 {
-    font-size: clamp(15px, 1.19vw, 18px) !important;
-    margin-bottom: 4px !important;
+    font-size: clamp(12px,.95vw,14px) !important;
+    margin-bottom: 3px !important;
   }
   #sec-ajuda .help-card-body p {
-    font-size: clamp(13px, 1.03vw, 15.5px) !important;
-    line-height: 1.6 !important;
+    font-size: clamp(10px,.82vw,12px) !important;
+    line-height: 1.55 !important;
   }
   #sec-ajuda .ext-link {
-    font-size: clamp(12px, .94vw, 14px) !important;
-    margin-top: 6px !important;
+    font-size: clamp(9.5px,.78vw,11px) !important;
+    margin-top: 4px !important;
   }
   #sec-ajuda .help-card-link {
-    border-radius: 15px !important;
+    border-radius: 13px !important;
   }
-  /* Garante que o wrap não gere scroll horizontal */
   #sec-ajuda .help-wrap {
     overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 
+  /* Quiz ≥1024px */
+  .quiz-wrap .section-h2 { font-size: clamp(2.6rem, 2.9vw, 3.8rem) !important; }
+  .quiz-wrap .section-desc { font-size: clamp(15px, 1.1vw, 19px) !important; }
 }
-/* ── Fim dos ajustes desktop ─────────────────────────────── */
-
 </style>
 </head>
 <body>
@@ -946,14 +1118,10 @@ h2.section-h2,
             <path d="M75,70 L85,310 Q75,314 73,310 L63,70 Z" fill="url(#glassGrad)" opacity=".6"/>
             <ellipse cx="140" cy="60" rx="80" ry="10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
             <ellipse cx="140" cy="330" rx="55" ry="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-            <!-- Sinal de proibição sobre o copo — cobre toda a área -->
             <g>
-              <!-- Círculo vermelho cobrindo todo o copo -->
               <circle cx="140" cy="190" r="132" fill="rgba(200,20,20,0.18)" stroke="#CC2200" stroke-width="10"/>
-              <!-- Barra diagonal de canto a canto do círculo -->
               <line x1="47" y1="97" x2="233" y2="283" stroke="#CC2200" stroke-width="10" stroke-linecap="round"/>
             </g>
-
           </svg>
           <div class="glass-glow"></div>
         </div>
@@ -1023,21 +1191,20 @@ h2.section-h2,
           <h2 class="section-h2" id="quiz-h2">Teste AUDIT (OMS)</h2>
           <p class="section-desc" id="quiz-desc">Avaliação oficial validada pela OMS. Leva menos de 2 minutos.</p>
         </div>
+        <!-- FIX: quiz-container é agora flex-col com scroll apenas nas opções -->
         <div class="quiz-container" id="quiz-container" data-scroll>
           <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
             <div class="quiz-bar-fill" id="qbar" style="width:0%"></div>
           </div>
           <div id="quiz-main">
+            <!-- Pergunta: flex-shrink:0, não entra no scroll -->
             <div class="quiz-q" id="qtext" aria-live="polite"></div>
+            <!-- Opções: overflow-y:auto aqui -->
             <div class="quiz-opts" id="qopts" role="radiogroup" aria-labelledby="qtext"></div>
-            <div class="quiz-nav">
-              <span class="quiz-counter" id="qcount" aria-live="polite"></span>
-              <span class="quiz-hint"    id="quiz-hint">Toque para avançar</span>
-            </div>
           </div>
           <div class="quiz-result" id="quiz-result" aria-live="polite">
             <div class="result-ring" aria-hidden="true">
-              <svg width="130" height="130" viewBox="0 0 130 130">
+              <svg width="120" height="120" viewBox="0 0 130 130">
                 <circle cx="65" cy="65" r="52" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8" id="ring-track"/>
                 <circle id="ring-fill" cx="65" cy="65" r="52" fill="none" stroke="#D92243" stroke-width="8" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
               </svg>
@@ -1052,6 +1219,11 @@ h2.section-h2,
               <button class="btn-reset" id="btn-reset" onclick="resetQuiz()">Refazer</button>
               <button class="btn-quiz-secondary" id="btn-quiz-sec" onclick="scrollToSection('sec-ia')">Falar com IA <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
             </div>
+          </div>
+          <!-- FIX: quiz-nav DENTRO do container mas FORA do scroll, sempre visível -->
+          <div class="quiz-nav" id="quiz-nav">
+            <span class="quiz-counter" id="qcount" aria-live="polite"></span>
+            <span class="quiz-hint"    id="quiz-hint">Toque para avançar</span>
           </div>
         </div>
       </div>
@@ -1095,43 +1267,35 @@ h2.section-h2,
           </div>
         </div>
         <div class="help-grid">
-          <!-- 1. ABRAFAM -->
-          <a class="help-card-link" href="https://abrafam.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.04s" aria-label="ABRAFAM - Associação Brasileira de Familiares">
+          <a class="help-card-link" href="https://abrafam.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.04s" aria-label="ABRAFAM">
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%23D92243'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M400 120c-30 0-55 25-55 55 0 20 10 37 26 47l-60 158h178l-60-158c16-10 26-27 26-47 0-30-25-55-55-55z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3Ccircle cx='260' cy='210' r='40' fill='rgba(255,255,255,.1)' stroke='%23fff' stroke-width='5'/%3E%3Ccircle cx='540' cy='210' r='40' fill='rgba(255,255,255,.1)' stroke='%23fff' stroke-width='5'/%3E%3Cpath d='M220 380h120M460 380h120' stroke='%23fff' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-home-heart" style="color:#D92243"></i></div><h3>ABRAFAM</h3><p>Associação Brasileira de Familiares, Amigos e Portadores de Transtornos Mentais.</p><span class="ext-link">abrafam.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 2. AA Brasil -->
-          <a class="help-card-link" href="https://www.aa.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.08s" aria-label="Alcoólicos Anônimos Brasil">
+          <a class="help-card-link" href="https://www.aa.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.08s" aria-label="AA Brasil">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80&auto=format" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div><h3>AA Brasil</h3><p>Grupos gratuitos e anônimos de recuperação em todo o Brasil.</p><span class="ext-link">aa.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 3. Linha de Ajuda AA -->
-          <a class="help-card-link" href="https://www.alcoolicosanonimos.org.br/linha-de-ajuda" target="_blank" rel="noopener" data-scroll style="transition-delay:.12s" aria-label="Linha de Ajuda dos Alcoólicos Anônimos">
+          <a class="help-card-link" href="https://www.alcoolicosanonimos.org.br/linha-de-ajuda" target="_blank" rel="noopener" data-scroll style="transition-delay:.12s" aria-label="Linha de Ajuda AA">
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M340 160c-55 0-100 45-100 100 0 30 13 57 34 76l-14 64 60-30c13 5 27 8 20 8 55 0 100-45 100-100s-45-100-100-100z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone-call" style="color:#86EFAC"></i></div><h3>Linha de Ajuda AA</h3><p>Telefones e WhatsApp de plantão por estado, incluindo Alagoas.</p><span class="ext-link">Contato AA <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 4. Al-Anon -->
-          <a class="help-card-link" href="https://www.al-anon.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.16s" aria-label="Al-Anon para familiares">
+          <a class="help-card-link" href="https://www.al-anon.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.16s" aria-label="Al-Anon">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1541199249251-f713e6145474?w=400&q=80&auto=format" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Al-Anon</h3><p>Suporte gratuito para familiares e amigos de pessoas com alcoolismo.</p><span class="ext-link">al-anon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 5. Nar-Anon -->
-          <a class="help-card-link" href="https://www.naranon.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.20s" aria-label="Nar-Anon Brasil">
+          <a class="help-card-link" href="https://www.naranon.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.20s" aria-label="Nar-Anon">
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='315' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Ccircle cx='485' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Cpath d='M223 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3Cpath d='M393 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users-group" style="color:#86EFAC"></i></div><h3>Nar-Anon</h3><p>Grupos de apoio para familiares e amigos de dependentes químicos.</p><span class="ext-link">naranon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 6. CVV -->
-          <a class="help-card-link" href="https://www.cvv.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.24s" aria-label="Centro de Valorização da Vida">
+          <a class="help-card-link" href="https://www.cvv.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.24s" aria-label="CVV">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80&auto=format" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart" id="senad-icon" style="color:#D92243"></i></div><h3>CVV — 188</h3><p>Apoio emocional gratuito 24h por telefone, chat e e-mail.</p><span class="ext-link">cvv.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 7. Para Entender a Dependência Química -->
-          <a class="help-card-link" href="https://www.paraentender.com.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.28s" aria-label="Para Entender a Dependência Química">
+          <a class="help-card-link" href="https://www.paraentender.com.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.28s" aria-label="Para Entender">
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%23F69D39'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Crect x='180' y='130' width='200' height='260' rx='14' fill='rgba(255,255,255,.12)' stroke='%23fff' stroke-width='6'/%3E%3Crect x='210' y='170' width='140' height='14' rx='7' fill='%23fff' opacity='.5'/%3E%3Crect x='210' y='200' width='110' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Crect x='210' y='225' width='130' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Crect x='210' y='250' width='100' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Ccircle cx='530' cy='240' r='90' fill='rgba(255,255,255,.08)' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M530 195v50l35 35' stroke='%23fff' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-book-2" style="color:#F69D39"></i></div><h3>Para Entender</h3><p>Portal educativo sobre dependência química com mapa de grupos de ajuda.</p><span class="ext-link">paraentender.com.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-book-2" style="color:#F69D39"></i></div><h3>Para Entender</h3><p>Portal educativo sobre dependência química com mapa de grupos.</p><span class="ext-link">paraentender.com.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <!-- 8. SENAD 149 -->
-          <a class="help-card-link" href="tel:149" data-scroll style="transition-delay:.32s" aria-label="SENAD - Ligue 149">
+          <a class="help-card-link" href="tel:149" data-scroll style="transition-delay:.32s" aria-label="SENAD 149">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80&auto=format" alt="" loading="lazy"></div>
             <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone" style="color:#FFA500"></i></div><h3>SENAD 149</h3><p>Orientação gratuita 24h do governo sobre dependência química.</p><span class="ext-link">Ligar agora <i class="ti ti-arrow-right" aria-hidden="true"></i></span></div>
           </a>
@@ -1185,23 +1349,21 @@ function applyTheme(t){
   document.documentElement.style.setProperty('--nav-active-bg',T.navActiveBg);
   document.documentElement.style.setProperty('--nav-active-border',T.navActiveBorder);
   document.querySelectorAll('.ia-deco').forEach(el=>el.style.color=T.iaDecoColor);
-  /* home text */
   document.getElementById('home-headline').style.color=T.txOnDark;
   document.getElementById('home-title-text').style.color=T.txOnDark;
   document.getElementById('home-hl').style.color=T.txOnDark;
-  /* section headers */
   document.getElementById('fases-h2').style.color=T.txOnDark;document.getElementById('fases-desc').style.color=T.txOnDarkSub;
   document.getElementById('ia-h2').style.color=T.txOnDark;document.getElementById('ia-desc').style.color=T.txOnDarkSub;
   document.getElementById('info-h2').style.color=T.txOnAcc;document.getElementById('info-desc').style.color=T.txOnAccSub;
   document.getElementById('quiz-h2').style.color=T.txOnAcc;document.getElementById('quiz-desc').style.color=T.txOnAccSub;
   document.getElementById('ajuda-h2').style.color=T.txOnAcc;document.getElementById('ajuda-desc').style.color=T.txOnAccSub;
-  /* info cards */
   document.querySelectorAll('.info-card').forEach(el=>{el.style.background=T.cardBg;el.style.borderColor=T.cardBorder;});
   document.querySelectorAll('.info-card h3').forEach(el=>el.style.color=T.cardTx);
   document.querySelectorAll('.info-card p').forEach(el=>el.style.color=T.cardTx2);
   document.querySelectorAll('.info-card-icon').forEach(el=>el.style.background=T.cardIconBg);
-  /* quiz */
   const qc=document.getElementById('quiz-container');qc.style.background=T.cardBg;qc.style.borderColor=T.quizContainerBorder||T.cardBorder;
+  /* FIX: quiz-nav herda o background do container */
+  const qn=document.getElementById('quiz-nav');if(qn){qn.style.background=T.cardBg;qn.style.borderColor='rgba(255,255,255,.06)';}
   document.getElementById('quiz-progress-bar').style.background=T.progressTrack;
   document.getElementById('qbar').style.background=T.progressFill;
   document.getElementById('qtext').style.color=T.cardTx;
@@ -1213,12 +1375,10 @@ function applyTheme(t){
   document.getElementById('res-title').style.color=T.resTitle;
   const bR=document.getElementById('btn-reset');bR.style.background=T.btnResetBg;bR.style.color=T.btnResetTx;bR.style.borderColor=T.btnResetBdr;
   const bS=document.getElementById('btn-quiz-sec');bS.style.color=T.btnSecTx;bS.style.borderColor=T.btnSecBdr;
-  /* crisis */
   const cs=document.getElementById('crisis-strip');cs.style.background=T.crisisBg;cs.style.borderColor=T.crisisBdr;
   document.getElementById('crisis-icon').style.color=T.crisisIconTx;
   document.getElementById('crisis-title').style.color=T.crisisTitleTx;
   document.getElementById('crisis-sub').style.color=T.crisisSubTx;
-  /* help cards */
   document.querySelectorAll('.help-card-link').forEach(el=>{el.style.background=T.cardBg;el.style.borderColor=T.cardBorder;});
   document.querySelectorAll('.help-card-body h3').forEach(el=>el.style.color=T.cardTx);
   document.querySelectorAll('.help-card-body p').forEach(el=>el.style.color=T.cardTx2);
@@ -1240,7 +1400,7 @@ function paintQuizOpts(){
   });
 }
 
-/* ── Theme dropdown (desktop) ── */
+/* Theme dropdown desktop */
 const themeBtn=document.getElementById('theme-btn');
 const themeDropdown=document.getElementById('theme-dropdown');
 if(themeBtn){
@@ -1250,15 +1410,10 @@ if(themeBtn){
   document.addEventListener('click',()=>{themeDropdown.classList.remove('open');themeBtn.setAttribute('aria-expanded','false');});
 }
 
-/* ── Navigation ── */
+/* Navigation */
 function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
-
-document.querySelectorAll('.bnav-item[data-target]').forEach(link=>{
-  link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);});
-});
-document.querySelectorAll('.nav-item[data-target]').forEach(link=>{
-  link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);if(window.innerWidth<=860)document.getElementById('sidebar').classList.remove('mobile-open');});
-});
+document.querySelectorAll('.bnav-item[data-target]').forEach(link=>{link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);});});
+document.querySelectorAll('.nav-item[data-target]').forEach(link=>{link.addEventListener('click',e=>{e.preventDefault();scrollToSection(link.dataset.target);if(window.innerWidth<=860)document.getElementById('sidebar').classList.remove('mobile-open');});});
 
 /* Desktop sidebar collapse */
 const sidebar=document.getElementById('sidebar');
@@ -1311,11 +1466,14 @@ function loadQ(){
   document.getElementById('qbar').style.width=`${pct}%`;
   document.getElementById('quiz-progress-bar').setAttribute('aria-valuenow',Math.round(pct));
   document.getElementById('qopts').innerHTML=q.o.map((o,i)=>{const sel=answers[qi]===i;return`<button class="quiz-opt${sel?' selected':''}" onclick="selectQ(${i})" role="radio" aria-checked="${sel}" style="background:${sel?T.optSelBg:T.optBg};border-color:${sel?T.optSelBorder:T.optBorder};color:${sel?T.optSelTx:T.optTx}"><div class="quiz-opt-dot" style="background:${sel?T.optSelDot:'transparent'};border-color:${sel?T.optSelBorder:T.optDotBorder}" aria-hidden="true"></div>${o}</button>`;}).join('');
+  /* FIX: scroll to top das opções ao mudar de pergunta */
+  document.getElementById('qopts').scrollTop=0;
 }
 function selectQ(i){answers[qi]=i;loadQ();setTimeout(()=>{if(qi<Qs.length-1){qi++;loadQ();}else showResult();},280);}
 function showResult(){
   totalScore=Qs.reduce((s,q,i)=>s+(answers[i]!==undefined?q.s[answers[i]]:0),0);
   document.getElementById('quiz-main').style.display='none';
+  document.getElementById('quiz-nav').style.display='none';
   document.getElementById('qbar').style.width='100%';
   document.getElementById('quiz-result').classList.add('show');
   document.getElementById('res-score').textContent=totalScore;
@@ -1330,10 +1488,18 @@ function showResult(){
   document.getElementById('res-title').textContent=title;
   document.getElementById('ring-fill').style.stroke=strokeCol;
   const box=document.getElementById('res-box');
-  box.textContent=msg;box.style.cssText=`background:${strokeCol}22;color:${strokeCol};border:.5px solid ${strokeCol};border-radius:12px;padding:14px 16px;margin:12px 0;text-align:left;font-size:13.5px;line-height:1.65;`;
+  box.textContent=msg;box.style.cssText=`background:${strokeCol}22;color:${strokeCol};border:.5px solid ${strokeCol};border-radius:12px;padding:14px 16px;margin:10px 0;text-align:left;font-size:13px;line-height:1.65;`;
   srAnnounce(`Resultado: ${title}. Pontuação: ${totalScore} pontos. ${msg}`);
 }
-function resetQuiz(){qi=0;answers=[];totalScore=0;document.getElementById('quiz-main').style.display='block';document.getElementById('quiz-result').classList.remove('show');document.getElementById('ring-fill').style.strokeDashoffset='327';loadQ();}
+function resetQuiz(){
+  qi=0;answers=[];totalScore=0;
+  document.getElementById('quiz-main').style.display='flex';
+  document.getElementById('quiz-main').style.flexDirection='column';
+  document.getElementById('quiz-nav').style.display='flex';
+  document.getElementById('quiz-result').classList.remove('show');
+  document.getElementById('ring-fill').style.strokeDashoffset='327';
+  loadQ();
+}
 
 /* ══════════════════════════════════
    BOTPRESS
@@ -1346,46 +1512,6 @@ window.addEventListener('load',()=>{
   [600,1500,3000,5000].forEach(t=>setTimeout(tryMove,t));
   new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&window.botpress?.open)window.botpress.open();});},{threshold:0.5}).observe(document.getElementById('sec-ia'));
 });
-
-/* ══════════════════════════════════
-   GEOLOCALIZAÇÃO
-══════════════════════════════════ */
-let leafletLoaded=false,locMap=null;
-function loadLeaflet(cb){if(leafletLoaded){cb();return;}const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);const js=document.createElement('script');js.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';js.onload=()=>{leafletLoaded=true;cb();};document.head.appendChild(js);}
-function haversineKm(la1,lo1,la2,lo2){const R=6371,dL=(la2-la1)*Math.PI/180,dN=(lo2-lo1)*Math.PI/180,a=Math.sin(dL/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
-function formatDist(km){return km<1?Math.round(km*1000)+'m':km.toFixed(1).replace('.',',')+'km';}
-function requestLocation(){
-  const btn=document.getElementById('loc-btn'),txt=document.getElementById('loc-btn-text');
-  btn.disabled=true;txt.textContent='Buscando…';srAnnounce('Buscando sua localização…');
-  if(!navigator.geolocation){txt.textContent='Não suportado';btn.disabled=false;return;}
-  navigator.geolocation.getCurrentPosition(
-    pos=>{txt.textContent='Ativo ✓';btn.disabled=false;srAnnounce('Localização encontrada. Buscando centros próximos…');loadLeaflet(()=>showNearbyPlaces(pos.coords.latitude,pos.coords.longitude));},
-    err=>{btn.disabled=false;txt.textContent='Tentar novamente';let m='Erro ao obter localização.';if(err.code===1)m='Permissão negada.';else if(err.code===3)m='Tempo esgotado.';document.getElementById('loc-sub').textContent=m;srAnnounce(m);},
-    {timeout:20000,enableHighAccuracy:true,maximumAge:60000}
-  );
-}
-async function fetchOverpass(q){const eps=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];for(const ep of eps){try{const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'data='+encodeURIComponent(q),signal:AbortSignal.timeout(18000)});if(!r.ok)continue;const d=await r.json();if(d&&d.elements)return d;}catch(e){continue;}}return null;}
-async function showNearbyPlaces(uLat,uLng){
-  const T=THEMES[currentTheme];
-  document.getElementById('loc-results').style.display='block';
-  document.getElementById('loc-places').innerHTML='<div class="loc-status">Buscando locais…</div>';
-  const mapEl=document.getElementById('loc-map');
-  if(!locMap){locMap=L.map(mapEl,{zoomControl:true}).setView([uLat,uLng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'©OSM',maxZoom:18}).addTo(locMap);}
-  else{locMap.setView([uLat,uLng],13);locMap.eachLayer(l=>{if(l instanceof L.Marker||l instanceof L.CircleMarker)locMap.removeLayer(l);});}
-  L.circleMarker([uLat,uLng],{radius:9,color:'#FFA500',fillColor:'#FFA500',fillOpacity:1,weight:3}).addTo(locMap).bindPopup('<b>📍 Você está aqui</b>').openPopup();
-  const q=`[out:json][timeout:30];(node["amenity"="hospital"](around:30000,${uLat},${uLng});way["amenity"="hospital"](around:30000,${uLat},${uLng});node["amenity"="clinic"](around:30000,${uLat},${uLng});node["amenity"="social_facility"](around:30000,${uLat},${uLng});node["healthcare"](around:30000,${uLat},${uLng});node["name"~"CAPS|Atenção Psicossocial|Alcoólicos|Saúde Mental|CRAS|CREAS|UPA|Pronto.Socorro|Hospital",i](around:30000,${uLat},${uLng}););out center 50;`;
-  let data=null;try{data=await fetchOverpass(q);}catch(e){}
-  if(!data||!data.elements?.length){document.getElementById('loc-places').innerHTML=`<div class="loc-status">Nenhum local encontrado automaticamente.<br><a href="https://www.google.com/maps/search/CAPS+saúde+mental/@${uLat},${uLng},13z" target="_blank" rel="noopener" style="color:#FFA500;font-weight:600">Buscar no Google Maps →</a></div>`;return;}
-  const seen=new Set();
-  const places=data.elements.filter(p=>{const n=p.tags?.name,a=p.tags?.amenity||p.tags?.healthcare;if(!n&&!a)return false;const k=n||(a+'_'+(p.lat||p.center?.lat));if(seen.has(k))return false;seen.add(k);return true;})
-    .map(p=>{const pLat=p.lat??p.center?.lat,pLon=p.lon??p.center?.lon;return{...p,lat:pLat,lon:pLon,distKm:haversineKm(uLat,uLng,pLat,pLon)};})
-    .filter(p=>p.lat&&p.lon).sort((a,b)=>a.distKm-b.distKm).slice(0,16);
-  if(!places.length){document.getElementById('loc-places').innerHTML='<div class="loc-status">Nenhum local mapeado encontrado.</div>';return;}
-  places.forEach(p=>{const name=p.tags?.name||'Serviço de saúde';const am=p.tags?.amenity||p.tags?.healthcare||'';const icon=am==='hospital'?'🏥':am==='pharmacy'?'💊':am==='social_facility'?'🏛️':'🏥';L.marker([p.lat,p.lon],{icon:L.divIcon({html:`<div style="font-size:20px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))">${icon}</div>`,className:'',iconSize:[24,24],iconAnchor:[12,12]})}).addTo(locMap).bindPopup(`<b>${name}</b><br><small>${am||'serviço'}·${formatDist(p.distKm)}</small>`);});
-  try{const grp=L.featureGroup([L.circleMarker([uLat,uLng],{radius:1}),...places.slice(0,8).map(p=>L.circleMarker([p.lat,p.lon],{radius:1}))]);locMap.fitBounds(grp.getBounds().pad(.15));}catch(e){}
-  document.getElementById('loc-places').innerHTML=places.map(p=>{const name=p.tags?.name||'Serviço de saúde';const am=p.tags?.amenity||p.tags?.healthcare||'';const tl={hospital:'Hospital',clinic:'Clínica',pharmacy:'Farmácia',social_facility:'Serviço Social',doctors:'UBS'}[am]||am||'Serviço';const phone=p.tags?.phone||p.tags?.['contact:phone'];const mu=`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lon}`;const icon=am==='hospital'?'🏥':am==='pharmacy'?'💊':am==='social_facility'?'🏛️':'🏥';return`<a class="loc-place-card" href="${mu}" target="_blank" rel="noopener" style="background:${T.cardBg};border-color:${T.cardBorder}"><div class="loc-place-name" style="color:${T.cardTx}">${icon} ${name}</div><div class="loc-place-type" style="color:${T.cardTx2}">${tl}</div>${phone?`<div class="loc-place-dist" style="color:${T.cardTx2}">📞 ${phone}</div>`:''}<div class="loc-place-dist" style="color:${T.extLinkTx};font-weight:600">${formatDist(p.distKm)} ↗</div></a>`;}).join('');
-  srAnnounce(`${places.length} locais encontrados próximos a você.`);
-}
 
 /* ══════════════════════════════════
    ÁUDIO / VOZ ALTA
@@ -1417,46 +1543,14 @@ document.addEventListener('keydown',e=>{if(e.altKey&&e.key.toLowerCase()==='r'){
 /* ══════════════════════════════════
    BOTÃO TEMA MOBILE
 ══════════════════════════════════ */
-const mobileThemeBtn = document.getElementById('mobile-theme-btn');
-const mobileThemeDd  = document.getElementById('mobile-theme-dropdown');
-
-if (mobileThemeBtn && mobileThemeDd) {
-  mobileThemeBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const open = mobileThemeDd.classList.toggle('open');
-    mobileThemeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  mobileThemeDd.querySelectorAll('.theme-option').forEach(opt => {
-    opt.addEventListener('click', e => {
-      e.stopPropagation();
-      applyTheme(opt.dataset.theme);
-      mobileThemeDd.classList.remove('open');
-      mobileThemeBtn.setAttribute('aria-expanded', 'false');
-      /* espelha seleção no dropdown mobile */
-      mobileThemeDd.querySelectorAll('.theme-option').forEach(o =>
-        o.classList.toggle('active', o.dataset.theme === opt.dataset.theme)
-      );
-    });
-    opt.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click(); }
-    });
-  });
-
-  document.addEventListener('click', () => {
-    mobileThemeDd.classList.remove('open');
-    mobileThemeBtn.setAttribute('aria-expanded', 'false');
-  });
+const mobileThemeBtn=document.getElementById('mobile-theme-btn');
+const mobileThemeDd=document.getElementById('mobile-theme-dropdown');
+if(mobileThemeBtn&&mobileThemeDd){
+  mobileThemeBtn.addEventListener('click',e=>{e.stopPropagation();const open=mobileThemeDd.classList.toggle('open');mobileThemeBtn.setAttribute('aria-expanded',open?'true':'false');});
+  mobileThemeDd.querySelectorAll('.theme-option').forEach(opt=>{opt.addEventListener('click',e=>{e.stopPropagation();applyTheme(opt.dataset.theme);mobileThemeDd.classList.remove('open');mobileThemeBtn.setAttribute('aria-expanded','false');mobileThemeDd.querySelectorAll('.theme-option').forEach(o=>o.classList.toggle('active',o.dataset.theme===opt.dataset.theme));});opt.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();opt.click();}});});
+  document.addEventListener('click',()=>{mobileThemeDd.classList.remove('open');mobileThemeBtn.setAttribute('aria-expanded','false');});
 }
-
-/* Espelha o tema ativo no dropdown mobile ao inicializar */
-function syncMobileThemeActive(t) {
-  const dd = document.getElementById('mobile-theme-dropdown');
-  if (!dd) return;
-  dd.querySelectorAll('.theme-option').forEach(o =>
-    o.classList.toggle('active', o.dataset.theme === t)
-  );
-}
+function syncMobileThemeActive(t){const dd=document.getElementById('mobile-theme-dropdown');if(!dd)return;dd.querySelectorAll('.theme-option').forEach(o=>o.classList.toggle('active',o.dataset.theme===t));}
 
 /* ══════════════════════════════════
    INIT
@@ -1470,5 +1564,5 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 setTimeout(()=>document.getElementById('page-veil').classList.add('out'),80);
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a016bd34eb766b1b',t:'MTc3OTczNTE2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0188dd339eeb8fb',t:'MTc3OTc1NDE5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
