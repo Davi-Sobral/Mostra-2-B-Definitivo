@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Além do Copo — Informação e Apoio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312100E'/%3E%3C!-- copo --%3E%3Cpath d='M18 14 L46 14 L41 50 L23 50 Z' fill='none' stroke='%23FFA500' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cellipse cx='32' cy='14' rx='14' ry='3.5' fill='none' stroke='%23FFA500' stroke-width='2.5'/%3E%3Crect x='23' y='31' width='18' height='14' rx='1' fill='rgba(255,165,0,.18)'/%3E%3C!-- sinal de bloqueio --%3E%3Ccircle cx='32' cy='32' r='19' fill='rgba(217,34,67,.15)' stroke='%23D92243' stroke-width='4'/%3E%3Cline x1='18' y1='18' x2='46' y2='46' stroke='%23D92243' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
@@ -309,13 +310,14 @@ h2.section-h2,
    FASES
 ═══════════════════════════════════════ */
 .fases-wrap { padding:30px 18px 26px; display:flex; flex-direction:column; min-height:100dvh; justify-content:center; transition:background .35s; }
-.fases-list { display:flex; flex-direction:column; gap:9px; margin-top:16px; }
+.fases-list { display:flex; flex-direction:column; gap:9px; margin-top:16px; width:100%; max-width:720px; align-self:center; }
 .fase-card {
   border:.5px solid rgba(255,255,255,.08); border-radius:14px;
   padding:13px 14px 13px 18px;
   display:flex; align-items:center; gap:12px;
   position:relative; overflow:hidden;
   transition:all .28s var(--ease); background:rgba(255,255,255,.04);
+  height:auto; min-height:0;
   -webkit-tap-highlight-color:transparent;
 }
 .fase-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:4px 0 0 4px; background:#FFA500; }
@@ -323,9 +325,9 @@ h2.section-h2,
 .fase-illus { flex-shrink:0; width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); }
 .fase-illus svg { width:52%; height:52%; }
 .fase-content { flex:1; min-width:0; }
-.fase-num { font-family:var(--font-h); font-size:.57rem; font-weight:700; letter-spacing:.14em; color:#fff; margin-bottom:1px; text-transform:uppercase; }
-.fase-card h3 { font-size:13px; font-weight:600; color:#fff; margin-bottom:2px; line-height:1.3; }
-.fase-card p  { font-size:11px; color:rgba(255,255,255,.62); line-height:1.55; }
+.fase-num { font-family:var(--font-h); font-size:.65rem; font-weight:700; letter-spacing:.14em; color:#fff; margin-bottom:2px; text-transform:uppercase; }
+.fase-card h3 { font-size:15px; font-weight:600; color:#fff; margin-bottom:3px; line-height:1.3; }
+.fase-card p  { font-size:13px; color:rgba(255,255,255,.62); line-height:1.6; }
 .fase-tag { display:none; }
 
 /* ═══════════════════════════════════════
@@ -337,14 +339,15 @@ h2.section-h2,
   display:flex; flex-direction:column;
   min-height: 100dvh;
   height: 100%;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
   transition:background .35s;
 }
 .quiz-wrap .section-header { width:100%; margin-top: 0; margin-bottom: 16px; }
 .quiz-wrap .section-h2  { font-size: clamp(2.25rem, 8vw, 3.05rem); line-height:1.08; }
 .quiz-wrap .section-desc { font-size: clamp(16px, 4.2vw, 18px); line-height: 1.78; max-width:none; }
-.quiz-inner { width:100%; min-height:100%; height:100%; flex:1; display:flex; flex-direction:column; }
-.quiz-container { border-radius:20px; padding:26px 20px; margin-top:0; border:.5px solid; transition:background .35s,border-color .35s; flex:1; min-height:0; height:auto; overflow:auto; display:flex; flex-direction:column; }
+.quiz-inner { width:100%; min-height:0; height:auto; flex:0 1 auto; display:flex; flex-direction:column; }
+.quiz-container { border-radius:20px; padding:26px 20px; margin-top:0; border:.5px solid; transition:background .35s,border-color .35s; min-height:0; height:auto; max-height:calc(100dvh * 0.55); overflow:auto; display:flex; flex-direction:column; width:100%; }
 .quiz-progress-bar { height:5px; border-radius:3px; margin-bottom:24px; overflow:hidden; transition:background .35s; flex-shrink:0; }
 .quiz-bar-fill { height:100%; border-radius:3px; transition:width .4s cubic-bezier(.4,0,.2,1),background .35s; }
 #quiz-main { flex:1; min-height:0; display:flex; flex-direction:column; }
@@ -388,7 +391,7 @@ h2.section-h2,
 @keyframes deco-float1 { 0%,100%{transform:translateY(0) rotate(-6deg)} 50%{transform:translateY(-10px) rotate(4deg)} }
 @keyframes deco-float2 { 0%,100%{transform:translateY(0) rotate(5deg)} 50%{transform:translateY(8px) rotate(-5deg)} }
 .ia-inner { width:100%; flex:1; display:flex; flex-direction:column; position:relative; z-index:2; }
-#bp-webchat-inline { min-height: calc(100dvh - 220px); height: calc(100dvh - 220px); border-radius:16px; overflow:hidden; border:.5px solid rgba(255,255,255,.1); background:rgba(0,0,0,.2); }
+#bp-webchat-inline { min-height: calc(86.25dvh - 165px); height: calc(86.25dvh - 165px); width:85%; margin-left:auto; margin-right:auto; border-radius:16px; overflow:hidden; border:.5px solid rgba(255,255,255,.1); background:rgba(0,0,0,.2); }
 [id*="bp-web-widget-btn"],[class*="bpw-floating"],[class*="bpw-powered"] { display:none!important; }
 
 /* ═══════════════════════════════════════
@@ -429,11 +432,11 @@ h2.section-h2,
 
 /* ─────────────────────────────────────────
    BOTÃO ÁUDIO — acima do VLibras
-   VLibras ≈ 40px, gap 8px → +48px
+   VLibras ≈ 56px, gap 12px → +68px
 ───────────────────────────────────────── */
 #float-audio-btn {
   position: fixed;
-  bottom: calc(var(--body-pb) + 72px);
+  bottom: calc(var(--body-pb) + 96px);
   right: 20px;
   left: auto;
   z-index: 7700;
@@ -454,7 +457,7 @@ h2.section-h2,
 /* Painel de áudio — sobe da direita */
 #sr-panel {
   position: fixed;
-  bottom: calc(var(--body-pb) + 72px);
+  bottom: calc(var(--body-pb) + 148px);
   right: 20px;
   left: auto;
   z-index: 7800;
@@ -584,20 +587,20 @@ h2.section-h2,
   .home-title-rule { margin:0 0 clamp(14px,2vh,22px); }
   .home-headline { font-size:clamp(2rem,4.5vw,4.4rem); font-weight:800; line-height:1.1; }
   /* Info desktop */
-  .info-wrap { padding:clamp(28px,4vh,60px) clamp(20px,5vw,72px); overflow:hidden; }
-  .info-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); }
-  .info-card { padding:clamp(18px,2.2vh,28px) clamp(16px,1.8vw,24px); }
-  .info-card-icon { width:50px; height:50px; border-radius:13px; font-size:1.5rem; margin-bottom:12px; }
-  .info-card h3 { font-size:clamp(17.5px,1.48vw,20.9px); }
-  .info-card p  { font-size:clamp(14.4px,1.14vw,16.8px); }
+  .info-wrap { padding:clamp(28px,4vh,60px) clamp(20px,5vw,72px); overflow:hidden; justify-content:center; }
+  .info-grid { grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); max-height:calc((100dvh - clamp(56px,8vh,120px)) * 0.75); gap:11px; }
+  .info-card { padding:clamp(12px,1.5vh,18px) clamp(14px,1.5vw,20px); overflow:hidden; }
+  .info-card-icon { width:40px; height:40px; border-radius:11px; font-size:1.2rem; margin-bottom:8px; }
+  .info-card h3 { font-size:clamp(15px,1.25vw,18px); }
+  .info-card p  { font-size:clamp(12px,.96vw,14px); line-height:1.55; }
   /* Fases desktop */
   .fases-wrap { padding:clamp(24px,3.5vh,52px) clamp(20px,5vw,72px); overflow:hidden; }
-  .fases-list { margin-top:clamp(14px,1.8vh,24px); gap:clamp(6px,.8vh,11px); }
-  .fase-card { padding:clamp(11px,1.4vh,20px) clamp(16px,2vw,28px); gap:clamp(14px,1.8vw,28px); }
+  .fases-list { margin-top:clamp(14px,1.8vh,24px); gap:clamp(7px,.9vh,13px); max-width:860px; }
+  .fase-card { padding:clamp(13px,1.6vh,22px) clamp(16px,2vw,28px); gap:clamp(14px,1.8vw,28px); }
   .fase-illus { width:clamp(48px,5.5vw,72px); height:clamp(48px,5.5vw,72px); border-radius:13px; }
-  .fase-num { font-size:.62rem; }
-  .fase-card h3 { font-size:clamp(13px,1.15vw,15.5px); }
-  .fase-card p  { font-size:clamp(11px,.9vw,12.5px); }
+  .fase-num { font-size:.68rem; }
+  .fase-card h3 { font-size:clamp(15px,1.25vw,17.5px); }
+  .fase-card p  { font-size:clamp(12.5px,.98vw,14px); }
   .fase-tag { display:flex; flex-shrink:0; padding:4px 12px; border-radius:28px; font-size:clamp(9px,.78vw,10.5px); font-weight:600; letter-spacing:.06em; border:.5px solid; white-space:nowrap; }
   /* ==========================================================================
      1. ABA DA IA (mantém a altura e amplia bastante a largura)
@@ -605,12 +608,12 @@ h2.section-h2,
   /* ==========================================================================
      2. ABA DO TESTE (título no topo e teste ocupando 80% da aba)
   ========================================================================== */
-  .quiz-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; align-items:stretch; justify-content:flex-start; }
-  .quiz-inner { width:100%; max-width:none; margin:0; min-height:100%; height:100%; display:flex; flex-direction:column; flex:1; }
+  .quiz-wrap { padding:clamp(24px,3.5vh,56px) clamp(20px,5vw,72px); overflow-y:auto; align-items:center; justify-content:center; }
+  .quiz-inner { width:100%; max-width:none; margin:0; min-height:0; height:auto; display:flex; flex-direction:column; flex:0 1 auto; }
   .quiz-wrap .section-header { width:100%; margin-bottom:20px; }
   .quiz-wrap .section-h2 { font-size:clamp(2.9rem,3.4vw,4rem); line-height:1.05; }
   .quiz-wrap .section-desc { font-size:clamp(18px,1.28vw,22px); line-height:1.8; }
-  .quiz-container { padding:clamp(28px,4vh,52px) clamp(22px,3vw,52px); flex:1; min-height:0; height:auto; }
+  .quiz-container { padding:clamp(28px,4vh,52px) clamp(22px,3vw,52px); min-height:0; height:auto; max-height:calc(100dvh * 0.55); }
   .quiz-q { font-size:clamp(1.4rem,1.85vw,2rem); }
   .quiz-opt { padding:clamp(14px,1.7vh,20px) clamp(16px,1.8vw,22px); font-size:clamp(15px,1.2vw,18px); }
   /* IA desktop */
@@ -619,7 +622,7 @@ h2.section-h2,
   .ia-deco-4 { top:12%; left:0%; opacity:.13; }
   .ia-deco-5 { bottom:28%; left:0%; opacity:.10; }
   .ia-deco-6 { bottom:10%; left:1%; opacity:.14; }
-  #bp-webchat-inline { --bp-box-h: clamp(520px, calc(100dvh - 280px), 680px); height:var(--bp-box-h); min-height:var(--bp-box-h); width:min(calc(var(--bp-box-h) * 2), calc(100vw - var(--sw) - 96px)); max-width:100%; aspect-ratio:auto; margin:18px auto 0; border-radius:24px; }
+  #bp-webchat-inline { --bp-box-h: clamp(520px, calc(100dvh - 280px), 680px); height:var(--bp-box-h); min-height:var(--bp-box-h); width:min(calc(var(--bp-box-h) * 1.5), calc((100vw - var(--sw) - 96px) * 0.75)); max-width:100%; aspect-ratio:auto; margin:18px auto 0; border-radius:24px; display:block; }
   /* Theme btn: back inside sidebar on desktop — reset all mobile overrides */
   #theme-btn {
     position: static !important;
@@ -680,8 +683,8 @@ h2.section-h2,
      4. ACESSIBILIDADE (VLibras à direita e áudio à esquerda)
   ========================================================================== */
   [vw] { bottom:20px!important; right:20px!important; left:auto!important; z-index:8000!important; }
-  #float-audio-btn { bottom:72px; right:20px; left:auto; }
-  #sr-panel { bottom:124px; right:20px; left:auto; width:270px; }
+  #float-audio-btn { bottom:96px; right:20px; left:auto; }
+  #sr-panel { bottom:148px; right:20px; left:auto; width:270px; }
 }
 @media (min-width:641px) and (max-width:1200px) {
   :root { --sw:88px; --sc:46px; }
@@ -697,7 +700,7 @@ h2.section-h2,
   .quiz-wrap .section-h2 { font-size: clamp(3.2rem, 3.1vw, 4.3rem); }
   .quiz-wrap .section-desc { font-size: clamp(19px, 1.15vw, 23px); }
   .quiz-container { flex:1; min-height:0; height:auto; }
-  #bp-webchat-inline { width:min(calc(var(--bp-box-h) * 2), calc(100vw - var(--sw) - 128px)); }
+  #bp-webchat-inline { width:min(calc(var(--bp-box-h) * 1.5), calc((100vw - var(--sw) - 128px) * 0.75)); }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -725,59 +728,64 @@ h2.section-h2,
     line-height: 1.05;
   }
 
-  /* ── ABA "O QUE É?": cards pela metade — padding, ícone, h3 e p ─
-     Reduz tudo proporcionalmente para caber no grid 2×2 sem overflow
+  /* ── ABA "O QUE É?": cards −25% — padding, ícone, h3 e p ──
   ─────────────────────────────────────────────────────────── */
+  #sec-info .info-grid {
+    max-height: calc((100dvh - clamp(56px,8vh,120px)) * 0.56) !important;
+  }
   #sec-info .info-card {
-    padding: clamp(10px, 1.1vw, 16px) clamp(10px, 1.1vw, 16px) !important;
-    gap: 5px !important;
+    padding: clamp(7px, .8vw, 11px) clamp(7px, .8vw, 11px) !important;
+    gap: 3px !important;
     overflow: hidden;
   }
   #sec-info .info-card-icon {
-    width: 30px !important; height: 30px !important;
-    font-size: .85rem !important;
-    border-radius: 8px !important;
-    margin-bottom: 6px !important;
-  }
-  #sec-info .info-card h3 {
-    font-size: clamp(19.5px, 1.575vw, 22.5px) !important;
-    line-height: 1.25 !important;
+    width: 22px !important; height: 22px !important;
+    font-size: .64rem !important;
+    border-radius: 6px !important;
     margin-bottom: 4px !important;
   }
+  #sec-info .info-card h3 {
+    font-size: clamp(14px, 1.18vw, 16.5px) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+  }
   #sec-info .info-card p {
-    font-size: 18px !important;
+    font-size: clamp(13.75px, 1.075vw, 16.25px) !important;
     line-height: 1.55 !important;
   }
 
-  /* ── ABA "AJUDA": help-grid cabe inteiro na tela ──────────
-     4 colunas com tamanhos compactos; imagem e corpo menores
+  /* ── ABA "AJUDA": help-grid — cards 25% maiores vs base anterior
   ─────────────────────────────────────────────────────────── */
   #sec-ajuda .help-grid {
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 14px !important;
+    gap: 25px !important;
   }
   #sec-ajuda .help-card-img {
-    height: clamp(70px, 7vh, 100px) !important;
+    height: clamp(113px, 11.25vh, 160px) !important;
   }
   #sec-ajuda .help-card-body {
-    padding: 8px 9px 10px !important;
+    padding: 14px 15px 18px !important;
   }
   #sec-ajuda .help-card-icon {
-    width: 22px !important; height: 22px !important;
-    font-size: 11px !important;
-    border-radius: 5px !important;
-    margin-bottom: 4px !important;
+    width: 35px !important; height: 35px !important;
+    font-size: 17px !important;
+    border-radius: 8px !important;
+    margin-bottom: 6px !important;
   }
   #sec-ajuda .help-card-body h3 {
-    font-size: clamp(10px, .78vw, 12px) !important;
-    margin-bottom: 2px !important;
+    font-size: clamp(15px, 1.19vw, 18px) !important;
+    margin-bottom: 4px !important;
   }
   #sec-ajuda .help-card-body p {
-    font-size: clamp(9px, .68vw, 10.5px) !important;
-    line-height: 1.5 !important;
+    font-size: clamp(13px, 1.03vw, 15.5px) !important;
+    line-height: 1.6 !important;
+  }
+  #sec-ajuda .ext-link {
+    font-size: clamp(12px, .94vw, 14px) !important;
+    margin-top: 6px !important;
   }
   #sec-ajuda .help-card-link {
-    border-radius: 10px !important;
+    border-radius: 15px !important;
   }
   /* Garante que o wrap não gere scroll horizontal */
   #sec-ajuda .help-wrap {
@@ -969,22 +977,22 @@ h2.section-h2,
         <div class="info-card" data-scroll style="transition-delay:.04s">
           <div class="info-card-icon" aria-hidden="true"><i class="ti ti-brain" style="color:#D92243"></i></div>
           <h3>Doença neurológica</h3>
-          <p>O álcool altera circuitos de recompensa, controle e memória. A dependência é real e mensurável neurologicamente.</p>
+          <p>O álcool modifica circuitos cerebrais de recompensa, memória e autocontrole. Com o tempo, o cérebro passa a depender da substância para funcionar normalmente — tornando a dependência uma condição médica real, mensurável e tratável.</p>
         </div>
         <div class="info-card" data-scroll style="transition-delay:.08s">
           <div class="info-card-icon" aria-hidden="true"><i class="ti ti-dna" style="color:#60A5FA"></i></div>
           <h3>Base genética</h3>
-          <p>50–60% do risco é hereditário. Filhos de dependentes têm 3–4× mais chance de desenvolver.</p>
+          <p>Entre 50% e 60% da vulnerabilidade ao alcoolismo tem origem genética. Filhos de dependentes apresentam risco até 4 vezes maior de desenvolver a condição — o que não significa destino, mas exige atenção redobrada ao padrão de consumo.</p>
         </div>
         <div class="info-card" data-scroll style="transition-delay:.12s">
           <div class="info-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div>
           <h3>Impacto social</h3>
-          <p>Afeta relacionamentos e emprego. No Brasil, +10 milhões têm uso nocivo — a maioria não reconhece.</p>
+          <p>O uso nocivo desgasta vínculos familiares, compromete o desempenho profissional e aumenta o risco de acidentes e violência. No Brasil, mais de 10 milhões de pessoas vivem essa realidade — e a maioria ainda não se reconhece como dependente.</p>
         </div>
         <div class="info-card" data-scroll style="transition-delay:.16s">
           <div class="info-card-icon" aria-hidden="true"><i class="ti ti-heartbeat" style="color:#D92243"></i></div>
           <h3>Riscos à saúde</h3>
-          <p>Cirrose, pancreatite, cardiomiopatia e risco aumentado de 7 tipos de câncer com uso prolongado.</p>
+          <p>O consumo prolongado eleva significativamente o risco de cirrose hepática, pancreatite, cardiomiopatia e ao menos 7 tipos de câncer. Além disso, compromete sistema imunológico, saúde mental e expectativa de vida — mesmo em doses consideradas "moderadas".</p>
         </div>
       </div>
     </div>
@@ -1087,37 +1095,45 @@ h2.section-h2,
           </div>
         </div>
         <div class="help-grid">
-          <a class="help-card-link" href="https://www.gov.br/saude/pt-br/composicao/saes/dadt/caps" target="_blank" rel="noopener" data-scroll style="transition-delay:.04s" aria-label="CAPS-AD gratuito pelo SUS">
-            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80&auto=format" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-building-hospital" style="color:#60A5FA"></i></div><h3>CAPS-AD</h3><p>Atendimento SUS, equipe multidisciplinar.</p><span class="ext-link">Saiba mais <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          <!-- 1. ABRAFAM -->
+          <a class="help-card-link" href="https://abrafam.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.04s" aria-label="ABRAFAM - Associação Brasileira de Familiares">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%23D92243'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M400 120c-30 0-55 25-55 55 0 20 10 37 26 47l-60 158h178l-60-158c16-10 26-27 26-47 0-30-25-55-55-55z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3Ccircle cx='260' cy='210' r='40' fill='rgba(255,255,255,.1)' stroke='%23fff' stroke-width='5'/%3E%3Ccircle cx='540' cy='210' r='40' fill='rgba(255,255,255,.1)' stroke='%23fff' stroke-width='5'/%3E%3Cpath d='M220 380h120M460 380h120' stroke='%23fff' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-home-heart" style="color:#D92243"></i></div><h3>ABRAFAM</h3><p>Associação Brasileira de Familiares, Amigos e Portadores de Transtornos Mentais.</p><span class="ext-link">abrafam.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <a class="help-card-link" href="https://www.aa.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.08s" aria-label="Alcoólicos Anônimos">
+          <!-- 2. AA Brasil -->
+          <a class="help-card-link" href="https://www.aa.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.08s" aria-label="Alcoólicos Anônimos Brasil">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80&auto=format" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div><h3>AA</h3><p>Grupos gratuitos e anônimos em todo o Brasil.</p><span class="ext-link">aa.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users" style="color:#86EFAC"></i></div><h3>AA Brasil</h3><p>Grupos gratuitos e anônimos de recuperação em todo o Brasil.</p><span class="ext-link">aa.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <a class="help-card-link" href="tel:149" data-scroll style="transition-delay:.12s" aria-label="SENAD - Ligue 149">
-            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80&auto=format" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone" id="senad-icon"></i></div><h3>SENAD 149</h3><p>Orientação gratuita 24h sobre dependência.</p><span class="ext-link">Ligar <i class="ti ti-arrow-right" aria-hidden="true"></i></span></div>
+          <!-- 3. Linha de Ajuda AA -->
+          <a class="help-card-link" href="https://www.alcoolicosanonimos.org.br/linha-de-ajuda" target="_blank" rel="noopener" data-scroll style="transition-delay:.12s" aria-label="Linha de Ajuda dos Alcoólicos Anônimos">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M340 160c-55 0-100 45-100 100 0 30 13 57 34 76l-14 64 60-30c13 5 27 8 20 8 55 0 100-45 100-100s-45-100-100-100z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone-call" style="color:#86EFAC"></i></div><h3>Linha de Ajuda AA</h3><p>Telefones e WhatsApp de plantão por estado, incluindo Alagoas.</p><span class="ext-link">Contato AA <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
+          <!-- 4. Al-Anon -->
           <a class="help-card-link" href="https://www.al-anon.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.16s" aria-label="Al-Anon para familiares">
             <div class="help-card-img"><img src="https://images.unsplash.com/photo-1541199249251-f713e6145474?w=400&q=80&auto=format" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Al-Anon</h3><p>Suporte para famílias e amigos.</p><span class="ext-link">al-anon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Al-Anon</h3><p>Suporte gratuito para familiares e amigos de pessoas com alcoolismo.</p><span class="ext-link">al-anon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <a class="help-card-link" href="https://amorexigente.org/" target="_blank" rel="noopener" data-scroll style="transition-delay:.20s" aria-label="Amor-Exigente">
-            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%23D92243'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M220 170c0-46 37-83 83-83 39 0 63 22 97 62 34-40 58-62 97-62 46 0 83 37 83 83 0 100-180 193-180 193S220 270 220 170z' fill='rgba(255,255,255,.14)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart-handshake" style="color:#D92243"></i></div><h3>Amor-Exigente</h3><p>Apoio para familiares e pessoas com dependência química.</p><span class="ext-link">Amor-Exigente <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
-          </a>
-          <a class="help-card-link" href="https://www.gov.br/mj/pt-br/assuntos/noticias/mais-de-um-milhao-de-pessoas-atendidas-pelo-servico-viva-voz" target="_blank" rel="noopener" data-scroll style="transition-delay:.24s" aria-label="Viva Voz">
-            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2360A5FA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Cpath d='M236 155h328c25 0 44 19 44 44v102c0 25-19 44-44 44H430l-82 63c-10 8-24 0-22-12l10-51H236c-25 0-44-19-44-44V199c0-25 19-44 44-44z' fill='rgba(255,255,255,.12)' stroke='%23fff' stroke-width='6'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-message-circle-2" style="color:#60A5FA"></i></div><h3>Viva Voz</h3><p>Orientação gratuita e sigilosa sobre álcool e drogas.</p><span class="ext-link">Viva Voz <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
-          </a>
-          <a class="help-card-link" href="https://www.naranon.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.28s" aria-label="Nar-Anon Brasil">
+          <!-- 5. Nar-Anon -->
+          <a class="help-card-link" href="https://www.naranon.org.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.20s" aria-label="Nar-Anon Brasil">
             <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2312100E'/%3E%3Cstop offset='100%25' stop-color='%2386EFAC'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='315' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Ccircle cx='485' cy='210' r='58' fill='rgba(255,255,255,.14)'/%3E%3Cpath d='M223 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3Cpath d='M393 352c18-55 67-91 122-91s104 36 122 91' stroke='%23fff' stroke-width='18' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users-group" style="color:#86EFAC"></i></div><h3>Nar-Anon</h3><p>Grupos de apoio para familiares de dependentes.</p><span class="ext-link">Nar-Anon Brasil <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-users-group" style="color:#86EFAC"></i></div><h3>Nar-Anon</h3><p>Grupos de apoio para familiares e amigos de dependentes químicos.</p><span class="ext-link">naranon.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
           </a>
-          <a class="help-card-link" href="https://www.buscaclinicas.com.br/" target="_blank" rel="noopener" data-scroll style="transition-delay:.32s" aria-label="Busca Clínicas de Recuperação">
-            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%2360A5FA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ccircle cx='340' cy='230' r='110' stroke='%23fff' stroke-width='22' fill='none'/%3E%3Cline x1='420' y1='310' x2='540' y2='400' stroke='%23fff' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='340' y1='175' x2='340' y2='285' stroke='%23fff' stroke-width='18' stroke-linecap='round'/%3E%3Cline x1='285' y1='230' x2='395' y2='230' stroke='%23fff' stroke-width='18' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
-            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-search" style="color:#60A5FA"></i></div><h3>Busca Clínicas</h3><p>Encontre clínicas de recuperação em todo o Brasil.</p><span class="ext-link">buscaclinicas.com.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          <!-- 6. CVV -->
+          <a class="help-card-link" href="https://www.cvv.org.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.24s" aria-label="Centro de Valorização da Vida">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-heart" id="senad-icon" style="color:#D92243"></i></div><h3>CVV — 188</h3><p>Apoio emocional gratuito 24h por telefone, chat e e-mail.</p><span class="ext-link">cvv.org.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <!-- 7. Para Entender a Dependência Química -->
+          <a class="help-card-link" href="https://www.paraentender.com.br" target="_blank" rel="noopener" data-scroll style="transition-delay:.28s" aria-label="Para Entender a Dependência Química">
+            <div class="help-card-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a1628'/%3E%3Cstop offset='100%25' stop-color='%23F69D39'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Crect x='180' y='130' width='200' height='260' rx='14' fill='rgba(255,255,255,.12)' stroke='%23fff' stroke-width='6'/%3E%3Crect x='210' y='170' width='140' height='14' rx='7' fill='%23fff' opacity='.5'/%3E%3Crect x='210' y='200' width='110' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Crect x='210' y='225' width='130' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Crect x='210' y='250' width='100' height='10' rx='5' fill='%23fff' opacity='.35'/%3E%3Ccircle cx='530' cy='240' r='90' fill='rgba(255,255,255,.08)' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M530 195v50l35 35' stroke='%23fff' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-book-2" style="color:#F69D39"></i></div><h3>Para Entender</h3><p>Portal educativo sobre dependência química com mapa de grupos de ajuda.</p><span class="ext-link">paraentender.com.br <i class="ti ti-external-link" aria-hidden="true"></i></span></div>
+          </a>
+          <!-- 8. SENAD 149 -->
+          <a class="help-card-link" href="tel:149" data-scroll style="transition-delay:.32s" aria-label="SENAD - Ligue 149">
+            <div class="help-card-img"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80&auto=format" alt="" loading="lazy"></div>
+            <div class="help-card-body"><div class="help-card-icon" aria-hidden="true"><i class="ti ti-phone" style="color:#FFA500"></i></div><h3>SENAD 149</h3><p>Orientação gratuita 24h do governo sobre dependência química.</p><span class="ext-link">Ligar agora <i class="ti ti-arrow-right" aria-hidden="true"></i></span></div>
           </a>
         </div>
       </div>
